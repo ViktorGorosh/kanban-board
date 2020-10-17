@@ -1,36 +1,44 @@
 import React, {Component} from 'react';
 import './App.scss';
 import Card from "./Card/Card";
+import AuthPopup from "./AuthPopup/AuthPopup";
 
-class App extends Component {
+interface IState {
+	isAuthorized: boolean,
+	todoCards: any
+}
+
+class App extends Component<{}, any> {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			columns: [
+			currentUser: 'Виктор Горош',
+			todoCards: [
 				{
-					title: 'TO DO',
-					cards: [
+					title: 'Title 1',
+					description: 'Desc 1',
+					comments: [
 						{
-							title: 'Title 1',
-							description: 'Desc 1',
-							comment: 'Comment 1',
-							author: 'Author 1'
+							author: 'Author of comment 1',
+							text: 'Text of comment 1'
 						},
-						{
-							title: 'Title 2',
-							description: 'Desc 2',
-							comment: 'Comment 2',
-							author: 'Author 2'
-						},
-						{
-							title: 'Title 3',
-							description: 'Desc 3',
-							comment: 'Comment 3',
-							author: 'Author 3'
-						},
-					]
-				}
+					],
+
+					author: 'Author 1'
+				},
+				{
+					title: 'Title 2',
+					description: 'Desc 2',
+					comment: 'Comment 2',
+					author: 'Author 2'
+				},
+				{
+					title: 'Title 3',
+					description: 'Desc 3',
+					comment: 'Comment 3',
+					author: 'Author 3'
+				},
 			]
 		}
 	}
@@ -38,6 +46,7 @@ class App extends Component {
 	render() {
 		return (
 			<React.Fragment>
+				<AuthPopup />
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
 				</header>
@@ -46,11 +55,11 @@ class App extends Component {
 						<div className="row">
 							<div className="col-md-3 column">
 								<div className="card">
-									<textarea className="form-control">TO DO</textarea>
+									<textarea className="form-control" defaultValue={'TO DO'}></textarea>
 									<ul className="list-group list-group-flush">
-										<li className="list-group-item">Cras justo odio</li>
-										<li className="list-group-item">Dapibus ac facilisis in</li>
-										<li className="list-group-item">Vestibulum at eros</li>
+										<li className="list-group-item">
+											<Card />
+										</li>
 									</ul>
 									<button type="button" className="btn btn-primary add-card">Добавить карточку</button>
 								</div>

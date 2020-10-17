@@ -1,7 +1,11 @@
 import React from "react";
 
+// interface Props {
+// 	title: string
+// }
+
 export default (props) => {
 	return (
-		<h2>Карточка</h2>
+		<p>Карточка</p>
 	)
 }
