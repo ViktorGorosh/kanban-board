@@ -6,3 +6,22 @@
 		color: #eee;
 	}
 }
+
+.section-board {
+	margin-top: 20px;
+	.card {
+		padding: 15px;
+	}
+	.column {
+		& textarea {
+			resize: none;
+			height: 40px;
+		}
+	}
+	ul {
+		margin-top: 20px;
+	}
+	.add-card {
+		margin-top: 20px;
+	}
+}
