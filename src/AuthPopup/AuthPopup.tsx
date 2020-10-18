@@ -3,6 +3,7 @@ import React from "react";
 interface IAuthPopupProps {
 	currentUser: string,
 	onChangeName: (event: object) => void,
+	onLogin: (event: object) => void,
 }
 
 export default (props: IAuthPopupProps) => {
@@ -26,7 +27,7 @@ export default (props: IAuthPopupProps) => {
 						</div>
 						<div className="modal-footer justify-content-center">
 							<button type="submit" className="btn btn-secondary" data-dismiss="modal"
-							>Войти</button>
+							onClick={props.onLogin}>Войти</button>
 						</div>
 					</div>
 				</div>

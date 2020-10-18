@@ -11,6 +11,8 @@ interface IState {
 
 class App extends Component<{}, IState> {
 
+	newUser = '';
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -45,19 +47,36 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	login = (event) => {
+		console.log('You are in')
+		if (this.newUser !== '') {
+			this.setState({
+				isAuthorized: true,
+				currentUser: this.newUser
+			})
+		}
+	}
+
 	onChangeName = (event) => {
-		console.log('authorized')
-		console.log(event.target.value)
-		// this.setState({
-		// 	isAuthorized: false,
-		// 	currentUser: 'Виктор Горош',
-		// })
+		this.newUser = event.target.value
+	}
+
+	componentDidMount() {
+		console.log(this.state)
+	}
+
+	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
+		console.log(this.state)
 	}
 
 	render() {
 		return (
 			<React.Fragment>
-				<AuthPopup currentUser={this.state.currentUser} onChangeName={this.onChangeName.bind(this)}/>
+				<AuthPopup
+					currentUser={this.state.currentUser}
+					onChangeName={this.onChangeName.bind(this)}
+					onLogin={this.login.bind(this)}
+				/>
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
 				</header>
