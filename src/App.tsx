@@ -6,6 +6,7 @@ import AuthPopup from "./AuthPopup/AuthPopup";
 interface IState {
 	isAuthorized: boolean,
 	currentUser: string,
+	activeCard: object | null,
 	todoCards: Array<object>
 }
 
@@ -18,6 +19,7 @@ class App extends Component<{}, IState> {
 		this.state = {
 			isAuthorized: false,
 			currentUser: 'Виктор Горош',
+			activeCard: null,
 			todoCards: [
 				{
 					title: 'Title 1',
@@ -34,13 +36,23 @@ class App extends Component<{}, IState> {
 				{
 					title: 'Title 2',
 					description: 'Desc 2',
-					comment: 'Comment 2',
+					comments: [
+						{
+							author: 'Author of comment 1',
+							text: 'Text of comment 1'
+						},
+					],
 					author: 'Author 2'
 				},
 				{
 					title: 'Title 3',
 					description: 'Desc 3',
-					comment: 'Comment 3',
+					comments: [
+						{
+							author: 'Author of comment 1',
+							text: 'Text of comment 1'
+						},
+					],
 					author: 'Author 3'
 				},
 			]
@@ -48,8 +60,8 @@ class App extends Component<{}, IState> {
 	}
 
 	login = (event) => {
-		console.log('You are in')
 		if (this.newUser !== '') {
+			console.log('You are in')
 			this.setState({
 				isAuthorized: true,
 				currentUser: this.newUser
@@ -88,7 +100,7 @@ class App extends Component<{}, IState> {
 									<textarea className="form-control" defaultValue={'TO DO'}></textarea>
 									<ul className="list-group list-group-flush">
 										<li className="list-group-item">
-											<Card />
+											<Card openWide={() => console.log('Card is open')}/>
 										</li>
 									</ul>
 									<button type="button" className="btn btn-primary add-card">Добавить карточку</button>

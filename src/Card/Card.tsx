@@ -1,11 +1,12 @@
 import React from "react";
 
-// interface Props {
-// 	title: string
-// }
+interface IProps {
+	openWide: () => void,
+}
 
-export default (props) => {
+export default (props: IProps) => {
+
 	return (
-		<p>Карточка</p>
+		<span onClick={props.openWide}>Карточка</span>
 	)
 }
