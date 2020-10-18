@@ -7,7 +7,12 @@ interface IState {
 	isAuthorized: boolean,
 	currentUser: string,
 	activeCard: object | null,
-	todoCards: Array<ICard>
+	columns: Array<IColumn>
+}
+
+interface IColumn {
+	columnTitle: string,
+	cards: Array<ICard>
 }
 
 interface ICard {
@@ -32,42 +37,48 @@ class App extends Component<{}, IState> {
 			isAuthorized: false,
 			currentUser: 'Виктор Горош',
 			activeCard: null,
-			todoCards: [
+			columns: [
 				{
-					title: 'Title 1',
-					description: 'Desc 1',
-					comments: [
+					columnTitle: 'TO DO',
+					cards: [
 						{
-							author: 'Author of comment 1',
-							text: 'Text of comment 1'
-						},
-					],
+							title: 'Title 1',
+							description: 'Desc 1',
+							comments: [
+								{
+									author: 'Author of comment 1',
+									text: 'Text of comment 1'
+								},
+							],
 
-					author: 'Author 1'
-				},
-				{
-					title: 'Title 2',
-					description: 'Desc 2',
-					comments: [
-						{
-							author: 'Author of comment 1',
-							text: 'Text of comment 1'
+							author: 'Author 1'
 						},
-					],
-					author: 'Author 2'
-				},
-				{
-					title: 'Title 3',
-					description: 'Desc 3',
-					comments: [
 						{
-							author: 'Author of comment 1',
-							text: 'Text of comment 1'
+							title: 'Title 2',
+							description: 'Desc 2',
+							comments: [
+								{
+									author: 'Author of comment 1',
+									text: 'Text of comment 1'
+								},
+							],
+							author: 'Author 2'
 						},
-					],
-					author: 'Author 3'
-				},
+						{
+							title: 'Title 3',
+							description: 'Desc 3',
+							comments: [
+								{
+									author: 'Author of comment 1',
+									text: 'Text of comment 1'
+								},
+							],
+							author: 'Author 3'
+						},
+					]
+				}
 			]
+
 		}
 	}
 
@@ -85,17 +96,17 @@ class App extends Component<{}, IState> {
 		this.newUser = event.target.value
 	}
 
-	componentDidMount() {
-		console.log(this.state)
-	}
+	ChangeColumnName = (event) => {
+		this.setState((prevState) => {
+			return {
 
-	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		console.log(this.state)
+			}
+		})
 	}
 
 	render() {
 		let cards
-		cards = this.state.todoCards.map((card, cardIndex) => {
+		cards = this.state.columns[0].cards.map((card, cardIndex) => {
 			return (
 				<Card
 					key={cardIndex}
@@ -121,7 +132,11 @@ class App extends Component<{}, IState> {
 						<div className="row">
 							<div className="col-md-3 column">
 								<div className="card">
-									<textarea className="form-control" defaultValue={'TO DO'}></textarea>
+									<textarea
+										className="form-control"
+										defaultValue={'TO DO'}
+										onChange={this.ChangeColumnName}
+									>{}</textarea>
 									<ul className="list-group list-group-flush">
 										{cards}
 									</ul>
