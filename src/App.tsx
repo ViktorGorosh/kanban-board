@@ -39,7 +39,7 @@ class App extends Component<{}, IState> {
 		this.state = {
 			isAuthorized: false,
 			currentUser: 'Виктор Горош',
-			isCardActive: true,
+			isCardActive: false,
 			activeColIndex: 0,
 			activeCardIndex: 0,
 			columns: [
@@ -138,7 +138,7 @@ class App extends Component<{}, IState> {
 					<CardOpen
 						content={this.state.columns[actCol].cards[actCard]}
 					/>
-					: null}
+				: null}
 
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
