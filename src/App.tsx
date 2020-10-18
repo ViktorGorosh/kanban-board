@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.scss';
-import Card from "./Card/Card";
 import AuthPopup from "./AuthPopup/AuthPopup";
+import Card from "./Card/Card";
 
 interface IState {
 	isAuthorized: boolean,
@@ -97,9 +97,13 @@ class App extends Component<{}, IState> {
 		let cards
 		cards = this.state.todoCards.map((card, cardIndex) => {
 			return (
-				<li className="list-group-item">
-					<span>{card.title}</span>
-				</li>
+				<Card
+					key={cardIndex}
+					cardIndex={cardIndex}
+					preview={true}
+					openWide={() => console.log('Card is open')}
+					title={card.title}
+				/>
 			)
 		})
 		return (
