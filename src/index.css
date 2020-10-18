@@ -16,3 +16,6 @@ code {
 }
 
 /*================= My own styles expanding Bootstrap ===============*/
+textarea {
+  resize: none!important;
+}

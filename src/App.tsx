@@ -46,7 +46,7 @@ class App extends Component<{}, any> {
 	render() {
 		return (
 			<React.Fragment>
-				<AuthPopup />
+				<AuthPopup currentUser={this.state.currentUser}/>
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
 				</header>

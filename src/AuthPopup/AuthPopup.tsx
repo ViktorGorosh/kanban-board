@@ -1,6 +1,10 @@
 import React from "react";
 
-export default (props) => {
+interface IAuthPopupProps {
+	currentUser: string
+}
+
+export default (props: IAuthPopupProps) => {
 	return (
 		<React.Fragment>
 			<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
@@ -11,16 +15,16 @@ export default (props) => {
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
-							<h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
+							<h5 className="modal-title" id="staticBackdropLabel">Введите имя пользователя</h5>
 							<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div className="modal-body">
-							...
+							<textarea className="form-control" defaultValue={props.currentUser}></textarea>
 						</div>
-						<div className="modal-footer">
-							<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+						<div className="modal-footer justify-content-center">
+							<button type="button" className="btn btn-secondary" data-dismiss="modal">Войти</button>
 						</div>
 					</div>
 				</div>
