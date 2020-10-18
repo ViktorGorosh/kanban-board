@@ -11,7 +11,7 @@ export default (props: IProps) => {
 
 	let cards = props.content.cards.map((card, cardIndex) => {
 		return (
-			<Card content={card} />
+			<Card key={cardIndex} content={card} />
 		)
 	})
 

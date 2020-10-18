@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import './App.scss';
 import AuthPopup from "./AuthPopup/AuthPopup";
-import Card from "./Card/Card";
 import Column from "./Column/Column";
+import CardOpen from "./CardOpen/CardOpen";
 
 interface IState {
 	isAuthorized: boolean,
 	currentUser: string,
-	activeCard: object | null,
+	isCardActive: boolean,
+	activeColIndex: number,
+	activeCardIndex: number,
 	columns: Array<IColumn>
 }
 
@@ -37,7 +39,9 @@ class App extends Component<{}, IState> {
 		this.state = {
 			isAuthorized: false,
 			currentUser: 'Виктор Горош',
-			activeCard: null,
+			isCardActive: true,
+			activeColIndex: 0,
+			activeCardIndex: 0,
 			columns: [
 				{
 					columnTitle: 'TO DO',
@@ -68,7 +72,6 @@ class App extends Component<{}, IState> {
 									text: 'Text of comment 1'
 								},
 							],
-
 							author: 'Author 1'
 						},
 					]
@@ -99,14 +102,6 @@ class App extends Component<{}, IState> {
 		this.newUser = event.target.value
 	}
 
-	ChangeColumnName = (event) => {
-		this.setState((prevState) => {
-			return {
-
-			}
-		})
-	}
-
 	render() {
 		// let cards
 		// cards = this.state.columns[0].cards.map((card, cardIndex) => {
@@ -124,9 +119,13 @@ class App extends Component<{}, IState> {
 		let columns;
 		columns = this.state.columns.map((column, colIndex) => {
 			return (
-				<Column content={column}/>
+				<Column key={colIndex} content={column}/>
 			)
 		})
+
+		const actCol = this.state.activeColIndex
+		const actCard = this.state.activeCardIndex
+
 		return (
 			<React.Fragment>
 				<AuthPopup
@@ -134,6 +133,13 @@ class App extends Component<{}, IState> {
 					onChangeName={this.onChangeName.bind(this)}
 					onLogin={this.login.bind(this)}
 				/>
+
+				{this.state.isCardActive ?
+					<CardOpen
+						content={this.state.columns[actCol].cards[actCard]}
+					/>
+					: null}
+
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
 				</header>
