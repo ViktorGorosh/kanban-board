@@ -7,7 +7,19 @@ interface IState {
 	isAuthorized: boolean,
 	currentUser: string,
 	activeCard: object | null,
-	todoCards: Array<object>
+	todoCards: Array<ICard>
+}
+
+interface ICard {
+	title: string,
+	description: string,
+	comments: Array<IComment>,
+	author: string
+}
+
+interface IComment {
+	author: string,
+	text: string,
 }
 
 class App extends Component<{}, IState> {
@@ -59,7 +71,7 @@ class App extends Component<{}, IState> {
 		}
 	}
 
-	login = (event) => {
+	login = () => {
 		if (this.newUser !== '') {
 			console.log('You are in')
 			this.setState({
@@ -82,6 +94,14 @@ class App extends Component<{}, IState> {
 	}
 
 	render() {
+		let cards
+		cards = this.state.todoCards.map((card, cardIndex) => {
+			return (
+				<li className="list-group-item">
+					<span>{card.title}</span>
+				</li>
+			)
+		})
 		return (
 			<React.Fragment>
 				<AuthPopup
@@ -99,9 +119,7 @@ class App extends Component<{}, IState> {
 								<div className="card">
 									<textarea className="form-control" defaultValue={'TO DO'}></textarea>
 									<ul className="list-group list-group-flush">
-										<li className="list-group-item">
-											<Card openWide={() => console.log('Card is open')}/>
-										</li>
+										{cards}
 									</ul>
 									<button type="button" className="btn btn-primary add-card">Добавить карточку</button>
 								</div>

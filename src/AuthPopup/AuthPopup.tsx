@@ -3,7 +3,7 @@ import React from "react";
 interface IAuthPopupProps {
 	currentUser: string,
 	onChangeName: (event: object) => void,
-	onLogin: (event: object) => void,
+	onLogin: () => void,
 }
 
 export default (props: IAuthPopupProps) => {
