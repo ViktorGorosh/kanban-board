@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.scss';
 import AuthPopup from "./AuthPopup/AuthPopup";
 import Card from "./Card/Card";
+import Column from "./Column/Column";
 
 interface IState {
 	isAuthorized: boolean,
@@ -10,7 +11,7 @@ interface IState {
 	columns: Array<IColumn>
 }
 
-interface IColumn {
+export interface IColumn {
 	columnTitle: string,
 	cards: Array<ICard>
 }
@@ -40,45 +41,21 @@ class App extends Component<{}, IState> {
 			columns: [
 				{
 					columnTitle: 'TO DO',
-					cards: [
-						{
-							title: 'Title 1',
-							description: 'Desc 1',
-							comments: [
-								{
-									author: 'Author of comment 1',
-									text: 'Text of comment 1'
-								},
-							],
-
-							author: 'Author 1'
-						},
-						{
-							title: 'Title 2',
-							description: 'Desc 2',
-							comments: [
-								{
-									author: 'Author of comment 1',
-									text: 'Text of comment 1'
-								},
-							],
-							author: 'Author 2'
-						},
-						{
-							title: 'Title 3',
-							description: 'Desc 3',
-							comments: [
-								{
-									author: 'Author of comment 1',
-									text: 'Text of comment 1'
-								},
-							],
-							author: 'Author 3'
-						},
-					]
-				}
+					cards: []
+				},
+				{
+					columnTitle: 'In Progress',
+					cards: []
+				},
+				{
+					columnTitle: 'Testing',
+					cards: []
+				},
+				{
+					columnTitle: 'Done',
+					cards: []
+				},
 			]
-
 		}
 	}
 
@@ -105,16 +82,23 @@ class App extends Component<{}, IState> {
 	}
 
 	render() {
-		let cards
-		cards = this.state.columns[0].cards.map((card, cardIndex) => {
+		// let cards
+		// cards = this.state.columns[0].cards.map((card, cardIndex) => {
+		// 	return (
+		// 		<Card
+		// 			key={cardIndex}
+		// 			cardIndex={cardIndex}
+		// 			preview={true}
+		// 			openWide={() => console.log('Card is open')}
+		// 			title={card.title}
+		// 		/>
+		// 	)
+		// })
+
+		let columns;
+		columns = this.state.columns.map((column, colIndex) => {
 			return (
-				<Card
-					key={cardIndex}
-					cardIndex={cardIndex}
-					preview={true}
-					openWide={() => console.log('Card is open')}
-					title={card.title}
-				/>
+				<Column content={column}/>
 			)
 		})
 		return (
@@ -130,22 +114,7 @@ class App extends Component<{}, IState> {
 				<section className='section-board'>
 					<div className="container-fluid">
 						<div className="row">
-							<div className="col-md-3 column">
-								<div className="card">
-									<textarea
-										className="form-control"
-										defaultValue={'TO DO'}
-										onChange={this.ChangeColumnName}
-									>{}</textarea>
-									<ul className="list-group list-group-flush">
-										{cards}
-									</ul>
-									<button type="button" className="btn btn-primary add-card">Добавить карточку</button>
-								</div>
-							</div>
-							{/*<div className="col-md-3 column-item">In Progress</div>*/}
-							{/*<div className="col-md-3 column-item">Testing</div>*/}
-							{/*<div className="col-md-3 column-item">Done</div>*/}
+							{columns}
 						</div>
 					</div>
 				</section>
