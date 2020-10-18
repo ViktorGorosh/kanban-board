@@ -5,14 +5,16 @@ import AuthPopup from "./AuthPopup/AuthPopup";
 
 interface IState {
 	isAuthorized: boolean,
-	todoCards: any
+	currentUser: string,
+	todoCards: Array<object>
 }
 
-class App extends Component<{}, any> {
+class App extends Component<{}, IState> {
 
 	constructor(props) {
 		super(props);
 		this.state = {
+			isAuthorized: false,
 			currentUser: 'Виктор Горош',
 			todoCards: [
 				{
@@ -43,10 +45,19 @@ class App extends Component<{}, any> {
 		}
 	}
 
+	onChangeName = (event) => {
+		console.log('authorized')
+		console.log(event.target.value)
+		// this.setState({
+		// 	isAuthorized: false,
+		// 	currentUser: 'Виктор Горош',
+		// })
+	}
+
 	render() {
 		return (
 			<React.Fragment>
-				<AuthPopup currentUser={this.state.currentUser}/>
+				<AuthPopup currentUser={this.state.currentUser} onChangeName={this.onChangeName.bind(this)}/>
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
 				</header>

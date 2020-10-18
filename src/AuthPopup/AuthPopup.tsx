@@ -1,7 +1,8 @@
 import React from "react";
 
 interface IAuthPopupProps {
-	currentUser: string
+	currentUser: string,
+	onChangeName: (event: object) => void,
 }
 
 export default (props: IAuthPopupProps) => {
@@ -16,15 +17,16 @@ export default (props: IAuthPopupProps) => {
 					<div className="modal-content">
 						<div className="modal-header">
 							<h5 className="modal-title" id="staticBackdropLabel">Введите имя пользователя</h5>
-							<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
 						</div>
 						<div className="modal-body">
-							<textarea className="form-control" defaultValue={props.currentUser}></textarea>
+							<input type='text' className="form-control"
+								   defaultValue={props.currentUser}
+								   onChange={props.onChangeName}>
+							</input>
 						</div>
 						<div className="modal-footer justify-content-center">
-							<button type="button" className="btn btn-secondary" data-dismiss="modal">Войти</button>
+							<button type="submit" className="btn btn-secondary" data-dismiss="modal"
+							>Войти</button>
 						</div>
 					</div>
 				</div>
