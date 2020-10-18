@@ -16,7 +16,7 @@ export interface IColumn {
 	cards: Array<ICard>
 }
 
-interface ICard {
+export interface ICard {
 	title: string,
 	description: string,
 	comments: Array<IComment>,
@@ -41,11 +41,37 @@ class App extends Component<{}, IState> {
 			columns: [
 				{
 					columnTitle: 'TO DO',
-					cards: []
+					cards: [
+						{
+							title: 'Title 1',
+							description: 'Desc 1',
+							comments: [
+								{
+									author: 'Author of comment 1',
+									text: 'Text of comment 1'
+								},
+							],
+
+							author: 'Author 1'
+						},
+					]
 				},
 				{
 					columnTitle: 'In Progress',
-					cards: []
+					cards: [
+						{
+							title: 'Title 1',
+							description: 'Desc 1',
+							comments: [
+								{
+									author: 'Author of comment 1',
+									text: 'Text of comment 1'
+								},
+							],
+
+							author: 'Author 1'
+						},
+					]
 				},
 				{
 					columnTitle: 'Testing',

@@ -8,6 +8,13 @@ interface IProps {
 }
 
 export default (props: IProps) => {
+
+	let cards = props.content.cards.map((card, cardIndex) => {
+		return (
+			<Card content={card} />
+		)
+	})
+
 	return (
 		<div className="col-md-3 column">
 			<div className="card">
@@ -16,6 +23,7 @@ export default (props: IProps) => {
 					defaultValue={props.content.columnTitle}
 				>{}</textarea>
 				<ul className="list-group list-group-flush">
+					{cards}
 				</ul>
 				<button type="button" className="btn btn-primary add-card">Добавить карточку</button>
 			</div>
