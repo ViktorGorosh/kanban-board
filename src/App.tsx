@@ -88,9 +88,17 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	componentDidMount() {
+		this.newUser = this.state.currentUser
+	}
+
+	changeName = (event) => {
+		this.newUser = event.target.value
+	}
+
 	login = () => {
 		if (this.newUser !== '') {
-			console.log('You are in')
+			console.log('You are in as', this.newUser)
 			this.setState({
 				isAuthorized: true,
 				currentUser: this.newUser
@@ -98,23 +106,7 @@ class App extends Component<{}, IState> {
 		}
 	}
 
-	changeName = (event) => {
-		this.newUser = event.target.value
-	}
-
 	render() {
-		// let cards
-		// cards = this.state.columns[0].cards.map((card, cardIndex) => {
-		// 	return (
-		// 		<Card
-		// 			key={cardIndex}
-		// 			cardIndex={cardIndex}
-		// 			preview={true}
-		// 			openWide={() => console.log('Card is open')}
-		// 			title={card.title}
-		// 		/>
-		// 	)
-		// })
 
 		let columns;
 		columns = this.state.columns.map((column, colIndex) => {
@@ -128,11 +120,14 @@ class App extends Component<{}, IState> {
 
 		return (
 			<React.Fragment>
-				<AuthPopup
-					currentUser={this.state.currentUser}
-					changeName={this.changeName.bind(this)}
-					login={this.login.bind(this)}
-				/>
+				{this.state.isAuthorized ? null :
+					<AuthPopup
+						currentUser={this.state.currentUser}
+						changeName={this.changeName.bind(this)}
+						login={this.login}
+					/>
+				}
+
 
 				{this.state.isCardActive ?
 					<CardOpen
