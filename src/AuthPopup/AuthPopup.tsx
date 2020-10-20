@@ -2,17 +2,17 @@ import React from "react";
 
 interface IAuthPopupProps {
 	currentUser: string,
-	onChangeName: (event: object) => void,
-	onLogin: () => void,
+	changeName: (event: object) => void,
+	login: () => void,
 }
 
 export default (props: IAuthPopupProps) => {
 	return (
 		<React.Fragment>
-			<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+			<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#authPopup">
 				Запустить окно авторизации
 			</button>
-			<div className="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabIndex={-1}
+			<div className="modal fade" id="authPopup" data-backdrop="static" data-keyboard="false" tabIndex={-1}
 				 role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
@@ -22,12 +22,12 @@ export default (props: IAuthPopupProps) => {
 						<div className="modal-body">
 							<input type='text' className="form-control"
 								   defaultValue={props.currentUser}
-								   onChange={props.onChangeName}>
+								   onChange={props.changeName}>
 							</input>
 						</div>
 						<div className="modal-footer justify-content-center">
-							<button type="submit" className="btn btn-secondary" data-dismiss="modal"
-							onClick={props.onLogin}>Войти</button>
+							<button type="button" className="btn btn-secondary" data-dismiss="modal"
+							onClick={props.login}>Войти</button>
 						</div>
 					</div>
 				</div>

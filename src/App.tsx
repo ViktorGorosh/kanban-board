@@ -98,7 +98,7 @@ class App extends Component<{}, IState> {
 		}
 	}
 
-	onChangeName = (event) => {
+	changeName = (event) => {
 		this.newUser = event.target.value
 	}
 
@@ -130,8 +130,8 @@ class App extends Component<{}, IState> {
 			<React.Fragment>
 				<AuthPopup
 					currentUser={this.state.currentUser}
-					onChangeName={this.onChangeName.bind(this)}
-					onLogin={this.login.bind(this)}
+					changeName={this.changeName.bind(this)}
+					login={this.login.bind(this)}
 				/>
 
 				{this.state.isCardActive ?
