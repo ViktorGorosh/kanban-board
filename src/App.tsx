@@ -33,6 +33,12 @@ interface IComment {
 class App extends Component<{}, IState> {
 
 	newUser = '';
+	cardTemplate = {
+		title: '',
+		description: '',
+		comments: [],
+		author: ''
+	}
 
 	constructor(props) {
 		super(props);
@@ -92,6 +98,10 @@ class App extends Component<{}, IState> {
 		this.newUser = this.state.currentUser
 	}
 
+	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
+		console.log(this.state)
+	}
+
 	changeName = (event) => {
 		this.newUser = event.target.value
 	}
@@ -113,6 +123,16 @@ class App extends Component<{}, IState> {
 		})
 	}
 
+	addCard = (colIndex) => {
+		this.setState((prevState) => {
+			const newState = {...prevState}
+			const newCard = {...this.cardTemplate}
+			newCard.author = prevState.currentUser
+			newState.columns[colIndex].cards.push(newCard)
+			return newState
+		})
+	}
+
 	render() {
 
 		let columns;
@@ -120,9 +140,10 @@ class App extends Component<{}, IState> {
 			return (
 				<Column
 					key={colIndex}
-					colIndex={colIndex}
+					colIndex={colIndex} // ?
 					content={column}
 					changeColTitle={event => this.changeColTitle(event.target.value, colIndex)}
+					addCard={() => this.addCard(colIndex)}
 				/>
 			)
 		})
@@ -139,7 +160,6 @@ class App extends Component<{}, IState> {
 						login={this.login}
 					/>
 				}
-
 
 				{this.state.isCardActive ?
 					<CardOpen

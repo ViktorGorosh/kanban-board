@@ -7,6 +7,7 @@ interface IProps {
 	content: IColumn
 	colIndex: number
 	changeColTitle: (event: any) => void
+	addCard: () => void
 }
 
 export default (props: IProps) => {
@@ -29,7 +30,11 @@ export default (props: IProps) => {
 				<ul className="list-group list-group-flush">
 					{cards}
 				</ul>
-				<button type="button" className="btn btn-primary add-card">Добавить карточку</button>
+				<button
+					type="button"
+					className="btn btn-primary add-card"
+					onClick={props.addCard}
+				>Добавить карточку</button>
 			</div>
 		</div>
 	)
