@@ -6,7 +6,10 @@ import {IColumn} from "../App";
 interface IProps {
 	content: IColumn
 	colIndex: number
+	activeColIndex: number
+	isAddingCard: boolean
 	changeColTitle: (event: any) => void
+	openAddCardMenu: () => void
 	addCard: () => void
 }
 
@@ -30,11 +33,27 @@ export default (props: IProps) => {
 				<ul className="list-group list-group-flush">
 					{cards}
 				</ul>
-				<button
-					type="button"
-					className="btn btn-primary add-card"
-					onClick={props.addCard}
-				>Добавить карточку</button>
+				{props.isAddingCard && props.colIndex === props.activeColIndex ?
+					<div className='adding-card'>
+						<input
+							type="text"
+							className="form-control adding-card__input"
+							placeholder='Введите название карточки'
+							autoFocus={true}
+						/>
+						<button
+							type="button"
+							className="btn btn-secondary adding-card__button"
+							onClick={props.openAddCardMenu}
+						>Добавить</button>
+					</div>
+					:
+					<button
+						type="button"
+						className="btn btn-primary add-card"
+						onClick={props.openAddCardMenu}
+					>Добавить карточку</button>
+				}
 			</div>
 		</div>
 	)

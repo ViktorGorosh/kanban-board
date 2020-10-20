@@ -1,12 +1,11 @@
-.section-board {
-	margin-top: 20px;
-	.card {
-		padding: 15px;
-	}
-	ul {
-		margin-top: 20px;
-	}
-	.add-card {
-		margin-top: 20px;
-	}
+.adding-card {
+	margin-top: 15px;
+	display: flex;
+	justify-content: space-between;
+}
+.adding-card__input {
+	flex-basis: 75%;
+}
+.adding-card__button {
+	flex-basis: 15%;
 }

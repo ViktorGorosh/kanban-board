@@ -10,6 +10,7 @@ interface IState {
 	isCardActive: boolean,
 	activeColIndex: number,
 	activeCardIndex: number,
+	isAddingCard: boolean,
 	columns: Array<IColumn>
 }
 
@@ -48,6 +49,7 @@ class App extends Component<{}, IState> {
 			isCardActive: false,
 			activeColIndex: 0,
 			activeCardIndex: 0,
+			isAddingCard: false,
 			columns: [
 				{
 					columnTitle: 'TO DO',
@@ -123,14 +125,33 @@ class App extends Component<{}, IState> {
 		})
 	}
 
-	addCard = (colIndex) => {
+	openAddCardMenu = (colIndex) => {
 		this.setState((prevState) => {
-			const newState = {...prevState}
-			const newCard = {...this.cardTemplate}
-			newCard.author = prevState.currentUser
-			newState.columns[colIndex].cards.push(newCard)
-			return newState
+			return {
+				isAddingCard: true,
+				activeColIndex: colIndex
+			}
 		})
+	}
+
+	addCard = (colIndex) => {
+		// if (this.state.isAddingCard)
+		// this.setState((prevState) => {
+		// 	if (!this.state.isAddingCard) {
+		// 		return {
+		// 			isAddingCard: true
+		// 		}
+		// 	} else {
+		// 		const newState = {...prevState}
+		// 		const newCard = {...this.cardTemplate}
+		// 		newCard.author = prevState.currentUser
+		// 		newCard.title = 'New card'
+		// 		newState.columns[colIndex].cards.push(newCard)
+		// 		newState.isAddingCard = false
+		// 		return newState
+		// 	}
+		// })
+		console.log('Card added')
 	}
 
 	render() {
@@ -141,8 +162,11 @@ class App extends Component<{}, IState> {
 				<Column
 					key={colIndex}
 					colIndex={colIndex} // ?
+					activeColIndex={this.state.activeColIndex}
 					content={column}
+					isAddingCard={this.state.isAddingCard}
 					changeColTitle={event => this.changeColTitle(event.target.value, colIndex)}
+					openAddCardMenu={() => this.openAddCardMenu(colIndex)}
 					addCard={() => this.addCard(colIndex)}
 				/>
 			)
