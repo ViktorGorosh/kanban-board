@@ -97,8 +97,7 @@ class App extends Component<{}, IState> {
 	}
 
 	login = () => {
-		if (this.newUser !== '') {
-			console.log('You are in as', this.newUser)
+		if (this.newUser) {
 			this.setState({
 				isAuthorized: true,
 				currentUser: this.newUser
@@ -106,12 +105,25 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	changeColTitle = (newTitle, colIndex) => {
+		this.setState((prevState) => {
+			const newState = {...prevState}
+			newState.columns[colIndex].columnTitle = newTitle
+			return newState
+		})
+	}
+
 	render() {
 
 		let columns;
 		columns = this.state.columns.map((column, colIndex) => {
 			return (
-				<Column key={colIndex} content={column}/>
+				<Column
+					key={colIndex}
+					colIndex={colIndex}
+					content={column}
+					changeColTitle={event => this.changeColTitle(event.target.value, colIndex)}
+				/>
 			)
 		})
 

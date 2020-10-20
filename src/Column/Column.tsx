@@ -5,6 +5,8 @@ import {IColumn} from "../App";
 
 interface IProps {
 	content: IColumn
+	colIndex: number
+	changeColTitle: (event: any) => void
 }
 
 export default (props: IProps) => {
@@ -18,10 +20,12 @@ export default (props: IProps) => {
 	return (
 		<div className="col-md-3 column">
 			<div className="card">
-				<textarea
+				<input
+					type='text'
 					className="form-control"
 					defaultValue={props.content.columnTitle}
-				>{}</textarea>
+					onInput={props.changeColTitle}
+				>{}</input>
 				<ul className="list-group list-group-flush">
 					{cards}
 				</ul>
