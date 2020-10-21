@@ -31,6 +31,8 @@ interface IComment {
 	text: string,
 }
 
+
+
 class App extends Component<{}, IState> {
 
 	newUser = '';
@@ -73,15 +75,15 @@ class App extends Component<{}, IState> {
 					columnTitle: 'In Progress',
 					cards: [
 						{
-							title: 'Title 1',
-							description: 'Desc 1',
+							title: 'Title 2',
+							description: 'Desc 2',
 							comments: [
 								{
 									author: 'Author of comment 1',
 									text: 'Text of comment 1'
 								},
 							],
-							author: 'Author 1'
+							author: 'Author 2'
 						},
 					]
 				},
@@ -153,6 +155,16 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	openCard = (colIndex, cardIndex) => {
+		this.setState((prevState) => {
+			return {
+				isCardActive: true,
+				activeColIndex: colIndex,
+				activeCardIndex: cardIndex,
+			}
+		})
+	}
+
 	render() {
 
 		let columns;
@@ -160,14 +172,16 @@ class App extends Component<{}, IState> {
 			return (
 				<Column
 					key={colIndex}
-					colIndex={colIndex} // ?
+					colIndex={colIndex}
 					activeColIndex={this.state.activeColIndex}
 					content={column}
 					isAddingCard={this.state.isAddingCard}
+
 					changeColTitle={event => this.changeColTitle(event.target.value, colIndex)}
 					openAddCardMenu={() => this.openAddCardMenu(colIndex)}
 					changeNewCardTitle = {event => this.changeNewCardTitle(event)}
-					addCard={() => this.addCard()}
+					addCard={this.addCard}
+					openCard={this.openCard}
 				/>
 			)
 		})

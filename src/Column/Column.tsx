@@ -12,13 +12,21 @@ interface IProps {
 	changeNewCardTitle: (event: any) => void
 	openAddCardMenu: () => void
 	addCard: () => void
+
+	openCard: (colIndex: number, cardIndex: number) => void
 }
 
 export default (props: IProps) => {
 
 	let cards = props.content.cards.map((card, cardIndex) => {
 		return (
-			<Card key={cardIndex} content={card} />
+			<Card
+				key={cardIndex}
+				colIndex={props.colIndex}
+				cardIndex={cardIndex}
+				content={card}
+				openCard={props.openCard}
+			/>
 		)
 	})
 
