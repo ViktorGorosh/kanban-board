@@ -34,6 +34,7 @@ interface IComment {
 class App extends Component<{}, IState> {
 
 	newUser = '';
+	newCardTitle = '';
 	cardTemplate = {
 		title: '',
 		description: '',
@@ -134,24 +135,22 @@ class App extends Component<{}, IState> {
 		})
 	}
 
-	addCard = (colIndex) => {
-		// if (this.state.isAddingCard)
-		// this.setState((prevState) => {
-		// 	if (!this.state.isAddingCard) {
-		// 		return {
-		// 			isAddingCard: true
-		// 		}
-		// 	} else {
-		// 		const newState = {...prevState}
-		// 		const newCard = {...this.cardTemplate}
-		// 		newCard.author = prevState.currentUser
-		// 		newCard.title = 'New card'
-		// 		newState.columns[colIndex].cards.push(newCard)
-		// 		newState.isAddingCard = false
-		// 		return newState
-		// 	}
-		// })
-		console.log('Card added')
+	changeNewCardTitle = (event) => {
+		this.newCardTitle = event.target.value
+	}
+
+	addCard = () => {
+		if (this.newCardTitle && this.state.isAddingCard) {
+			const newCard = {...this.cardTemplate}
+			newCard.title = this.newCardTitle
+
+			this.setState((prevState) => {
+				const newState = {...prevState}
+				newState.columns[this.state.activeColIndex].cards.push(newCard)
+				newState.isAddingCard = false
+				return newState
+			})
+		}
 	}
 
 	render() {
@@ -167,7 +166,8 @@ class App extends Component<{}, IState> {
 					isAddingCard={this.state.isAddingCard}
 					changeColTitle={event => this.changeColTitle(event.target.value, colIndex)}
 					openAddCardMenu={() => this.openAddCardMenu(colIndex)}
-					addCard={() => this.addCard(colIndex)}
+					changeNewCardTitle = {event => this.changeNewCardTitle(event)}
+					addCard={() => this.addCard()}
 				/>
 			)
 		})
