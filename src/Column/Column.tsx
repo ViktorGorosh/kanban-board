@@ -39,7 +39,7 @@ export default (props: IProps) => {
 					defaultValue={props.content.columnTitle}
 					onChange={props.changeColTitle}
 				>{}</input>
-				<ul className="list-group list-group-flush">
+				<ul className="list-group list-group-flush cards">
 					{cards}
 				</ul>
 				{props.isAddingCard && props.colIndex === props.activeColIndex ?
