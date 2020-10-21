@@ -19,3 +19,7 @@ code {
 textarea {
   resize: none!important;
 }
+
+:last-child {
+  margin-bottom: 0;
+}

@@ -206,6 +206,7 @@ class App extends Component<{}, IState> {
 				{this.state.isCardActive ?
 					<CardOpen
 						content={this.state.columns[actCol].cards[actCard]}
+						colTitle={this.state.columns[actCol].columnTitle}
 					/>
 				: null}
 

@@ -1,7 +1,14 @@
-.CardOpen__title {
-	border: none;
-	background-color: transparent;
-	width: 100%;
+.CardOpen {
+	.input, .author {
+		border: none;
+		background-color: transparent;
+		width: 100%;
+	}
+}
+
+.CardOpen__annotation {
+	margin-right: 15px;
+	margin-bottom: 0;
 }
 
 .CardOpen__description {
