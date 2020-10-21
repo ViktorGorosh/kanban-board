@@ -26,7 +26,7 @@ export interface ICard {
 	author: string
 }
 
-interface IComment {
+export interface IComment {
 	author: string,
 	text: string,
 }
@@ -81,6 +81,10 @@ class App extends Component<{}, IState> {
 								{
 									author: 'Author of comment 1',
 									text: 'Text of comment 1'
+								},
+								{
+									author: 'Author of comment 2',
+									text: 'Text of comment 2'
 								},
 							],
 							author: 'Author 2'
@@ -143,12 +147,12 @@ class App extends Component<{}, IState> {
 
 	addCard = () => {
 		if (this.newCardTitle && this.state.isAddingCard) {
-			const newCard = {...this.cardTemplate}
-			newCard.title = this.newCardTitle
-
 			this.setState((prevState) => {
+				const newCard = {...this.cardTemplate}
+				newCard.title = this.newCardTitle
+				newCard.author = prevState.currentUser
 				const newState = {...prevState}
-				newState.columns[this.state.activeColIndex].cards.push(newCard)
+				newState.columns[prevState.activeColIndex].cards.push(newCard)
 				newState.isAddingCard = false
 				return newState
 			})

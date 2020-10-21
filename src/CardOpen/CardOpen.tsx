@@ -7,6 +7,12 @@ interface IProps {
 }
 
 export default (props: IProps) => {
+	let comments = props.content.comments.map((comment, comIndex) => {
+		return (
+			<li className='list-group-item'>{comment.text}</li>
+		)
+	})
+
 	return (
 		<React.Fragment>
 			<div className="modal fade show" id="staticBackdropLive" data-backdrop="static" data-keyboard="false"
@@ -25,6 +31,9 @@ export default (props: IProps) => {
 							</div>
 							<div className="card-footer">
 								<h5 className='CardOpen__annotation'>Comments:</h5>
+								<ul className="list-group">
+									{comments}
+								</ul>
 							</div>
 						</div>
 					</div>
