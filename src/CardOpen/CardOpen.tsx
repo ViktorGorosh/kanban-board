@@ -8,6 +8,7 @@ interface IProps {
 	content: ICard
 	close: () => void
 	escHandler: (event: object) => void
+	deleteCard: () => void
 }
 
 export default (props: IProps) => {
@@ -56,12 +57,13 @@ export default (props: IProps) => {
 							<div className="card-body">
 								<h5 className='CardOpen__annotation mb-2'>Description:</h5>
 								<textarea className="CardOpen__description">{props.content.description}</textarea>
-							</div>
-							<div className="card-footer">
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group">
 									{comments}
 								</ul>
+							</div>
+							<div className="card-footer">
+								<button className='btn btn-danger' onClick={props.deleteCard}>Delete</button>
 							</div>
 						</div>
 					</div>

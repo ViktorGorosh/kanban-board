@@ -108,7 +108,7 @@ class App extends Component<{}, IState> {
 	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		console.log(this.state)
+		console.log('App updated')
 	}
 
 	changeName = (event) => {
@@ -183,6 +183,15 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	deleteCard = () => {
+		this.setState(prevState => {
+			const newState = {...prevState}
+			newState.columns[this.state.activeColIndex].cards.splice(this.state.activeCardIndex, 1)
+			newState.isCardActive = false
+			return newState
+		})
+	}
+
 	render() {
 
 		let columns;
@@ -223,6 +232,7 @@ class App extends Component<{}, IState> {
 						colTitle={this.state.columns[actCol].columnTitle}
 						close={this.closeOpenCard}
 						escHandler={this.escHandler}
+						deleteCard={this.deleteCard}
 					/>
 				: null}
 
