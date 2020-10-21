@@ -6,6 +6,8 @@ import Comment from "../Comment/Comment";
 interface IProps {
 	colTitle: string
 	content: ICard
+	close: () => void
+	escHandler: (event: object) => void
 }
 
 export default (props: IProps) => {
@@ -27,10 +29,23 @@ export default (props: IProps) => {
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="card CardOpen">
+							<button
+								type="button"
+								className="close"
+								aria-label="Close"
+								onClick={event => props.close()}
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
 							<div className="card-header">
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Title:</h5>
-									<input type="text" className="input" defaultValue={props.content.title}/>
+									<input type="text"
+										   className="input"
+										   defaultValue={props.content.title}
+										   autoFocus={true}
+										   onKeyDown={props.escHandler}
+									/>
 								</div>
 								<p>In "{props.colTitle}" list</p>
 								<div className='d-flex justify-content-between mb-1'>

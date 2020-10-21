@@ -1,8 +1,17 @@
 .CardOpen {
+	position: relative;
 	.input, .author {
 		border: none;
 		background-color: transparent;
 		width: 100%;
+	}
+	.close {
+		position: absolute;
+		right: 2px;
+		top: -2px;
+		&:focus {
+			outline: none;
+		}
 	}
 }
 

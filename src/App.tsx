@@ -169,6 +169,20 @@ class App extends Component<{}, IState> {
 		})
 	}
 
+	closeOpenCard = () => {
+		this.setState(prevState => {
+			return {
+				isCardActive: false
+			}
+		})
+	}
+
+	escHandler = (event) => {
+		if (event.key === 'Escape') {
+			this.closeOpenCard()
+		}
+	}
+
 	render() {
 
 		let columns;
@@ -207,6 +221,8 @@ class App extends Component<{}, IState> {
 					<CardOpen
 						content={this.state.columns[actCol].cards[actCard]}
 						colTitle={this.state.columns[actCol].columnTitle}
+						close={this.closeOpenCard}
+						escHandler={this.escHandler}
 					/>
 				: null}
 
