@@ -9,7 +9,7 @@ interface IProps {
 	close: () => void
 	escHandler: (event: object) => void
 	deleteCard: () => void
-	changeCardField: (field: string, newValue: string) => void
+	changeCardField: (field: string, newValue: string | null) => void
 }
 
 export default (props: IProps) => {
@@ -57,11 +57,29 @@ export default (props: IProps) => {
 								</div>
 							</div>
 							<div className="card-body">
-								<h5 className='CardOpen__annotation mb-2'>Description:</h5>
-								<textarea
-									className="CardOpen__description"
-									onChange={(event) => props.changeCardField('description', event.target.value)}
-								>{props.content.description}</textarea>
+								{props.content.description === null ?
+									<div className='d-flex justify-content-between mb-2'>
+										<h5 className='CardOpen__annotation'>Description:</h5>
+										<button
+											className='btn btn-secondary'
+											onClick={() => props.changeCardField('description', '')}
+										>Add description</button>
+									</div>
+								:
+									<React.Fragment>
+										<h5 className='CardOpen__annotation mb-2'>Description:</h5>
+										<textarea
+											className="CardOpen__description mb-2"
+											autoFocus={true}
+											onKeyDown={props.escHandler}
+											onChange={(event) => props.changeCardField('description', event.target.value)}
+										>{props.content.description}</textarea>
+										<button
+											className='btn btn-warning d-block ml-auto mb-2'
+											onClick={() => props.changeCardField('description', null)}
+										>Delete description</button>
+									</React.Fragment>
+								}
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group">
 									{comments}

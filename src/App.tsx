@@ -21,7 +21,7 @@ export interface IColumn {
 
 export interface ICard {
 	title: string,
-	description: string,
+	description: string | null,
 	comments: Array<IComment>,
 	author: string
 }
@@ -39,7 +39,7 @@ class App extends Component<{}, IState> {
 	newCardTitle = '';
 	cardTemplate = {
 		title: '',
-		description: '',
+		description: null,
 		comments: [],
 		author: ''
 	}
