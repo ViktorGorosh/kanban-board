@@ -11,6 +11,7 @@ interface IState {
 	activeColIndex: number,
 	activeCardIndex: number,
 	isAddingCard: boolean,
+	isAddingComment: boolean,
 	columns: Array<IColumn>
 }
 
@@ -37,6 +38,7 @@ class App extends Component<{}, IState> {
 
 	newUser = '';
 	newCardTitle = '';
+	newComment = '';
 	cardTemplate = {
 		title: '',
 		description: null,
@@ -53,6 +55,7 @@ class App extends Component<{}, IState> {
 			activeColIndex: 0,
 			activeCardIndex: 0,
 			isAddingCard: false,
+			isAddingComment: false,
 			columns: [
 				{
 					columnTitle: 'TO DO',
@@ -153,6 +156,7 @@ class App extends Component<{}, IState> {
 				newCard.author = prevState.currentUser
 				const newState = {...prevState}
 				newState.columns[prevState.activeColIndex].cards.push(newCard)
+				this.newCardTitle = ''
 				newState.isAddingCard = false
 				return newState
 			})
@@ -210,6 +214,34 @@ class App extends Component<{}, IState> {
 		})
 	}
 
+	openAddCommentMenu = () => {
+		this.setState((prevState) => {
+			return {
+				isAddingComment: true,
+			}
+		})
+	}
+
+	changeNewComment = (event) => {
+		this.newComment = event.target.value
+	}
+
+	addComment = () => {
+		if (this.newComment) {
+			this.setState(prevState => {
+				const newState = {...prevState}
+				const card = newState.columns[prevState.activeColIndex].cards[prevState.activeCardIndex]
+				card.comments.push({
+					text: this.newComment,
+					author: prevState.currentUser
+				})
+				this.newComment = ''
+				newState.isAddingComment = false
+				return newState
+			})
+		}
+	}
+
 	render() {
 
 		let columns;
@@ -248,11 +280,15 @@ class App extends Component<{}, IState> {
 					<CardOpen
 						content={this.state.columns[actCol].cards[actCard]}
 						colTitle={this.state.columns[actCol].columnTitle}
+						isAddingComment={this.state.isAddingComment}
 						close={this.closeOpenCard}
 						escHandler={this.escHandler}
 						deleteCard={this.deleteCard}
 						changeCardField={this.changeCardField}
 						changeComment={this.changeComment}
+						openAddCommentMenu={this.openAddCommentMenu}
+						changeNewComment={this.changeNewComment}
+						addComment={this.addComment}
 					/>
 				: null}
 

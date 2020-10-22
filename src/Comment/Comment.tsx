@@ -1,5 +1,6 @@
 import React from "react";
 import {IComment} from "../App";
+import './Comment.scss'
 
 interface IProps {
 	comIndex: number

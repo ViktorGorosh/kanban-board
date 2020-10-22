@@ -5,12 +5,17 @@ import Comment from "../Comment/Comment";
 
 interface IProps {
 	colTitle: string
+	isAddingComment: boolean
 	content: ICard
+
 	close: () => void
 	escHandler: (event: object) => void
 	deleteCard: () => void
 	changeCardField: (field: 'title' | 'description', newValue: string | null) => void
 	changeComment: (comIndex: number, newValue: string) => void
+	openAddCommentMenu: () => void
+	changeNewComment: (event: object) => void
+	addComment: () => void
 }
 
 export default (props: IProps) => {
@@ -42,6 +47,7 @@ export default (props: IProps) => {
 							>
 								<span aria-hidden="true">&times;</span>
 							</button>
+
 							<div className="card-header">
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Title:</h5>
@@ -59,6 +65,7 @@ export default (props: IProps) => {
 									<p className="author">{props.content.author}</p>
 								</div>
 							</div>
+
 							<div className="card-body">
 								{props.content.description === null ?
 									<div className='d-flex justify-content-between mb-2'>
@@ -85,9 +92,33 @@ export default (props: IProps) => {
 									</React.Fragment>
 								}
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
-								<ul className="list-group">
+								<ul className="list-group mb-2">
 									{comments}
 								</ul>
+
+								{props.isAddingComment ?
+									<div className='adding-card'>
+										<input
+											type="text"
+											className="form-control adding-card__input"
+											placeholder='Введите комментарий'
+											autoFocus={true}
+											onInput={props.changeNewComment}
+										/>
+										<button
+											type="button"
+											className="btn btn-secondary adding-card__button"
+											onClick={props.addComment}
+										>Добавить</button>
+									</div>
+								:
+									<button
+										type="button"
+										className="btn btn-warning d-block ml-auto"
+										onClick={props.openAddCommentMenu}
+									>Добавить комментарий</button>
+								}
+
 							</div>
 							<div className="card-footer">
 								<button className='btn btn-danger' onClick={props.deleteCard}>Delete</button>
