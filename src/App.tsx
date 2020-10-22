@@ -186,8 +186,17 @@ class App extends Component<{}, IState> {
 	deleteCard = () => {
 		this.setState(prevState => {
 			const newState = {...prevState}
-			newState.columns[this.state.activeColIndex].cards.splice(this.state.activeCardIndex, 1)
+			newState.columns[prevState.activeColIndex].cards.splice(prevState.activeCardIndex, 1)
 			newState.isCardActive = false
+			return newState
+		})
+	}
+
+	changeCardField = (field, newValue) => {
+		this.setState(prevState => {
+			const newState = {...prevState}
+			const card = newState.columns[prevState.activeColIndex].cards[prevState.activeCardIndex]
+			card[field] = newValue
 			return newState
 		})
 	}
@@ -233,6 +242,7 @@ class App extends Component<{}, IState> {
 						close={this.closeOpenCard}
 						escHandler={this.escHandler}
 						deleteCard={this.deleteCard}
+						changeCardField={this.changeCardField}
 					/>
 				: null}
 

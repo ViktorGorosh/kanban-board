@@ -9,6 +9,7 @@ interface IProps {
 	close: () => void
 	escHandler: (event: object) => void
 	deleteCard: () => void
+	changeCardField: (field: string, newValue: string) => void
 }
 
 export default (props: IProps) => {
@@ -46,6 +47,7 @@ export default (props: IProps) => {
 										   defaultValue={props.content.title}
 										   autoFocus={true}
 										   onKeyDown={props.escHandler}
+										   onChange={(event) => props.changeCardField('title', event.target.value)}
 									/>
 								</div>
 								<p>In "{props.colTitle}" list</p>
@@ -56,7 +58,10 @@ export default (props: IProps) => {
 							</div>
 							<div className="card-body">
 								<h5 className='CardOpen__annotation mb-2'>Description:</h5>
-								<textarea className="CardOpen__description">{props.content.description}</textarea>
+								<textarea
+									className="CardOpen__description"
+									onChange={(event) => props.changeCardField('description', event.target.value)}
+								>{props.content.description}</textarea>
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group">
 									{comments}
