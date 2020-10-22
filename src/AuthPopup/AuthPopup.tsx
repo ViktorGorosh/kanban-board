@@ -20,6 +20,7 @@ export default (props: IProps) => {
 						<div className="modal-body">
 							<input type='text' className="form-control"
 								   defaultValue={props.currentUser}
+								   autoFocus={true}
 								   onChange={props.changeName}>
 							</input>
 						</div>

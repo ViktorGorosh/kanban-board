@@ -48,9 +48,9 @@ class App extends Component<{}, IState> {
 
 	constructor(props) {
 		super(props);
-		this.state = {
+		const defaultState: IState = {
 			isAuthorized: false,
-			currentUser: 'Виктор Горош',
+			currentUser: 'Аноним',
 			isCardActive: false,
 			activeColIndex: 0,
 			activeCardIndex: 0,
@@ -104,14 +104,20 @@ class App extends Component<{}, IState> {
 				},
 			]
 		}
+		// @ts-ignore
+		this.state = JSON.parse(localStorage.getItem('state')) || defaultState
 	}
 
 	componentDidMount() {
 		this.newUser = this.state.currentUser
+		console.log('App is mounted')
 	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		console.log('App updated')
+		console.log('App is updated')
+		const newState = {...prevState}
+		newState.isAuthorized = newState.isCardActive = newState.isAddingCard = newState.isAddingComment = false
+		localStorage.setItem('state', JSON.stringify(newState))
 	}
 
 	changeName = (event) => {
