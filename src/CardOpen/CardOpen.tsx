@@ -16,6 +16,7 @@ interface IProps {
 	openAddCommentMenu: () => void
 	changeNewComment: (event: object) => void
 	addComment: () => void
+	deleteComment: (comIndex: number) => void
 }
 
 export default (props: IProps) => {
@@ -27,6 +28,7 @@ export default (props: IProps) => {
 				content={comment}
 				changeComment={props.changeComment}
 				escHandler={props.escHandler}
+				deleteComment={props.deleteComment}
 			/>
 		)
 	})
@@ -109,7 +111,7 @@ export default (props: IProps) => {
 											type="button"
 											className="btn btn-secondary adding-card__button"
 											onClick={props.addComment}
-										>Добавить</button>
+										>Сохранить</button>
 									</div>
 								:
 									<button

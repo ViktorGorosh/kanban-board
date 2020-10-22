@@ -242,6 +242,15 @@ class App extends Component<{}, IState> {
 		}
 	}
 
+	deleteComment = (comIndex) => {
+		this.setState(prevState => {
+			const newState = {...prevState}
+			const card = newState.columns[prevState.activeColIndex].cards[prevState.activeCardIndex]
+			card.comments.splice(comIndex, 1)
+			return newState
+		})
+	}
+
 	render() {
 
 		let columns;
@@ -289,6 +298,7 @@ class App extends Component<{}, IState> {
 						openAddCommentMenu={this.openAddCommentMenu}
 						changeNewComment={this.changeNewComment}
 						addComment={this.addComment}
+						deleteComment={this.deleteComment}
 					/>
 				: null}
 
