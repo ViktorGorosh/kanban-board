@@ -201,6 +201,15 @@ class App extends Component<{}, IState> {
 		})
 	}
 
+	changeComment = (comIndex, newValue) => {
+		this.setState(prevState => {
+			const newState = {...prevState}
+			const card = newState.columns[prevState.activeColIndex].cards[prevState.activeCardIndex]
+			card.comments[comIndex].text = newValue
+			return newState
+		})
+	}
+
 	render() {
 
 		let columns;
@@ -243,6 +252,7 @@ class App extends Component<{}, IState> {
 						escHandler={this.escHandler}
 						deleteCard={this.deleteCard}
 						changeCardField={this.changeCardField}
+						changeComment={this.changeComment}
 					/>
 				: null}
 

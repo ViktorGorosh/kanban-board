@@ -9,7 +9,8 @@ interface IProps {
 	close: () => void
 	escHandler: (event: object) => void
 	deleteCard: () => void
-	changeCardField: (field: string, newValue: string | null) => void
+	changeCardField: (field: 'title' | 'description', newValue: string | null) => void
+	changeComment: (comIndex: number, newValue: string) => void
 }
 
 export default (props: IProps) => {
@@ -19,6 +20,8 @@ export default (props: IProps) => {
 				key={comIndex}
 				comIndex={comIndex}
 				content={comment}
+				changeComment={props.changeComment}
+				escHandler={props.escHandler}
 			/>
 		)
 	})
@@ -43,7 +46,7 @@ export default (props: IProps) => {
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Title:</h5>
 									<input type="text"
-										   className="input"
+										   className="form-control input"
 										   defaultValue={props.content.title}
 										   autoFocus={true}
 										   onKeyDown={props.escHandler}
@@ -69,11 +72,12 @@ export default (props: IProps) => {
 									<React.Fragment>
 										<h5 className='CardOpen__annotation mb-2'>Description:</h5>
 										<textarea
-											className="CardOpen__description mb-2"
+											className="CardOpen__description form-control mb-2"
+											defaultValue={props.content.description}
 											autoFocus={true}
 											onKeyDown={props.escHandler}
 											onChange={(event) => props.changeCardField('description', event.target.value)}
-										>{props.content.description}</textarea>
+										>{}</textarea>
 										<button
 											className='btn btn-warning d-block ml-auto mb-2'
 											onClick={() => props.changeCardField('description', null)}
