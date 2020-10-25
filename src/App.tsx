@@ -11,7 +11,8 @@ interface IState {
 }
 
 export interface ICard {
-	colId: string
+	colId: string,
+	id: number,
 	title: string,
 	description: string | null,
 	comments: Array<IComment>,
@@ -34,6 +35,7 @@ class App extends Component<{}, IState>{
 			cards: [
 				{
 					colId: 'TO DO',
+					id: 0,
 					title: 'Title 1',
 					description: null,
 					comments: [],
@@ -45,10 +47,10 @@ class App extends Component<{}, IState>{
 
 	updateUser = (name: string): void => {
 		if (name !== '') {
-			this.setState({
+			this.setState((prevState) => ({
 				isAuthorized: true,
 				user: name
-			})
+			}))
 		}
 	}
 
@@ -73,7 +75,14 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
-
+	addCard = (title: string, colId: string): void => {
+		if (title === '') return
+		this.setState((prevState) => ({
+			cards: [...prevState.cards,
+				{colId, id: prevState.cards.length, title, description: null, comments: [], author: prevState.user}
+			]
+		}))
+	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
 		console.log(this.state)
@@ -87,8 +96,9 @@ class App extends Component<{}, IState>{
 					key={column}
 					colIndex={colIndex}
 					title={column}
-					updateColTitle={this.updateColTitle}
 					cards={this.state.cards}
+					updateColTitle={this.updateColTitle}
+					addCard={this.addCard}
 				/>
 			)
 		})
