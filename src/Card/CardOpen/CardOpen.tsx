@@ -6,7 +6,7 @@ interface IProps {
 	content: ICard,
 	close: () => void
 	deleteCard: (id: number) => void
-	updateCard: (id: number, content: ICard) => void
+	saveChanges: (id: number, content: ICard) => void
 }
 
 export default (props: IProps) => {
@@ -50,7 +50,7 @@ export default (props: IProps) => {
 										   autoFocus={true}
 
 										   onKeyDown={escHandler}
-										   onChange={(e) => update('title', e.target.value)}
+										   onChange={e => update('title', e.target.value)}
 									/>
 								</div>
 								<p>In "{content.colId}" list</p>
@@ -66,6 +66,7 @@ export default (props: IProps) => {
 										<h5 className='CardOpen__annotation'>Description:</h5>
 										<button
 											className='btn btn-secondary'
+											onClick={e => update('description', '')}
 										>Add description</button>
 									</div>
 									:
@@ -75,10 +76,13 @@ export default (props: IProps) => {
 											className="CardOpen__description form-control mb-2"
 											defaultValue={content.description}
 											autoFocus={true}
+
 											onKeyDown={escHandler}
+											onChange={e => update('description', e.target.value)}
 										>{}</textarea>
 										<button
 											className='btn btn-warning d-block ml-auto mb-2'
+											onClick={() => update('description', null)}
 										>Delete description</button>
 									</React.Fragment>
 								}
@@ -94,7 +98,7 @@ export default (props: IProps) => {
 								>Delete</button>
 								<button
 									className='btn btn-info'
-									onClick={() => props.updateCard(content.id, content)}
+									onClick={() => props.saveChanges(content.id, content)}
 								>Save changes</button>
 							</div>
 						</div>

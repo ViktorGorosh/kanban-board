@@ -31,7 +31,7 @@ export default (props: IProps) => {
 					content={props.content}
 					close={toggleActive}
 					deleteCard={props.deleteCard}
-					updateCard={props.updateCard}
+					saveChanges={props.updateCard}
 				/>
 			: null
 			}

@@ -6,7 +6,8 @@ import Column from "./Columns/Column";
 interface IState {
 	isAuthorized: boolean,
 	user: string,
-	columns: Array<string>
+	nextId: number,
+	columns: Array<string>,
 	cards: Array<ICard>
 }
 
@@ -31,6 +32,7 @@ class App extends Component<{}, IState>{
 		this.state = {
 			isAuthorized: false,
 			user: 'Аноним',
+			nextId: 1,
 			columns: ['TO DO', 'In Progress', 'Testing', 'done'],
 			cards: [
 				{
@@ -79,10 +81,9 @@ class App extends Component<{}, IState>{
 		if (title === '') return
 		this.setState((prevState) => ({
 			cards: [...prevState.cards,
-				// TODO исправить установку id, length не подходит, т.к. карточки могут удаляться. Добавить nextId в
-				//  state?
-				{colId, id: prevState.cards.length, title, description: null, comments: [], author: prevState.user}
-			]
+				{colId, id: prevState.nextId, title, description: null, comments: [], author: prevState.user}
+			],
+			nextId: prevState.nextId + 1
 		}))
 	}
 
