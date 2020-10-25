@@ -5,6 +5,7 @@ import CardOpen from "./CardOpen/CardOpen";
 
 interface IProps {
 	content: ICard
+	deleteCard: (id: number) => void
 }
 
 export default (props: IProps) => {
@@ -28,6 +29,7 @@ export default (props: IProps) => {
 				<CardOpen
 					content={props.content}
 					close={toggleActive}
+					delete={props.deleteCard}
 				/>
 			: null
 			}

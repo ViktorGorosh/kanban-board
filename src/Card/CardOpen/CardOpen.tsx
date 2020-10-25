@@ -5,6 +5,7 @@ import {ICard} from "../../App";
 interface IProps {
 	content: ICard,
 	close: () => void
+	delete: (id: number) => void
 }
 
 export default (props: IProps) => {
@@ -40,7 +41,7 @@ export default (props: IProps) => {
 										   onKeyDown={escHandler}
 									/>
 								</div>
-								<p>In "" list</p>
+								<p>In "{props.content.colId}" list</p>
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Author:</h5>
 									<p className="author">{props.content.author}</p>
@@ -77,7 +78,7 @@ export default (props: IProps) => {
 							<div className="card-footer">
 								<button
 									className='btn btn-danger'
-
+									onClick={() => props.delete(props.content.id)}
 								>Delete</button>
 							</div>
 						</div>

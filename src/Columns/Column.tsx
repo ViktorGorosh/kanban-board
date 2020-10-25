@@ -23,7 +23,7 @@ export default (props: IProps) => {
 			<Card
 				key={card.id}
 				content={card}
-
+				deleteCard={props.deleteCard}
 			/>
 		)
 	});
