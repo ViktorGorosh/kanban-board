@@ -79,6 +79,8 @@ class App extends Component<{}, IState>{
 		if (title === '') return
 		this.setState((prevState) => ({
 			cards: [...prevState.cards,
+				// TODO исправить установку id, length не подходит, т.к. карточки могут удаляться. Добавить nextId в
+				//  state?
 				{colId, id: prevState.cards.length, title, description: null, comments: [], author: prevState.user}
 			]
 		}))
@@ -87,6 +89,17 @@ class App extends Component<{}, IState>{
 	deleteCard = (id: number): void => {
 		this.setState(prevState => ({
 			cards: prevState.cards.filter(card => card.id !== id)
+		}))
+	}
+
+	updateCard = (id: number, content: ICard): void => {
+		this.setState(prevState => ({
+			cards: prevState.cards.map(card => {
+				if (card.id === id) {
+					return content
+				}
+				return card
+			})
 		}))
 	}
 
@@ -105,6 +118,7 @@ class App extends Component<{}, IState>{
 					updateColTitle={this.updateColTitle}
 					addCard={this.addCard}
 					deleteCard={this.deleteCard}
+					updateCard={this.updateCard}
 				/>
 			)
 		})

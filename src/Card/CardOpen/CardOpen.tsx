@@ -1,14 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import './CardOpen.scss'
 import {ICard} from "../../App";
 
 interface IProps {
 	content: ICard,
 	close: () => void
-	delete: (id: number) => void
+	deleteCard: (id: number) => void
+	updateCard: (id: number, content: ICard) => void
 }
 
 export default (props: IProps) => {
+
+	const [content, setContent] = useState(props.content)
+
+	const update = (field: 'title' | 'description', value: string | null): void => {
+		setContent(prevState => ({
+			...prevState,
+			[field]: value
+		}))
+	}
 
 	const escHandler = (e) => {
 		if (e.key === 'Escape') props.close()
@@ -36,20 +46,22 @@ export default (props: IProps) => {
 									<h5 className='CardOpen__annotation'>Title:</h5>
 									<input type="text"
 										   className="form-control input"
-										   defaultValue={props.content.title}
+										   defaultValue={content.title}
 										   autoFocus={true}
+
 										   onKeyDown={escHandler}
+										   onChange={(e) => update('title', e.target.value)}
 									/>
 								</div>
-								<p>In "{props.content.colId}" list</p>
+								<p>In "{content.colId}" list</p>
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Author:</h5>
-									<p className="author">{props.content.author}</p>
+									<p className="author">{content.author}</p>
 								</div>
 							</div>
 
 							<div className="card-body">
-								{props.content.description === null ?
+								{content.description === null ?
 									<div className='d-flex justify-content-between mb-2'>
 										<h5 className='CardOpen__annotation'>Description:</h5>
 										<button
@@ -61,7 +73,7 @@ export default (props: IProps) => {
 										<h5 className='CardOpen__annotation mb-2'>Description:</h5>
 										<textarea
 											className="CardOpen__description form-control mb-2"
-											defaultValue={props.content.description}
+											defaultValue={content.description}
 											autoFocus={true}
 											onKeyDown={escHandler}
 										>{}</textarea>
@@ -75,11 +87,15 @@ export default (props: IProps) => {
 								</ul>
 
 							</div>
-							<div className="card-footer">
+							<div className="card-footer d-flex justify-content-between">
 								<button
 									className='btn btn-danger'
-									onClick={() => props.delete(props.content.id)}
+									onClick={() => props.deleteCard(props.content.id)}
 								>Delete</button>
+								<button
+									className='btn btn-info'
+									onClick={() => props.updateCard(content.id, content)}
+								>Save changes</button>
 							</div>
 						</div>
 					</div>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import './Card.scss'
 import {ICard} from "../App";
 import CardOpen from "./CardOpen/CardOpen";
@@ -6,6 +6,7 @@ import CardOpen from "./CardOpen/CardOpen";
 interface IProps {
 	content: ICard
 	deleteCard: (id: number) => void
+	updateCard: (id: number, content: ICard) => void
 }
 
 export default (props: IProps) => {
@@ -29,7 +30,8 @@ export default (props: IProps) => {
 				<CardOpen
 					content={props.content}
 					close={toggleActive}
-					delete={props.deleteCard}
+					deleteCard={props.deleteCard}
+					updateCard={props.updateCard}
 				/>
 			: null
 			}

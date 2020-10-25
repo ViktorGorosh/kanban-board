@@ -10,6 +10,7 @@ interface IProps {
 	updateColTitle: (oldTitle: string, newTitle: string) => void
 	addCard: (title: string, colId: string) => void
 	deleteCard: (id: number) => void
+	updateCard: (id: number, content: ICard) => void
 }
 
 export default (props: IProps) => {
@@ -24,6 +25,7 @@ export default (props: IProps) => {
 				key={card.id}
 				content={card}
 				deleteCard={props.deleteCard}
+				updateCard={props.updateCard}
 			/>
 		)
 	});
