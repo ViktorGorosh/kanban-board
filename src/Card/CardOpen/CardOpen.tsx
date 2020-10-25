@@ -3,10 +3,16 @@ import './CardOpen.scss'
 import {ICard} from "../../App";
 
 interface IProps {
-	content: ICard
+	content: ICard,
+	close: () => void
 }
 
 export default (props: IProps) => {
+
+	const escHandler = (e) => {
+		if (e.key === 'Escape') props.close()
+	}
+
 	return (
 		<React.Fragment>
 			<div className="modal fade show" id="staticBackdropLive" data-backdrop="static" data-keyboard="false"
@@ -19,6 +25,7 @@ export default (props: IProps) => {
 								type="button"
 								className="close"
 								aria-label="Close"
+								onClick={props.close}
 							>
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -30,6 +37,7 @@ export default (props: IProps) => {
 										   className="form-control input"
 										   defaultValue={props.content.title}
 										   autoFocus={true}
+										   onKeyDown={escHandler}
 									/>
 								</div>
 								<p>In "" list</p>
@@ -54,6 +62,7 @@ export default (props: IProps) => {
 											className="CardOpen__description form-control mb-2"
 											defaultValue={props.content.description}
 											autoFocus={true}
+											onKeyDown={escHandler}
 										>{}</textarea>
 										<button
 											className='btn btn-warning d-block ml-auto mb-2'
@@ -66,7 +75,10 @@ export default (props: IProps) => {
 
 							</div>
 							<div className="card-footer">
-								<button className='btn btn-danger'>Delete</button>
+								<button
+									className='btn btn-danger'
+
+								>Delete</button>
 							</div>
 						</div>
 					</div>

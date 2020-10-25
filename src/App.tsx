@@ -58,7 +58,7 @@ class App extends Component<{}, IState>{
 		if (newTitle === '') return
 		this.setState((prevState) => ({
 			columns: prevState.columns.map((title) => {
-				if(title === target) {
+				if (title === target) {
 					return newTitle
 				}
 				return title
@@ -84,21 +84,27 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
+	deleteCard = (id: number): void => {
+		this.setState(prevState => ({
+			cards: prevState.cards.filter(card => card.id !== id)
+		}))
+	}
+
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
 		console.log(this.state)
 	}
 
 	render() {
 
-		let columns = this.state.columns.map((column, colIndex) => {
+		let columns = this.state.columns.map((column) => {
 			return (
 				<Column
 					key={column}
-					colIndex={colIndex}
 					title={column}
 					cards={this.state.cards}
 					updateColTitle={this.updateColTitle}
 					addCard={this.addCard}
+					deleteCard={this.deleteCard}
 				/>
 			)
 		})

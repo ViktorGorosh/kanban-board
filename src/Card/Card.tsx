@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Card.scss'
 import {ICard} from "../App";
 import CardOpen from "./CardOpen/CardOpen";
@@ -11,16 +11,27 @@ export default (props: IProps) => {
 
 	const [isActive, setActive] = useState(false)
 
+	const toggleActive = () => {
+		setActive(prevState => !prevState)
+	}
+
 	return (
-		<li
-			className="list-group-item cards__item"
-			onClick={() => setActive(true)}
-		>
-			{props.content.title}
-			<span className={'badge badge-info float-right'}>{props.content.comments.length}</span>
+		<React.Fragment>
+			<li
+				className="list-group-item cards__item"
+				onClick={toggleActive}
+			>
+				{props.content.title}
+				<span className={'badge badge-info float-right'}>{props.content.comments.length}</span>
+			</li>
 			{isActive ?
-				<CardOpen content={props.content}/>
-			: null}
-		</li>
+				<CardOpen
+					content={props.content}
+					close={toggleActive}
+				/>
+			: null
+			}
+		</React.Fragment>
+
 	)
 }

@@ -5,11 +5,11 @@ import Card from "../Card/Card";
 
 interface IProps {
 	title: string,
-	colIndex: number,
 	cards: Array<ICard>
 
 	updateColTitle: (oldTitle: string, newTitle: string) => void
 	addCard: (title: string, colId: string) => void
+	deleteCard: (id: number) => void
 }
 
 export default (props: IProps) => {
@@ -23,6 +23,7 @@ export default (props: IProps) => {
 			<Card
 				key={card.id}
 				content={card}
+
 			/>
 		)
 	});
