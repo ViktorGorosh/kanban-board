@@ -23,7 +23,7 @@ export default (props: IProps) => {
 								   className="form-control"
 								   defaultValue={name}
 								   autoFocus={true}
-								   onChange={(e) => {setName(e.target.value)}}
+								   onChange={e => {setName(e.target.value)}}
 							>{}</input>
 						</div>
 						<div className="modal-footer justify-content-center">

@@ -1,10 +1,26 @@
 import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./AuthPopup/AuthPopup";
+import Column from "./Columns/Column";
 
 interface IState {
 	isAuthorized: boolean,
-	user: string
+	user: string,
+	columns: Array<string>
+	cards: Array<ICard>
+}
+
+export interface ICard {
+	colId: string
+	title: string,
+	description: string | null,
+	comments: Array<IComment>,
+	author: string
+}
+
+export interface IComment {
+	author: string,
+	text: string,
 }
 
 class App extends Component<{}, IState>{
@@ -14,10 +30,20 @@ class App extends Component<{}, IState>{
 		this.state = {
 			isAuthorized: false,
 			user: 'Аноним',
+			columns: ['TO DO', 'In Progress', 'Testing', 'done'],
+			cards: [
+				{
+					colId: 'TO DO',
+					title: 'Title 1',
+					description: null,
+					comments: [],
+					author: 'Author 1'
+				}
+			]
 		}
 	}
 
-	setUserName = (name: string): void => {
+	updateUser = (name: string): void => {
 		if (name !== '') {
 			this.setState({
 				isAuthorized: true,
@@ -26,22 +52,44 @@ class App extends Component<{}, IState>{
 		}
 	}
 
+	// TODO реализовать изменение colTitle для card
+	updateColTitle = (target: string, newTitle: string): void => {
+		if (newTitle === '') return
+		this.setState((prevState) => ({
+			columns: prevState.columns.map((title) => {
+				if(title === target) {
+					return newTitle
+				}
+				return title
+			})
+		}))
+	}
+
+
+
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
 		console.log(this.state)
 	}
 
-	componentDidMount() {
-
-	}
-
 	render() {
+
+		let columns = this.state.columns.map((column, colIndex) => {
+			return (
+				<Column
+					key={column}
+					colIndex={colIndex}
+					title={column}
+					updateColTitle={this.updateColTitle}
+				/>
+			)
+		})
 
 		return (
 			<React.Fragment>
 				{this.state.isAuthorized ? null :
 					<AuthPopup
 						name={this.state.user}
-						saveName={this.setUserName}
+						saveName={this.updateUser}
 					/>
 				}
 				<header className='main-header text-center'>
@@ -50,7 +98,7 @@ class App extends Component<{}, IState>{
 				<section className='section-board'>
 					<div className="container-fluid">
 						<div className="row">
-
+							{columns}
 						</div>
 					</div>
 				</section>
