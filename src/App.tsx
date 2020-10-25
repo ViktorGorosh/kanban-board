@@ -21,6 +21,7 @@ export interface ICard {
 }
 
 export interface IComment {
+	id: number,
 	author: string,
 	text: string,
 }
@@ -42,6 +43,7 @@ class App extends Component<{}, IState>{
 					description: null,
 					comments: [
 						{
+							id: 0,
 							author: 'Author 1',
 							text: 'Hello'
 						},

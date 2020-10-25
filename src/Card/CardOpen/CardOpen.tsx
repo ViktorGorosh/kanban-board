@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './CardOpen.scss'
 import {ICard} from "../../App";
 import Comment from "../../Comment/Comment";
@@ -17,6 +17,11 @@ export default (props: IProps) => {
 	const [isAddingComment, setAddingComment] = useState(false)
 	const [comment, setComment] = useState('')
 
+	// Id последнего комментария всегда наибольший
+	const [nextId, setNextId] = useState(content.comments.length === 0 ?
+		0 :
+		content.comments[content.comments.length - 1].id + 1)
+
 	const update = (field: 'title' | 'description', value: string | null): void => {
 		setContent(prevState => ({
 			...prevState,
@@ -31,10 +36,18 @@ export default (props: IProps) => {
 	const addComment = (text: string): void => {
 		setContent(prevState => ({
 			...prevState,
-			comments: [...prevState.comments, {author: props.user, text}]
+			comments: [...prevState.comments, {author: props.user, text, id: nextId}]
 		}))
 		setComment('')
 		setAddingComment(false)
+		setNextId(prevState => prevState + 1)
+	}
+
+	const deleteComment = (id: number): void => {
+		setContent(prevState => ({
+			...prevState,
+			comments: prevState.comments.filter(comment => comment.id !== id)
+		}))
 	}
 
 	const comments = content.comments.map((comment, comIndex) => {
@@ -43,8 +56,13 @@ export default (props: IProps) => {
 				key={comIndex}
 				content={comment}
 				escHandler={escHandler}
+				deleteComment={deleteComment}
 			/>
 		)
+	})
+
+	useEffect(() => {
+		console.log(content)
 	})
 
 	return (
