@@ -52,7 +52,6 @@ class App extends Component<{}, IState>{
 		}
 	}
 
-	// TODO реализовать изменение colTitle для card
 	updateColTitle = (target: string, newTitle: string): void => {
 		if (newTitle === '') return
 		this.setState((prevState) => ({
@@ -61,6 +60,15 @@ class App extends Component<{}, IState>{
 					return newTitle
 				}
 				return title
+			}),
+			cards: prevState.cards.map((card) => {
+				if (card.colId === target) {
+					return {
+						...card,
+						colId: newTitle
+					}
+				}
+				return card
 			})
 		}))
 	}
