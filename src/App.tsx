@@ -88,6 +88,7 @@ class App extends Component<{}, IState>{
 					colIndex={colIndex}
 					title={column}
 					updateColTitle={this.updateColTitle}
+					cards={this.state.cards}
 				/>
 			)
 		})
