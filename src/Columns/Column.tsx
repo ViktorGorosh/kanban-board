@@ -5,7 +5,8 @@ import Card from "../Card/Card";
 
 interface IProps {
 	title: string,
-	cards: Array<ICard>
+	cards: Array<ICard>,
+	user: string,
 
 	updateColTitle: (oldTitle: string, newTitle: string) => void
 	addCard: (title: string, colId: string) => void
@@ -23,6 +24,7 @@ export default (props: IProps) => {
 		return (
 			<Card
 				key={card.id}
+				user={props.user}
 				content={card}
 				deleteCard={props.deleteCard}
 				updateCard={props.updateCard}

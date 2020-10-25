@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import './CardOpen.scss'
 import {ICard} from "../../App";
+import Comment from "../../Comment/Comment";
 
 interface IProps {
 	content: ICard,
+	user: string,
 	close: () => void
 	deleteCard: (id: number) => void
 	saveChanges: (id: number, content: ICard) => void
@@ -12,6 +14,8 @@ interface IProps {
 export default (props: IProps) => {
 
 	const [content, setContent] = useState(props.content)
+	const [isAddingComment, setAddingComment] = useState(false)
+	const [comment, setComment] = useState('')
 
 	const update = (field: 'title' | 'description', value: string | null): void => {
 		setContent(prevState => ({
@@ -20,9 +24,28 @@ export default (props: IProps) => {
 		}))
 	}
 
-	const escHandler = (e) => {
+	const escHandler = (e): void => {
 		if (e.key === 'Escape') props.close()
 	}
+
+	const addComment = (text: string): void => {
+		setContent(prevState => ({
+			...prevState,
+			comments: [...prevState.comments, {author: props.user, text}]
+		}))
+		setComment('')
+		setAddingComment(false)
+	}
+
+	const comments = content.comments.map((comment, comIndex) => {
+		return (
+			<Comment
+				key={comIndex}
+				content={comment}
+				escHandler={escHandler}
+			/>
+		)
+	})
 
 	return (
 		<React.Fragment>
@@ -65,8 +88,8 @@ export default (props: IProps) => {
 									<div className='d-flex justify-content-between mb-2'>
 										<h5 className='CardOpen__annotation'>Description:</h5>
 										<button
-											className='btn btn-secondary'
-											onClick={e => update('description', '')}
+											className='btn btn-warning'
+											onClick={() => update('description', '')}
 										>Add description</button>
 									</div>
 									:
@@ -78,17 +101,44 @@ export default (props: IProps) => {
 											autoFocus={true}
 
 											onKeyDown={escHandler}
-											onChange={e => update('description', e.target.value)}
+											onChange={(e) => update('description', e.target.value)}
 										>{}</textarea>
 										<button
-											className='btn btn-warning d-block ml-auto mb-2'
+											className='btn btn-secondary d-block ml-auto mb-2'
 											onClick={() => update('description', null)}
 										>Delete description</button>
 									</React.Fragment>
 								}
+
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group mb-2">
+									{comments}
 								</ul>
+
+								{isAddingComment ?
+									<div className='adding-card'>
+										<input
+											type="text"
+											className="form-control adding-card__input"
+											placeholder='Введите комментарий'
+											autoFocus={true}
+											onChange={e => setComment(e.target.value)}
+										/>
+										<button
+											type="button"
+											className="btn btn-secondary adding-card__button"
+											onClick={() => {
+												addComment(comment)
+											}}
+										>Save</button>
+									</div>
+								:
+									<button
+										type="button"
+										className="btn btn-warning d-block ml-auto"
+										onClick={() => setAddingComment(true)}
+									>Add comment</button>
+								}
 
 							</div>
 							<div className="card-footer d-flex justify-content-between">

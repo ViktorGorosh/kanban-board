@@ -40,7 +40,12 @@ class App extends Component<{}, IState>{
 					id: 0,
 					title: 'Title 1',
 					description: null,
-					comments: [],
+					comments: [
+						{
+							author: 'Author 1',
+							text: 'Hello'
+						},
+					],
 					author: 'Author 1'
 				}
 			]
@@ -49,7 +54,7 @@ class App extends Component<{}, IState>{
 
 	updateUser = (name: string): void => {
 		if (name !== '') {
-			this.setState((prevState) => ({
+			this.setState(() => ({
 				isAuthorized: true,
 				user: name
 			}))
@@ -116,6 +121,8 @@ class App extends Component<{}, IState>{
 					key={column}
 					title={column}
 					cards={this.state.cards}
+					user={this.state.user}
+
 					updateColTitle={this.updateColTitle}
 					addCard={this.addCard}
 					deleteCard={this.deleteCard}
