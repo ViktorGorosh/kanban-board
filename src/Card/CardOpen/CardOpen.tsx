@@ -13,17 +13,18 @@ interface IProps {
 
 export default (props: IProps) => {
 
-	const [content, setContent] = useState(props.content)
+	const [state, setState] = useState(props.content)
+	const [isAddingDescription, setAddingDescription] = useState(false)
 	const [isAddingComment, setAddingComment] = useState(false)
 	const [comment, setComment] = useState('')
 
 	// Id последнего комментария всегда наибольший
-	const [nextId, setNextId] = useState(content.comments.length === 0 ?
+	const [nextId, setNextId] = useState(state.comments.length === 0 ?
 		0 :
-		content.comments[content.comments.length - 1].id + 1)
+		state.comments[state.comments.length - 1].id + 1)
 
 	const update = (field: 'title' | 'description', value: string | null): void => {
-		setContent(prevState => ({
+		setState(prevState => ({
 			...prevState,
 			[field]: value
 		}))
@@ -34,7 +35,7 @@ export default (props: IProps) => {
 	}
 
 	const addComment = (text: string): void => {
-		setContent(prevState => ({
+		setState(prevState => ({
 			...prevState,
 			comments: [...prevState.comments, {author: props.user, text, id: nextId}]
 		}))
@@ -44,13 +45,13 @@ export default (props: IProps) => {
 	}
 
 	const deleteComment = (id: number): void => {
-		setContent(prevState => ({
+		setState(prevState => ({
 			...prevState,
 			comments: prevState.comments.filter(comment => comment.id !== id)
 		}))
 	}
 
-	const comments = content.comments.map((comment, comIndex) => {
+	const comments = state.comments.map((comment, comIndex) => {
 		return (
 			<Comment
 				key={comIndex}
@@ -62,7 +63,7 @@ export default (props: IProps) => {
 	})
 
 	useEffect(() => {
-		console.log(content)
+		console.log(state)
 	})
 
 	return (
@@ -87,45 +88,57 @@ export default (props: IProps) => {
 									<h5 className='CardOpen__annotation'>Title:</h5>
 									<input type="text"
 										   className="form-control input"
-										   defaultValue={content.title}
+										   defaultValue={state.title}
 										   autoFocus={true}
 
 										   onKeyDown={escHandler}
 										   onChange={e => update('title', e.target.value)}
 									/>
 								</div>
-								<p>In "{content.colId}" list</p>
+								<p>In "{state.colId}" list</p>
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Author:</h5>
-									<p className="author">{content.author}</p>
+									<p className="author">{state.author}</p>
 								</div>
 							</div>
 
 							<div className="card-body">
-								{content.description === null ?
-									<div className='d-flex justify-content-between mb-2'>
-										<h5 className='CardOpen__annotation'>Description:</h5>
-										<button
-											className='btn btn-warning'
-											onClick={() => update('description', '')}
-										>Add description</button>
-									</div>
-									:
+								{state.description !== null ?
+
 									<React.Fragment>
 										<h5 className='CardOpen__annotation mb-2'>Description:</h5>
 										<textarea
 											className="CardOpen__description form-control mb-2"
-											defaultValue={content.description}
+											defaultValue={state.description}
 											autoFocus={true}
 
 											onKeyDown={escHandler}
 											onChange={(e) => update('description', e.target.value)}
 										>{}</textarea>
-										<button
-											className='btn btn-secondary d-block ml-auto mb-2'
-											onClick={() => update('description', null)}
-										>Delete description</button>
+
+										<div className='d-flex justify-content-between mb-2'>
+											<button
+												className='btn btn-danger d-block'
+												onClick={() => update('description', null)}
+											>Delete description</button>
+											<button
+												className='btn btn-info d-block'
+												onClick={() => props.saveChanges(state.id, state)}
+											>Save</button>
+										</div>
 									</React.Fragment>
+
+									:
+
+									<div className='d-flex justify-content-between mb-2'>
+										<h5 className='CardOpen__annotation'>Description:</h5>
+										<button
+										className='btn btn-warning'
+										onClick={() => {
+											update('description', '')
+										}}
+										>Add description</button>
+									</div>
 								}
 
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
@@ -166,7 +179,7 @@ export default (props: IProps) => {
 								>Delete</button>
 								<button
 									className='btn btn-info'
-									onClick={() => props.saveChanges(content.id, content)}
+									onClick={() => props.saveChanges(state.id, state)}
 								>Save changes</button>
 							</div>
 						</div>
