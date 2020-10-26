@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./AuthPopup/AuthPopup";
 import Column from "./Columns/Column";
-import {log} from "util";
 
 interface IState {
 	isAuthorized: boolean,
@@ -31,7 +30,7 @@ class App extends Component<{}, IState>{
 
 	constructor(props) {
 		super(props);
-		this.state = {
+		const defaultState: IState = {
 			isAuthorized: false,
 			user: 'Аноним',
 			nextId: 1,
@@ -53,6 +52,8 @@ class App extends Component<{}, IState>{
 				}
 			]
 		}
+		// @ts-ignore
+		this.state = JSON.parse(localStorage.getItem('state')) || defaultState
 	}
 
 	updateUser = (name: string): void => {
@@ -114,7 +115,10 @@ class App extends Component<{}, IState>{
 	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		console.log(this.state)
+		const newState = {...prevState} // Я помню, что не надо полностью копировать стейт:) Но this.setState здесь
+		// не подходит
+		newState.isAuthorized = false
+		localStorage.setItem('state', JSON.stringify(newState))
 	}
 
 	render() {

@@ -179,6 +179,7 @@ export default (props: IProps) => {
 											className="btn btn-secondary adding-card__button"
 											onClick={() => {
 												addComment(comment)
+												props.saveChanges(state.id, state)
 											}}
 										>Save</button>
 									</div>
