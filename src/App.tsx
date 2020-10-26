@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./AuthPopup/AuthPopup";
 import Column from "./Columns/Column";
+import {log} from "util";
 
 interface IState {
 	isAuthorized: boolean,
@@ -101,6 +102,7 @@ class App extends Component<{}, IState>{
 	}
 
 	updateCard = (id: number, content: ICard): void => {
+		console.log('updated')
 		this.setState(prevState => ({
 			cards: prevState.cards.map(card => {
 				if (card.id === id) {

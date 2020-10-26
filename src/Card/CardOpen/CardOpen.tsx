@@ -14,7 +14,6 @@ interface IProps {
 export default (props: IProps) => {
 
 	const [state, setState] = useState(props.content)
-	const [isAddingDescription, setAddingDescription] = useState(false)
 	const [isAddingComment, setAddingComment] = useState(false)
 	const [comment, setComment] = useState('')
 
@@ -51,6 +50,22 @@ export default (props: IProps) => {
 		}))
 	}
 
+	const updateComment = (id: number, newText: string): void => {
+		setState(prevState => ({
+			...prevState,
+			comments: prevState.comments.map(comment => {
+				if (comment.id === id) {
+					return {
+						...comment,
+						text: newText
+					}
+				}
+				return comment
+			})
+		}))
+		props.saveChanges(state.id, state)
+	}
+
 	const comments = state.comments.map((comment, comIndex) => {
 		return (
 			<Comment
@@ -58,6 +73,7 @@ export default (props: IProps) => {
 				content={comment}
 				escHandler={escHandler}
 				deleteComment={deleteComment}
+				updateComment={updateComment}
 			/>
 		)
 	})
@@ -119,7 +135,10 @@ export default (props: IProps) => {
 										<div className='d-flex justify-content-between mb-2'>
 											<button
 												className='btn btn-danger d-block'
-												onClick={() => update('description', null)}
+												onClick={() => {
+													update('description', null)
+													props.saveChanges(state.id, state)
+												}}
 											>Delete description</button>
 											<button
 												className='btn btn-info d-block'
@@ -176,7 +195,7 @@ export default (props: IProps) => {
 								<button
 									className='btn btn-danger'
 									onClick={() => props.deleteCard(props.content.id)}
-								>Delete</button>
+								>Delete card</button>
 								<button
 									className='btn btn-info'
 									onClick={() => props.saveChanges(state.id, state)}

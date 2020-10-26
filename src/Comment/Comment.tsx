@@ -5,6 +5,7 @@ interface IProps {
 	content: IComment,
 	escHandler: (e: KeyboardEvent) => void
 	deleteComment: (comIndex: number) => void
+	updateComment: (id: number, newText: string) => void
 }
 
 export default (props: IProps) => {
@@ -15,12 +16,19 @@ export default (props: IProps) => {
 		<li className='list-group-item comment'>
 			<blockquote className='blockquote mb-0'>
 				<textarea
-					className='form-control'
+					className='form-control mb-2'
 					defaultValue={text}
 					onKeyDown={props.escHandler}
 					onChange={e => setText(e.target.value)}
 				>{}</textarea>
-				<footer className='blockquote-footer text-right'>{props.content.author}</footer>
+				<div className="d-flex justify-content-between">
+					<button
+						className='btn btn-secondary d-block'
+						onClick={() => props.updateComment(props.content.id, text)}
+					>Сохранить</button>
+					<footer className='blockquote-footer text-right'>{props.content.author}</footer>
+				</div>
+
 			</blockquote>
 			<button
 				type="button"
