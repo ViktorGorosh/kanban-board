@@ -69,7 +69,7 @@ export default (props: IProps) => {
 	const comments = state.comments.map((comment, comIndex) => {
 		return (
 			<Comment
-				key={comIndex}
+				key={comment.id}
 				content={comment}
 				escHandler={escHandler}
 				deleteComment={deleteComment}
@@ -179,6 +179,7 @@ export default (props: IProps) => {
 											className="btn btn-secondary adding-card__button"
 											onClick={() => {
 												addComment(comment)
+												props.saveChanges(state.id, state)
 											}}
 										>Save</button>
 									</div>
