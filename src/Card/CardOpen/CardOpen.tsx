@@ -1,21 +1,29 @@
 import React, {useCallback, useState} from "react";
 import './CardOpen.scss'
-import {ICard} from "../../App";
-// import Comment from "../../Comment/Comment";
+import {ICard, IComment} from "../../App";
+import Comment from "../../Comment/Comment";
 
 interface IProps {
 	colTitle: string,
 	card: ICard,
+	comments: Array<IComment>
 	user: string,
 	onClose: () => void
+
 	onCardDelete: (id: number) => void
 	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+
+	onCommentAdd: (text: string, cardId: number) => void
+	onCommentDelete: (id: number) => void
+	onCommentUpdate: (id: number, text: string) => void
 }
 
 export default (props: IProps) => {
 
 	const [title, setTitle] = useState(props.card.title)
 	const [description, setDescription] = useState(props.card.description)
+	const [isAddingComment, setAddingComment] = useState(false)
+	const [newComment, setNewComment] = useState('')
 
 	const onEscape = useCallback((e) => {
 		if (e.key === 'Escape') props.onClose()
@@ -31,7 +39,14 @@ export default (props: IProps) => {
 
 	const onCardDelete = useCallback(() => props.onCardDelete(props.card.id), [props])
 
-	
+	const onToggleAddingComment = useCallback(() => setAddingComment(prevState => !prevState), [])
+	const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
+	const onCommentAdd = useCallback(() => {
+		props.onCommentAdd(newComment, props.card.id);
+		onToggleAddingComment()
+		setNewComment('') // ?
+	}, [props, newComment, onToggleAddingComment])
+
 	return (
 		<>
 			<div className="modal fade show" id="staticBackdropLive" data-backdrop="static" data-keyboard="false"
@@ -84,7 +99,7 @@ export default (props: IProps) => {
 
 											onKeyDown={onEscape}
 											onChange={onDescriptionChange}
-										>{}</textarea>
+										/>
 
 										<div className='d-flex justify-content-between mb-2'>
 											<button
@@ -109,36 +124,43 @@ export default (props: IProps) => {
 									</div>
 								}
 
-								{/*<h5 className='CardOpen__annotation mb-2'>Comments:</h5>*/}
-								{/*<ul className="list-group mb-2">*/}
-								{/*	{comments}*/}
-								{/*</ul>*/}
+								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
+								<ul className="list-group mb-2">
+									{props.comments.map(comment => {
+										return (
+											<Comment
+												key={comment.id}
+												comment={comment}
+												onEscape={onEscape}
+												onCommentDelete={props.onCommentDelete}
+												onCommentUpdate={props.onCommentUpdate}
+											/>
+										)
+									})}
+								</ul>
 
-								{/*{isAddingComment ?*/}
-								{/*	<div className='adding-card'>*/}
-								{/*		<input*/}
-								{/*			type="text"*/}
-								{/*			className="form-control adding-card__input"*/}
-								{/*			placeholder='Введите комментарий'*/}
-								{/*			autoFocus={true}*/}
-								{/*			onChange={e => setComment(e.target.value)}*/}
-								{/*		/>*/}
-								{/*		<button*/}
-								{/*			type="button"*/}
-								{/*			className="btn btn-secondary adding-card__button"*/}
-								{/*			onClick={() => {*/}
-								{/*				addComment(comment)*/}
-								{/*				props.saveChanges(state.id, state)*/}
-								{/*			}}*/}
-								{/*		>Save</button>*/}
-								{/*	</div>*/}
-								{/*:*/}
-								{/*	<button*/}
-								{/*		type="button"*/}
-								{/*		className="btn btn-warning d-block ml-auto"*/}
-								{/*		onClick={() => setAddingComment(true)}*/}
-								{/*	>Add comment</button>*/}
-								{/*}*/}
+								{isAddingComment ?
+									<div className='adding-card'>
+										<input
+											type="text"
+											className="form-control adding-card__input"
+											placeholder='Введите комментарий'
+											autoFocus={true}
+											onChange={onNewCommentChange}
+										/>
+										<button
+											type="button"
+											className="btn btn-secondary adding-card__button"
+											onClick={onCommentAdd}
+										>Save</button>
+									</div>
+								:
+									<button
+										type="button"
+										className="btn btn-warning d-block ml-auto"
+										onClick={onToggleAddingComment}
+									>Add comment</button>
+								}
 
 							</div>
 							<div className="card-footer d-flex justify-content-between">

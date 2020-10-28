@@ -116,6 +116,7 @@ class App extends Component<{}, IState>{
 	}
 
 	handleCardUpdate = (id: number, key: 'title' | 'description', value: string | null): void => {
+		if (key === 'title' && value === '') return
 		this.setState(prevState => ({
 			cards: prevState.cards.map(card => {
 				if (card.id === id) {
@@ -126,11 +127,33 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
-	// handleCommentAdd = ()
+	handleCommentAdd = (text: string, cardId: number): void => {
+		if (text === '') return
+		this.setState(prevState => ({
+			comments: [...prevState.comments, {id: prevState.nextId, cardId, author: prevState.user, text}],
+			nextId: prevState.nextId + 1
+		}))
+	}
+
+	handleCommentDelete = (id: number): void => {
+		this.setState(prevState => ({
+			comments: prevState.comments.filter(comment => comment.id !== id)
+		}))
+	}
+
+	handleCommentUpdate = (id: number, text: string): void => {
+		if (text === '') return
+		this.setState(prevState => ({
+			comments: prevState.comments.map(comment => {
+				if (comment.id === id) return {...comment, text}
+				return comment
+			})
+		}))
+	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		const newState = {...prevState, isAuthorized: false}
-		localStorage.setItem('state', JSON.stringify(newState))
+		const savedState = {...prevState, isAuthorized: false}
+		localStorage.setItem('state', JSON.stringify(savedState))
 		console.log(this.state)
 	}
 
@@ -164,6 +187,10 @@ class App extends Component<{}, IState>{
 										onCardAdd={this.handleCardAdd}
 										onCardDelete={this.handleCardDelete}
 										onCardUpdate={this.handleCardUpdate}
+
+										onCommentAdd={this.handleCommentAdd}
+										onCommentDelete={this.handleCommentDelete}
+										onCommentUpdate={this.handleCommentUpdate}
 									/>
 								)
 							})}

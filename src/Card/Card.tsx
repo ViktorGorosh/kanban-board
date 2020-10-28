@@ -10,6 +10,10 @@ interface IProps {
 	user: string
 	onCardDelete: (id: number) => void
 	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+
+	onCommentAdd: (text: string, cardId: number) => void
+	onCommentDelete: (id: number) => void
+	onCommentUpdate: (id: number, text: string) => void
 }
 
 export default (props: IProps) => {
@@ -32,10 +36,16 @@ export default (props: IProps) => {
 				<CardOpen
 					colTitle={props.colTitle}
 					card={props.card}
+					comments={props.comments}
+					user={props.user}
 					onClose={onToggleActive}
+
 					onCardDelete={props.onCardDelete}
 					onCardUpdate={props.onCardUpdate}
-					user={props.user}
+
+					onCommentAdd={props.onCommentAdd}
+					onCommentDelete={props.onCommentDelete}
+					onCommentUpdate={props.onCommentUpdate}
 				/>
 			: null
 			}

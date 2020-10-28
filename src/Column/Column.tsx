@@ -14,6 +14,10 @@ interface IProps {
 	onCardAdd: (title: string, colId: number) => void
 	onCardDelete: (id: number) => void
 	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+
+	onCommentAdd: (text: string, cardId: number) => void
+	onCommentDelete: (id: number) => void
+	onCommentUpdate: (id: number, text: string) => void
 }
 
 export default (props: IProps) => {
@@ -53,6 +57,10 @@ export default (props: IProps) => {
 
 									onCardDelete={props.onCardDelete}
 									onCardUpdate={props.onCardUpdate}
+
+									onCommentAdd={props.onCommentAdd}
+									onCommentDelete={props.onCommentDelete}
+									onCommentUpdate={props.onCommentUpdate}
 								/>
 							)
 						})
