@@ -44,7 +44,6 @@ export default (props: IProps) => {
 	const onCommentAdd = useCallback(() => {
 		props.onCommentAdd(newComment, props.card.id);
 		onToggleAddingComment()
-		setNewComment('') // ?
 	}, [props, newComment, onToggleAddingComment])
 
 	return (

@@ -38,8 +38,7 @@ class App extends Component<{}, IState>{
 		super(props);
 
 		// @ts-ignore
-		// this.state = JSON.parse(localStorage.getItem('state')) || defaultState
-		this.state = {
+		this.state = JSON.parse(localStorage.getItem('state')) ||  {
 			isAuthorized: false,
 			user: 'Аноним',
 			nextId: 4,
@@ -152,9 +151,9 @@ class App extends Component<{}, IState>{
 	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		const savedState = {...prevState, isAuthorized: false}
+		console.log(this.state) // нужно текущее состояние, а не предыдущее
+		const savedState = {...this.state, isAuthorized: false}
 		localStorage.setItem('state', JSON.stringify(savedState))
-		console.log(this.state)
 	}
 
 	render() {
