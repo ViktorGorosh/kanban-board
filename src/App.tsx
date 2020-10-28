@@ -1,27 +1,33 @@
 import React, {Component} from 'react'
 import './App.scss'
-import AuthPopup from "./AuthPopup/AuthPopup";
-import Column from "./Columns/Column";
+// import AuthPopup from "./AuthPopup/AuthPopup";
+// import Column from "./Columns/Column";
 
 interface IState {
 	isAuthorized: boolean,
 	user: string,
 	nextId: number,
-	columns: Array<string>,
+	columns: Array<IColumn>,
 	cards: Array<ICard>
+	comments: Array<IComment>
+}
+
+interface IColumn {
+	id: number,
+	title: string
 }
 
 export interface ICard {
-	colId: string,
+	colId: number,
 	id: number,
 	title: string,
 	description: string | null,
-	comments: Array<IComment>,
 	author: string
 }
 
 export interface IComment {
 	id: number,
+	cardId: number,
 	author: string,
 	text: string,
 }
@@ -30,33 +36,40 @@ class App extends Component<{}, IState>{
 
 	constructor(props) {
 		super(props);
-		const defaultState: IState = {
+
+		// @ts-ignore
+		// this.state = JSON.parse(localStorage.getItem('state')) || defaultState
+		this.state = {
 			isAuthorized: false,
 			user: 'Аноним',
-			nextId: 1,
-			columns: ['TO DO', 'In Progress', 'Testing', 'done'],
+			nextId: 4,
+			columns: [
+				{id: 0, title: 'TO DO'},
+				{id: 1, title: 'In Progress'},
+				{id: 2, title: 'Testing'},
+				{id: 3, title: 'done'}
+			],
 			cards: [
 				{
-					colId: 'TO DO',
+					colId: 0,
 					id: 0,
 					title: 'Title 1',
 					description: null,
-					comments: [
-						{
-							id: 0,
-							author: 'Author 1',
-							text: 'Hello'
-						},
-					],
 					author: 'Author 1'
 				}
-			]
+			],
+			comments: [
+				{
+					id: 0,
+					cardId: 0,
+					author: 'Author 1',
+					text: 'Hello'
+				},
+			],
 		}
-		// @ts-ignore
-		this.state = JSON.parse(localStorage.getItem('state')) || defaultState
 	}
 
-	updateUser = (name: string): void => {
+	handleUserUpdate = (name: string): void => {
 		if (name !== '') {
 			this.setState(() => ({
 				isAuthorized: true,
@@ -65,20 +78,20 @@ class App extends Component<{}, IState>{
 		}
 	}
 
-	updateColTitle = (target: string, newTitle: string): void => {
+	handleColTitleUpdate = (id: number, newTitle: string): void => {
 		if (newTitle === '') return
 		this.setState((prevState) => ({
-			columns: prevState.columns.map((title) => {
-				if (title === target) {
-					return newTitle
+			columns: prevState.columns.map((column) => {
+				if (column.id === id) {
+					return {...column, title: newTitle}
 				}
-				return title
+				return column
 			}),
 			cards: prevState.cards.map((card) => {
-				if (card.colId === target) {
+				if (card.colId === id) {
 					return {
 						...card,
-						colId: newTitle
+						colId: id
 					}
 				}
 				return card
@@ -86,24 +99,23 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
-	addCard = (title: string, colId: string): void => {
+	handleCardAdd = (title: string, colId: number): void => {
 		if (title === '') return
 		this.setState((prevState) => ({
 			cards: [...prevState.cards,
-				{colId, id: prevState.nextId, title, description: null, comments: [], author: prevState.user}
+				{colId, id: prevState.nextId, title, description: null, author: prevState.user}
 			],
 			nextId: prevState.nextId + 1
 		}))
 	}
 
-	deleteCard = (id: number): void => {
+	handleCardDelete = (id: number): void => {
 		this.setState(prevState => ({
 			cards: prevState.cards.filter(card => card.id !== id)
 		}))
 	}
 
-	updateCard = (id: number, content: ICard): void => {
-		console.log('updated')
+	handleCardUpdate = (id: number, content: ICard): void => {
 		this.setState(prevState => ({
 			cards: prevState.cards.map(card => {
 				if (card.id === id) {
@@ -115,37 +127,35 @@ class App extends Component<{}, IState>{
 	}
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
-		const newState = {...prevState} // Я помню, что не надо полностью копировать стейт:) Но this.setState здесь
-		// не подходит
-		newState.isAuthorized = false
+		const newState = {...prevState, isAuthorized: false}
 		localStorage.setItem('state', JSON.stringify(newState))
 	}
 
 	render() {
 
-		let columns = this.state.columns.map((column) => {
-			return (
-				<Column
-					key={column}
-					title={column}
-					cards={this.state.cards}
-					user={this.state.user}
-
-					updateColTitle={this.updateColTitle}
-					addCard={this.addCard}
-					deleteCard={this.deleteCard}
-					updateCard={this.updateCard}
-				/>
-			)
-		})
+		// let columns = this.state.columns.map((column) => {
+		// 	return (
+		// 		<Column
+		// 			key={column.id}
+		// 			title={column.title}
+		// 			cards={this.state.cards}
+		// 			user={this.state.user}
+		//
+		// 			onColTitleUpdate={this.handleColTitleUpdate}
+		// 			on={this.handleCardAdd}
+		// 			handleCardDelete={this.handleCardDelete}
+		// 			handleCardUpdate={this.handleCardUpdate}
+		// 		/>
+		// 	)
+		// })
 
 		return (
 			<React.Fragment>
-				{this.state.isAuthorized ? null :
-					<AuthPopup
-						name={this.state.user}
-						saveName={this.updateUser}
-					/>
+				{this.state.isAuthorized ? null : null
+					// <AuthPopup
+					// 	name={this.state.user}
+					// 	saveName={this.handleUserUpdate}
+					// />
 				}
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
@@ -153,7 +163,7 @@ class App extends Component<{}, IState>{
 				<section className='section-board'>
 					<div className="container-fluid">
 						<div className="row">
-							{columns}
+
 						</div>
 					</div>
 				</section>
