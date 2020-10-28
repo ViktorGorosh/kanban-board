@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './App.scss'
-// import AuthPopup from "./AuthPopup/AuthPopup";
+import AuthPopup from "./AuthPopup/AuthPopup";
 // import Column from "./Columns/Column";
 
 interface IState {
@@ -151,11 +151,11 @@ class App extends Component<{}, IState>{
 
 		return (
 			<React.Fragment>
-				{this.state.isAuthorized ? null : null
-					// <AuthPopup
-					// 	name={this.state.user}
-					// 	saveName={this.handleUserUpdate}
-					// />
+				{this.state.isAuthorized ? null :
+					<AuthPopup
+						name={this.state.user}
+						onUserUpdate={this.handleUserUpdate}
+					/>
 				}
 				<header className='main-header text-center'>
 					<h1 className='title'>NotTrelloAtAll</h1>
