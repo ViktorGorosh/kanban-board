@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 
 interface IProps {
 	name: string
@@ -8,6 +8,8 @@ interface IProps {
 export default (props: IProps) => {
 
 	const [name, setName] = useState(props.name)
+	const onChange = useCallback(e => {setName(e.target.value)},[])
+	const onClick = useCallback(() => props.onUserUpdate(name), [name, props])
 
 	return (
 		<React.Fragment>
@@ -23,12 +25,12 @@ export default (props: IProps) => {
 								   className="form-control"
 								   defaultValue={name}
 								   autoFocus={true}
-								   onChange={e => {setName(e.target.value)}}
+								   onChange={onChange}
 							>{}</input>
 						</div>
 						<div className="modal-footer justify-content-center">
 							<button type="button" className="btn btn-secondary" data-dismiss="modal"
-									onClick={() => props.onUserUpdate(name)}
+									onClick={onClick}
 							>Войти</button>
 						</div>
 					</div>

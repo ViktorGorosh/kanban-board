@@ -129,6 +129,7 @@ class App extends Component<{}, IState>{
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
 		const newState = {...prevState, isAuthorized: false}
 		localStorage.setItem('state', JSON.stringify(newState))
+		console.log(this.state)
 	}
 
 	render() {
