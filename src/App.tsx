@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./AuthPopup/AuthPopup";
-// import Column from "./Columns/Column";
+import Column from "./Column/Column";
 
 interface IState {
 	isAuthorized: boolean,
@@ -134,22 +134,6 @@ class App extends Component<{}, IState>{
 
 	render() {
 
-		// let columns = this.state.columns.map((column) => {
-		// 	return (
-		// 		<Column
-		// 			key={column.id}
-		// 			title={column.title}
-		// 			cards={this.state.cards}
-		// 			user={this.state.user}
-		//
-		// 			onColTitleUpdate={this.handleColTitleUpdate}
-		// 			on={this.handleCardAdd}
-		// 			handleCardDelete={this.handleCardDelete}
-		// 			handleCardUpdate={this.handleCardUpdate}
-		// 		/>
-		// 	)
-		// })
-
 		return (
 			<React.Fragment>
 				{this.state.isAuthorized ? null :
@@ -164,7 +148,22 @@ class App extends Component<{}, IState>{
 				<section className='section-board'>
 					<div className="container-fluid">
 						<div className="row">
+							{this.state.columns.map((column) => {
+								return (
+									<Column
+										key={column.id}
+										colId={column.id}
+										title={column.title}
+										cards={this.state.cards.filter(card => card.colId === column.id)}
+										user={this.state.user}
 
+										onColTitleUpdate={this.handleColTitleUpdate}
+										onCardAdd={this.handleCardAdd}
+										onCardDelete={this.handleCardDelete}
+										onCardUpdate={this.handleCardUpdate}
+									/>
+								)
+							})}
 						</div>
 					</div>
 				</section>
