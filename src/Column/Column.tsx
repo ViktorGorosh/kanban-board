@@ -1,12 +1,13 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import './Column.scss';
-import {ICard} from "../App";
-// import Card from "../Card/Card";
+import {ICard, IComment} from "../App";
+import Card from "../Card/Card";
 
 interface IProps {
 	title: string,
 	colId: number,
 	cards: Array<ICard>,
+	comments: Array<IComment>
 	user: string,
 
 	onColTitleUpdate: (id: number, newTitle: string) => void
@@ -22,31 +23,13 @@ export default (props: IProps) => {
 	const [newCardTitle, setNewCardTitle] = useState('')
 	
 	const onChangeColTitle = useCallback(e => setColTitle(e.target.value), [])
-	const onColTitleUpdate = useCallback(() => {
-		props.onColTitleUpdate(props.colId, colTitle);
-	}, [colTitle, props])
-	
+	const onColTitleUpdate = useCallback(() => props.onColTitleUpdate(props.colId, colTitle), [colTitle, props])
 	const onChangeNewCardTitle = useCallback(e => setNewCardTitle(e.target.value), [])
 	const onCardAdd = useCallback(() => {
 		setAddingCard(false)
 		props.onCardAdd(newCardTitle, props.colId)
 	}, [newCardTitle, props])
 	const onToggleAddingCard = useCallback(() => setAddingCard(true), [])
-
-	// const cards = props.cards.filter(card => card.colId === props.title).map(card => {
-	// 	return (
-	// 		<Card
-	// 			key={card.id}
-	// 			user={props.user}
-	// 			content={card}
-	// 			onCardDelete={props.onCardDelete}
-	// 			onCardUpdate={props.onCardUpdate}
-	// 		/>
-	// 	)
-	// });
-
-	useEffect(() => console.log(colTitle))
-
 
 	return (
 		<div className="col-md-3 column">
@@ -59,7 +42,20 @@ export default (props: IProps) => {
 					onBlur={onColTitleUpdate}
 				/>
 				<ul className="list-group list-group-flush cards">
-					{/*{cards}*/}
+					{props.cards.map(card => {
+							return (
+								<Card
+									key={card.id}
+									user={props.user}
+									card={card}
+									comments={props.comments.filter(comment => comment.cardId === card.id)}
+
+									onCardDelete={props.onCardDelete}
+									onCardUpdate={props.onCardUpdate}
+								/>
+							)
+						})
+					}
 				</ul>
 				{isAddingCard ?
 					<div className='adding-card'>

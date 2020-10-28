@@ -155,6 +155,7 @@ class App extends Component<{}, IState>{
 										colId={column.id}
 										title={column.title}
 										cards={this.state.cards.filter(card => card.colId === column.id)}
+										comments={this.state.comments}
 										user={this.state.user}
 
 										onColTitleUpdate={this.handleColTitleUpdate}
