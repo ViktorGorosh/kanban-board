@@ -1,0 +1,36 @@
+.CardOpen {
+	position: relative;
+	.input, .author {
+		//border: none;
+		//background-color: transparent;
+		width: 100%;
+	}
+	.close {
+		position: absolute;
+		right: 2px;
+		top: -2px;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.CardOpen__annotation {
+	margin-right: 15px;
+	margin-bottom: 0;
+}
+
+.CardOpen__save-title {
+	margin-left: 15px;
+}
+
+.CardOpen__description {
+	min-height: 100px;
+	height: auto;
+	width: 100%;
+	//border: none;
+	//background-color: transparent;
+}
+.CardOpen__add-comment {
+
+}

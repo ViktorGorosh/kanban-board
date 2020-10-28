@@ -13,7 +13,7 @@ interface IProps {
 	onColTitleUpdate: (id: number, newTitle: string) => void
 	onCardAdd: (title: string, colId: number) => void
 	onCardDelete: (id: number) => void
-	onCardUpdate: (id: number, card: ICard) => void
+	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
 }
 
 export default (props: IProps) => {
@@ -47,6 +47,7 @@ export default (props: IProps) => {
 								<Card
 									key={card.id}
 									user={props.user}
+									colTitle={props.title}
 									card={card}
 									comments={props.comments.filter(comment => comment.cardId === card.id)}
 

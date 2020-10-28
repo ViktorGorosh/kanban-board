@@ -12,7 +12,7 @@ export default (props: IProps) => {
 	const onClick = useCallback(() => props.onUserUpdate(name), [name, props])
 
 	return (
-		<React.Fragment>
+		<>
 			<div className="modal fade show" id="authPopup" data-backdrop="static" data-keyboard="false" tabIndex={-1}
 				 role="dialog" aria-labelledby="staticBackdropLabel" aria-modal="true" style={{display: 'block'}}>
 				<div className="modal-dialog">
@@ -36,6 +36,6 @@ export default (props: IProps) => {
 					</div>
 				</div>
 			</div>
-		</React.Fragment>
+		</>
 	)
 }

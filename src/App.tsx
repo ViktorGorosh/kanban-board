@@ -115,16 +115,18 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
-	handleCardUpdate = (id: number, content: ICard): void => {
+	handleCardUpdate = (id: number, key: 'title' | 'description', value: string | null): void => {
 		this.setState(prevState => ({
 			cards: prevState.cards.map(card => {
 				if (card.id === id) {
-					return content
+					return {...card, [key]: value}
 				}
 				return card
 			})
 		}))
 	}
+
+	// handleCommentAdd = ()
 
 	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
 		const newState = {...prevState, isAuthorized: false}
@@ -135,7 +137,7 @@ class App extends Component<{}, IState>{
 	render() {
 
 		return (
-			<React.Fragment>
+			<>
 				{this.state.isAuthorized ? null :
 					<AuthPopup
 						name={this.state.user}
@@ -168,7 +170,7 @@ class App extends Component<{}, IState>{
 						</div>
 					</div>
 				</section>
-			</React.Fragment>
+			</>
 		)
 	}
 }
