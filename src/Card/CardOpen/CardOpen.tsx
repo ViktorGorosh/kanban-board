@@ -39,12 +39,15 @@ export default (props: IProps) => {
 
 	const onCardDelete = useCallback(() => props.onCardDelete(props.card.id), [props])
 
-	const onToggleAddingComment = useCallback(() => setAddingComment(prevState => !prevState), [])
+	const onToggleAddingComment = useCallback(() => {
+		setAddingComment(prevState => !prevState)
+		setNewComment('')
+	}, [])
 	const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
 	const onCommentAdd = useCallback(() => {
 		props.onCommentAdd(newComment, props.card.id);
-		onToggleAddingComment()
-	}, [props, newComment, onToggleAddingComment])
+		setAddingComment(prevState => !prevState)
+	}, [props, newComment])
 
 	return (
 		<>
