@@ -22,17 +22,19 @@ interface ColumnItemProps {
 
 export default (props: ColumnItemProps) => {
 
-	const [colTitle, setColTitle] = useState(props.title)
+	const {title, colId, cards, comments, user, onColTitleUpdate: handleColTitleUpdate, onCardAdd: handleCardAdd,
+		onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete, onCommentUpdate} = props
+	const [colTitle, setColTitle] = useState(title)
 	const [isAddingCard, setAddingCard] = useState(false)
 	const [newCardTitle, setNewCardTitle] = useState('')
 	
 	const onChangeColTitle = useCallback(e => setColTitle(e.target.value), [])
-	const onColTitleUpdate = useCallback(() => props.onColTitleUpdate(props.colId, colTitle), [colTitle, props])
+	const onColTitleUpdate = useCallback(() => handleColTitleUpdate(colId, colTitle), [colTitle, colId, handleColTitleUpdate])
 	const onChangeNewCardTitle = useCallback(e => setNewCardTitle(e.target.value), [])
 	const onCardAdd = useCallback(() => {
 		setAddingCard(false)
-		props.onCardAdd(newCardTitle, props.colId)
-	}, [newCardTitle, props])
+		handleCardAdd(newCardTitle, colId)
+	}, [newCardTitle, colId, handleCardAdd])
 	const onToggleAddingCard = useCallback(() => setAddingCard(true), [])
 
 	return (
@@ -41,26 +43,26 @@ export default (props: ColumnItemProps) => {
 				<input
 					type='text'
 					className="form-control"
-					defaultValue={props.title}
+					defaultValue={title}
 					onChange={onChangeColTitle}
 					onBlur={onColTitleUpdate}
 				/>
 				<ul className="list-group list-group-flush cards">
-					{props.cards.map(card => {
+					{cards.map(card => {
 							return (
 								<CardItem
 									key={card.id}
-									user={props.user}
-									colTitle={props.title}
+									user={user}
+									colTitle={title}
 									card={card}
-									comments={props.comments.filter(comment => comment.cardId === card.id)}
+									comments={comments.filter(comment => comment.cardId === card.id)}
 
-									onCardDelete={props.onCardDelete}
-									onCardUpdate={props.onCardUpdate}
+									onCardDelete={onCardDelete}
+									onCardUpdate={onCardUpdate}
 
-									onCommentAdd={props.onCommentAdd}
-									onCommentDelete={props.onCommentDelete}
-									onCommentUpdate={props.onCommentUpdate}
+									onCommentAdd={onCommentAdd}
+									onCommentDelete={onCommentDelete}
+									onCommentUpdate={onCommentUpdate}
 								/>
 							)
 						})

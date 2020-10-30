@@ -17,7 +17,8 @@ interface CardItemProps {
 }
 
 export default (props: CardItemProps) => {
-
+	const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
+		onCommentUpdate} = props
 	const [isActive, setActive] = useState(false)
 
 	const onToggleActive = useCallback(() => setActive(prevState => !prevState), []);
@@ -29,23 +30,22 @@ export default (props: CardItemProps) => {
 				className="list-group-item cards__item"
 				onClick={onToggleActive}
 			>
-				{props.card.title}
-				<span className={'badge badge-info float-right'}>{props.comments.length}</span>
+				{card.title}
+				<span className={'badge badge-info float-right'}>{comments.length}</span>
 			</li>
 			{isActive ?
 				<CardOpen
-					colTitle={props.colTitle}
-					card={props.card}
-					comments={props.comments}
-					user={props.user}
+					colTitle={colTitle}
+					card={card}
+					comments={comments}
 					onClose={onToggleActive}
 
-					onCardDelete={props.onCardDelete}
-					onCardUpdate={props.onCardUpdate}
+					onCardDelete={onCardDelete}
+					onCardUpdate={onCardUpdate}
 
-					onCommentAdd={props.onCommentAdd}
-					onCommentDelete={props.onCommentDelete}
-					onCommentUpdate={props.onCommentUpdate}
+					onCommentAdd={onCommentAdd}
+					onCommentDelete={onCommentDelete}
+					onCommentUpdate={onCommentUpdate}
 				/>
 			: null
 			}

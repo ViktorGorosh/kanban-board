@@ -5,11 +5,11 @@ interface AuthPopupProps {
 	onUserUpdate: (name: string) => void
 }
 
-export default (props: AuthPopupProps) => {
+export default ({name, onUserUpdate}: AuthPopupProps) => {
 
-	const [name, setName] = useState(props.name)
-	const onChange = useCallback(e => {setName(e.target.value)},[])
-	const onClick = useCallback(() => props.onUserUpdate(name), [name, props])
+	const [newName, setNewName] = useState(name)
+	const onChange = useCallback(e => {setNewName(e.target.value)},[])
+	const onClick = useCallback(() => onUserUpdate(newName), [newName, onUserUpdate])
 
 	return (
 		<>
@@ -23,7 +23,7 @@ export default (props: AuthPopupProps) => {
 						<div className="modal-body">
 							<input type='text'
 								   className="form-control"
-								   defaultValue={name}
+								   defaultValue={newName}
 								   autoFocus={true}
 								   onChange={onChange}
 							>{}</input>

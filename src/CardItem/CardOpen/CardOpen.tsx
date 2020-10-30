@@ -7,7 +7,6 @@ interface CardOpenProps {
 	colTitle: string,
 	card: Card,
 	comments: Array<Comment>
-	user: string,
 	onClose: () => void
 
 	onCardDelete: (id: number) => void
@@ -19,25 +18,30 @@ interface CardOpenProps {
 }
 
 export default (props: CardOpenProps) => {
-
-	const [title, setTitle] = useState(props.card.title)
-	const [description, setDescription] = useState(props.card.description)
+	const {colTitle, card, comments, onCardDelete: handleCardDelete, onCardUpdate: handleCardUpdate,
+		onClose, onCommentAdd: handleCommentAdd, onCommentDelete, onCommentUpdate} = props
+	const [title, setTitle] = useState(card.title)
+	const [description, setDescription] = useState(card.description)
 	const [isAddingComment, setAddingComment] = useState(false)
 	const [newComment, setNewComment] = useState('')
 
 	const onEscape = useCallback((e) => {
-		if (e.key === 'Escape') props.onClose()
-	}, [props])
+		if (e.key === 'Escape') onClose()
+	}, [onClose])
 	
 	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
-	const onTitleSave = useCallback(() => props.onCardUpdate(props.card.id, 'title', title), [title, props])
+	const onTitleSave = useCallback(() => handleCardUpdate(card.id, 'title', title),
+		[title, card.id, handleCardUpdate])
 
 	const onDescriptionChange = useCallback((e) => setDescription(e.target.value), [])
-	const onDescriptionDelete = useCallback(() => props.onCardUpdate(props.card.id, 'description', null), [props])
-	const onDescriptionSave = useCallback(() => props.onCardUpdate(props.card.id, 'description', description), [description, props])
-	const onDescriptionAdd = useCallback(() => props.onCardUpdate(props.card.id, 'description', ''), [props])
+	const onDescriptionDelete = useCallback(() => handleCardUpdate(card.id, 'description', null),
+		[card.id, handleCardUpdate])
+	const onDescriptionSave = useCallback(() => handleCardUpdate(card.id, 'description', description),
+		[description, card.id, handleCardUpdate])
+	const onDescriptionAdd = useCallback(() => handleCardUpdate(card.id, 'description', ''),
+		[handleCardUpdate, card.id])
 
-	const onCardDelete = useCallback(() => props.onCardDelete(props.card.id), [props])
+	const onCardDelete = useCallback(() => handleCardDelete(card.id), [handleCardDelete, card.id])
 
 	const onToggleAddingComment = useCallback(() => {
 		setAddingComment(prevState => !prevState)
@@ -45,9 +49,9 @@ export default (props: CardOpenProps) => {
 	}, [])
 	const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
 	const onCommentAdd = useCallback(() => {
-		props.onCommentAdd(newComment, props.card.id);
+		handleCommentAdd(newComment, card.id);
 		setAddingComment(prevState => !prevState)
-	}, [props, newComment])
+	}, [handleCommentAdd, card.id, newComment])
 
 	return (
 		<>
@@ -61,7 +65,7 @@ export default (props: CardOpenProps) => {
 								type="button"
 								className="close"
 								aria-label="Close"
-								onClick={props.onClose}
+								onClick={onClose}
 							>
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -71,7 +75,7 @@ export default (props: CardOpenProps) => {
 									<h5 className='CardOpen__annotation'>Title:</h5>
 									<input type="text"
 										   className="form-control input"
-										   defaultValue={props.card.title}
+										   defaultValue={card.title}
 										   autoFocus={true}
 										   
 										   onKeyDown={onEscape}
@@ -82,21 +86,21 @@ export default (props: CardOpenProps) => {
 										onClick={onTitleSave}
 									>Save</button>
 								</div>
-								<p>In "{props.colTitle}" list</p>
+								<p>In "{colTitle}" list</p>
 								<div className='d-flex justify-content-between mb-1'>
 									<h5 className='CardOpen__annotation'>Author:</h5>
-									<p className="author">{props.card.author}</p>
+									<p className="author">{card.author}</p>
 								</div>
 							</div>
 
 							<div className="card-body">
-								{props.card.description !== null ?
+								{card.description !== null ?
 
 									<>
 										<h5 className='CardOpen__annotation mb-2'>Description:</h5>
 										<textarea
 											className="CardOpen__description form-control mb-2"
-											defaultValue={props.card.description}
+											defaultValue={card.description}
 											autoFocus={true}
 
 											onKeyDown={onEscape}
@@ -128,14 +132,14 @@ export default (props: CardOpenProps) => {
 
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group mb-2">
-									{props.comments.map(comment => {
+									{comments.map(comment => {
 										return (
 											<CommentItem
 												key={comment.id}
 												comment={comment}
 												onEscape={onEscape}
-												onCommentDelete={props.onCommentDelete}
-												onCommentUpdate={props.onCommentUpdate}
+												onCommentDelete={onCommentDelete}
+												onCommentUpdate={onCommentUpdate}
 											/>
 										)
 									})}

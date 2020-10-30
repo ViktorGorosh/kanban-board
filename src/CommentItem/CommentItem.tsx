@@ -11,11 +11,15 @@ interface CommentItemProps {
 
 export default (props: CommentItemProps) => {
 
-	const [text, setText] = useState(props.comment.text)
+	const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate, onEscape} = props
+
+	const [text, setText] = useState(comment.text)
 	
 	const onCommentTextChange = useCallback(e => setText(e.target.value), [])
-	const onCommentUpdate = useCallback(() => props.onCommentUpdate(props.comment.id, text), [text, props])
-	const onCommentDelete = useCallback(() => props.onCommentDelete(props.comment.id), [props])
+	const onCommentUpdate = useCallback(() => handleCommentUpdate(comment.id, text),
+		[handleCommentUpdate, comment.id, text, ])
+	const onCommentDelete = useCallback(() => handleCommentDelete(comment.id),
+		[handleCommentDelete, comment.id])
 	
 	return (
 		<li className='list-group-item comment'>
@@ -23,7 +27,7 @@ export default (props: CommentItemProps) => {
 				<textarea
 					className='form-control mb-2'
 					defaultValue={text}
-					onKeyDown={props.onEscape}
+					onKeyDown={onEscape}
 					onChange={onCommentTextChange}
 				/>
 				<div className="d-flex justify-content-between">
@@ -31,7 +35,7 @@ export default (props: CommentItemProps) => {
 						className='btn btn-secondary d-block'
 						onClick={onCommentUpdate}
 					>Сохранить</button>
-					<footer className='blockquote-footer text-right'>{props.comment.author}</footer>
+					<footer className='blockquote-footer text-right'>{comment.author}</footer>
 				</div>
 			</blockquote>
 			<button
