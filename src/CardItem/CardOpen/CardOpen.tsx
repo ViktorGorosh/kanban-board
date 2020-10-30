@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import './CardOpen.scss'
-import {Card, Comment} from "../../App";
+import {Card, CardChanges, Comment} from "../../App";
 import CommentItem from "../../CommentItem/CommentItem";
 
 interface CardOpenProps {
@@ -10,7 +10,7 @@ interface CardOpenProps {
 	onClose: () => void
 
 	onCardDelete: (id: number) => void
-	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+	onCardUpdate: (id: number, changes: CardChanges) => void
 
 	onCommentAdd: (text: string, cardId: number) => void
 	onCommentDelete: (id: number) => void
@@ -30,15 +30,16 @@ export default (props: CardOpenProps) => {
 	}, [onClose])
 	
 	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
-	const onTitleSave = useCallback(() => handleCardUpdate(card.id, 'title', title),
-		[title, card.id, handleCardUpdate])
+	const onTitleSave = useCallback(() => {
+		if (title !== '') handleCardUpdate(card.id, {title})
+	},[title, card.id, handleCardUpdate])
 
 	const onDescriptionChange = useCallback((e) => setDescription(e.target.value), [])
-	const onDescriptionDelete = useCallback(() => handleCardUpdate(card.id, 'description', null),
+	const onDescriptionDelete = useCallback(() => handleCardUpdate(card.id, {description: null}),
 		[card.id, handleCardUpdate])
-	const onDescriptionSave = useCallback(() => handleCardUpdate(card.id, 'description', description),
+	const onDescriptionSave = useCallback(() => handleCardUpdate(card.id, {description}),
 		[description, card.id, handleCardUpdate])
-	const onDescriptionAdd = useCallback(() => handleCardUpdate(card.id, 'description', ''),
+	const onDescriptionAdd = useCallback(() => handleCardUpdate(card.id, {description: ''}),
 		[handleCardUpdate, card.id])
 
 	const onCardDelete = useCallback(() => handleCardDelete(card.id), [handleCardDelete, card.id])

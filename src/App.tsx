@@ -32,6 +32,11 @@ export interface Comment {
 	text: string,
 }
 
+export interface CardChanges {
+	title?: Card['title']
+	description?: Card['description']
+}
+
 class App extends Component<{}, State>{
 
 	constructor(props) {
@@ -46,7 +51,7 @@ class App extends Component<{}, State>{
 				{id: 0, title: 'TO DO'},
 				{id: 1, title: 'In Progress'},
 				{id: 2, title: 'Testing'},
-				{id: 3, title: 'done'}
+				{id: 3, title: 'Done'}
 			],
 			cards: [
 				{
@@ -114,12 +119,11 @@ class App extends Component<{}, State>{
 		}))
 	}
 
-	handleCardUpdate = (id: number, key: 'title' | 'description', value: string | null): void => {
-		if (key === 'title' && value === '') return
+	handleCardUpdate = (id: number, changes: CardChanges): void => {
 		this.setState(prevState => ({
 			cards: prevState.cards.map(card => {
 				if (card.id === id) {
-					return {...card, [key]: value}
+					return {...card, ...changes}
 				}
 				return card
 			})

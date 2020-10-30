@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import './CardItem.scss'
-import {Card, Comment} from "../App";
+import {Card, CardChanges, Comment} from "../App";
 import CardOpen from "./CardOpen/CardOpen";
 
 interface CardItemProps {
@@ -9,7 +9,7 @@ interface CardItemProps {
 	comments: Array<Comment>
 	user: string
 	onCardDelete: (id: number) => void
-	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+	onCardUpdate: (id: number, changes: CardChanges) => void
 
 	onCommentAdd: (text: string, cardId: number) => void
 	onCommentDelete: (id: number) => void

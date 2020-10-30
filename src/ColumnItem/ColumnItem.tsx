@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import './ColumnItem.scss';
-import {Card, Comment} from "../App";
+import {Card, CardChanges, Comment} from "../App";
 import CardItem from "../CardItem/CardItem";
 
 interface ColumnItemProps {
@@ -13,7 +13,7 @@ interface ColumnItemProps {
 	onColTitleUpdate: (id: number, newTitle: string) => void
 	onCardAdd: (title: string, colId: number) => void
 	onCardDelete: (id: number) => void
-	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
+	onCardUpdate: (id: number, changes: CardChanges) => void
 
 	onCommentAdd: (text: string, cardId: number) => void
 	onCommentDelete: (id: number) => void
