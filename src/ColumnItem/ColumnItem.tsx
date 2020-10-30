@@ -81,14 +81,14 @@ export default (props: ColumnItemProps) => {
 							type="button"
 							className="btn btn-secondary adding-card__button"
 							onClick={onCardAdd}
-						>Добавить</button>
+						>Add</button>
 					</div>
 					:
 					<button
 						type="button"
 						className="btn btn-primary add-card"
 						onClick={onToggleAddingCard}
-					>Добавить карточку</button>
+					>Add card</button>
 				}
 			</div>
 		</div>

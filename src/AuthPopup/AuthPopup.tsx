@@ -18,7 +18,7 @@ export default ({name, onUserUpdate}: AuthPopupProps) => {
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
-							<h5 className="modal-title" id="staticBackdropLabel">Введите имя пользователя</h5>
+							<h5 className="modal-title" id="staticBackdropLabel">Enter user name</h5>
 						</div>
 						<div className="modal-body">
 							<input type='text'
@@ -31,7 +31,7 @@ export default ({name, onUserUpdate}: AuthPopupProps) => {
 						<div className="modal-footer justify-content-center">
 							<button type="button" className="btn btn-secondary" data-dismiss="modal"
 									onClick={onClick}
-							>Войти</button>
+							>Log in</button>
 						</div>
 					</div>
 				</div>

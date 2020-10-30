@@ -34,7 +34,7 @@ export default (props: CommentItemProps) => {
 					<button
 						className='btn btn-secondary d-block'
 						onClick={onCommentUpdate}
-					>Сохранить</button>
+					>Save</button>
 					<footer className='blockquote-footer text-right'>{comment.author}</footer>
 				</div>
 			</blockquote>
