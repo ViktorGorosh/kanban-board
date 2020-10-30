@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import './CardOpen.scss'
 import {Card, CardChanges, Comment} from "../../App";
 import CommentItem from "../../CommentItem/CommentItem";
@@ -54,6 +54,13 @@ export default (props: CardOpenProps) => {
 		setAddingComment(prevState => !prevState)
 	}, [handleCommentAdd, card.id, newComment])
 
+	useEffect(() => {
+		document.addEventListener('keydown', onEscape)
+		return function cleanup() {
+			document.removeEventListener('keydown', onEscape)
+		};
+	}, [onEscape]);
+
 	return (
 		<>
 			<div className="modal fade show" id="staticBackdropLive" data-backdrop="static" data-keyboard="false"
@@ -79,7 +86,6 @@ export default (props: CardOpenProps) => {
 										   defaultValue={card.title}
 										   autoFocus={true}
 										   
-										   onKeyDown={onEscape}
 										   onChange={onTitleChange}
 									/>
 									<button
@@ -104,7 +110,6 @@ export default (props: CardOpenProps) => {
 											defaultValue={card.description}
 											autoFocus={true}
 
-											onKeyDown={onEscape}
 											onChange={onDescriptionChange}
 										/>
 
@@ -138,7 +143,6 @@ export default (props: CardOpenProps) => {
 											<CommentItem
 												key={comment.id}
 												comment={comment}
-												onEscape={onEscape}
 												onCommentDelete={onCommentDelete}
 												onCommentUpdate={onCommentUpdate}
 											/>

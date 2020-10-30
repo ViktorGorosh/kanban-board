@@ -1,17 +1,16 @@
-import React, {KeyboardEvent, useCallback, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {Comment} from "../App";
 
 interface CommentItemProps {
 	comment: Comment,
-	onEscape: (e: KeyboardEvent) => void
-	
+
 	onCommentDelete: (id: number) => void
 	onCommentUpdate: (id: number, text: string) => void
 }
 
 export default (props: CommentItemProps) => {
 
-	const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate, onEscape} = props
+	const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate} = props
 
 	const [text, setText] = useState(comment.text)
 	
@@ -27,7 +26,6 @@ export default (props: CommentItemProps) => {
 				<textarea
 					className='form-control mb-2'
 					defaultValue={text}
-					onKeyDown={onEscape}
 					onChange={onCommentTextChange}
 				/>
 				<div className="d-flex justify-content-between">
