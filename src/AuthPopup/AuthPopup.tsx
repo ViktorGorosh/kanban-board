@@ -1,11 +1,11 @@
 import React, {useCallback, useState} from "react";
 
-interface IProps {
+interface AuthPopupProps {
 	name: string
 	onUserUpdate: (name: string) => void
 }
 
-export default (props: IProps) => {
+export default (props: AuthPopupProps) => {
 
 	const [name, setName] = useState(props.name)
 	const onChange = useCallback(e => {setName(e.target.value)},[])

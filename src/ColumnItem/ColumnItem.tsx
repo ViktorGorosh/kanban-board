@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from "react";
 import './ColumnItem.scss';
-import {ICard, IComment} from "../App";
+import {Card, Comment} from "../App";
 import CardItem from "../CardItem/CardItem";
 
-interface IProps {
+interface ColumnItemProps {
 	title: string,
 	colId: number,
-	cards: Array<ICard>,
-	comments: Array<IComment>
+	cards: Array<Card>,
+	comments: Array<Comment>
 	user: string,
 
 	onColTitleUpdate: (id: number, newTitle: string) => void
@@ -20,7 +20,7 @@ interface IProps {
 	onCommentUpdate: (id: number, text: string) => void
 }
 
-export default (props: IProps) => {
+export default (props: ColumnItemProps) => {
 
 	const [colTitle, setColTitle] = useState(props.title)
 	const [isAddingCard, setAddingCard] = useState(false)

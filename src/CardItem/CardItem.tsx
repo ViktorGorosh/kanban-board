@@ -1,12 +1,12 @@
 import React, {useCallback, useState} from "react";
 import './CardItem.scss'
-import {ICard, IComment} from "../App";
+import {Card, Comment} from "../App";
 import CardOpen from "./CardOpen/CardOpen";
 
-interface IProps {
+interface CardItemProps {
 	colTitle: string
-	card: ICard
-	comments: Array<IComment>
+	card: Card
+	comments: Array<Comment>
 	user: string
 	onCardDelete: (id: number) => void
 	onCardUpdate: (id: number, key: 'title' | 'description', value: string | null) => void
@@ -16,7 +16,7 @@ interface IProps {
 	onCommentUpdate: (id: number, text: string) => void
 }
 
-export default (props: IProps) => {
+export default (props: CardItemProps) => {
 
 	const [isActive, setActive] = useState(false)
 

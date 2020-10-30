@@ -1,15 +1,15 @@
 import React, {KeyboardEvent, useCallback, useState} from "react";
-import {IComment} from "../App";
+import {Comment} from "../App";
 
-interface IProps {
-	comment: IComment,
+interface CommentItemProps {
+	comment: Comment,
 	onEscape: (e: KeyboardEvent) => void
 	
 	onCommentDelete: (id: number) => void
 	onCommentUpdate: (id: number, text: string) => void
 }
 
-export default (props: IProps) => {
+export default (props: CommentItemProps) => {
 
 	const [text, setText] = useState(props.comment.text)
 	

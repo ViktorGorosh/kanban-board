@@ -7,17 +7,17 @@ interface State {
 	isAuthorized: boolean,
 	user: string,
 	nextId: number,
-	columns: Array<IColumn>,
-	cards: Array<ICard>
-	comments: Array<IComment>
+	columns: Array<Column>,
+	cards: Array<Card>
+	comments: Array<Comment>
 }
 
-interface IColumn {
+interface Column {
 	id: number,
 	title: string
 }
 
-export interface ICard {
+export interface Card {
 	colId: number,
 	id: number,
 	title: string,
@@ -25,7 +25,7 @@ export interface ICard {
 	author: string
 }
 
-export interface IComment {
+export interface Comment {
 	id: number,
 	cardId: number,
 	author: string,
