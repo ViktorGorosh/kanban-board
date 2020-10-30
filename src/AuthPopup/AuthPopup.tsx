@@ -26,7 +26,7 @@ export default ({name, onUserUpdate}: AuthPopupProps) => {
 								   defaultValue={newName}
 								   autoFocus={true}
 								   onChange={onChange}
-							>{}</input>
+							/>
 						</div>
 						<div className="modal-footer justify-content-center">
 							<button type="button" className="btn btn-secondary" data-dismiss="modal"
