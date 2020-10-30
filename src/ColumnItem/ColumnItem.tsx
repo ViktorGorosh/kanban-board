@@ -76,7 +76,7 @@ export default (props: ColumnItemProps) => {
 						<input
 							type="text"
 							className="form-control adding-card__input"
-							placeholder='Введите название карточки'
+							placeholder='Enter card title...'
 							autoFocus={true}
 							onChange={onChangeNewCardTitle}
 						/>

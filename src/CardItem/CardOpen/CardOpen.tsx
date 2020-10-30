@@ -150,7 +150,7 @@ export default (props: CardOpenProps) => {
 										<input
 											type="text"
 											className="form-control adding-card__input"
-											placeholder='Введите комментарий'
+											placeholder='Enter comment...'
 											autoFocus={true}
 											onChange={onNewCommentChange}
 										/>
