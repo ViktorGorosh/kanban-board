@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
 import './CardOpen.scss'
 import {ICard, IComment} from "../../App";
-import Comment from "../../Comment/Comment";
+import CommentItem from "../../CommentItem/CommentItem";
 
 interface IProps {
 	colTitle: string,
@@ -130,7 +130,7 @@ export default (props: IProps) => {
 								<ul className="list-group mb-2">
 									{props.comments.map(comment => {
 										return (
-											<Comment
+											<CommentItem
 												key={comment.id}
 												comment={comment}
 												onEscape={onEscape}

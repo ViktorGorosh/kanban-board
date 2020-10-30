@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./AuthPopup/AuthPopup";
-import Column from "./Column/Column";
+import ColumnItem from "./ColumnItem/ColumnItem";
 
-interface IState {
+interface State {
 	isAuthorized: boolean,
 	user: string,
 	nextId: number,
@@ -32,7 +32,7 @@ export interface IComment {
 	text: string,
 }
 
-class App extends Component<{}, IState>{
+class App extends Component<{}, State>{
 
 	constructor(props) {
 		super(props);
@@ -150,7 +150,7 @@ class App extends Component<{}, IState>{
 		}))
 	}
 
-	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IState>, snapshot?: any) {
+	componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<State>, snapshot?: any) {
 		console.log(this.state) // нужно текущее состояние, а не предыдущее
 		const savedState = {...this.state, isAuthorized: false}
 		localStorage.setItem('state', JSON.stringify(savedState))
@@ -174,7 +174,7 @@ class App extends Component<{}, IState>{
 						<div className="row">
 							{this.state.columns.map((column) => {
 								return (
-									<Column
+									<ColumnItem
 										key={column.id}
 										colId={column.id}
 										title={column.title}

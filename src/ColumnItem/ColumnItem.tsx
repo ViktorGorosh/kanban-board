@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
-import './Column.scss';
+import './ColumnItem.scss';
 import {ICard, IComment} from "../App";
-import Card from "../Card/Card";
+import CardItem from "../CardItem/CardItem";
 
 interface IProps {
 	title: string,
@@ -48,7 +48,7 @@ export default (props: IProps) => {
 				<ul className="list-group list-group-flush cards">
 					{props.cards.map(card => {
 							return (
-								<Card
+								<CardItem
 									key={card.id}
 									user={props.user}
 									colTitle={props.title}

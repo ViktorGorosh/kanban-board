@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from "react";
-import './Card.scss'
+import './CardItem.scss'
 import {ICard, IComment} from "../App";
 import CardOpen from "./CardOpen/CardOpen";
 
