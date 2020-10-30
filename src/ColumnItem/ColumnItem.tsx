@@ -35,7 +35,10 @@ export default (props: ColumnItemProps) => {
 		setAddingCard(false)
 		handleCardAdd(newCardTitle, colId)
 	}, [newCardTitle, colId, handleCardAdd])
-	const onToggleAddingCard = useCallback(() => setAddingCard(true), [])
+	const onToggleAddingCard = useCallback(() => {
+		setAddingCard(true)
+		setNewCardTitle('')
+	}, [])
 
 	return (
 		<div className="col-md-3 column">
