@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './App.scss'
-import AuthPopup from "./AuthPopup/AuthPopup";
+import AuthPopup from "./app/views/components/AuthPopup";
 import ColumnItem from "./ColumnItem/ColumnItem";
 
 interface State {

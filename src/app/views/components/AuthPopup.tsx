@@ -1,4 +1,6 @@
 import React, {useCallback, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import { selectUser, login } from '../../state/ducks/auth/authSlice'
 
 interface AuthPopupProps {
 	name: string
@@ -7,9 +9,12 @@ interface AuthPopupProps {
 
 export default ({name, onUserUpdate}: AuthPopupProps) => {
 
-	const [newName, setNewName] = useState(name)
+	const dispatch = useDispatch();
+	const user = useSelector(selectUser)
+
+	const [newName, setNewName] = useState(user)
 	const onChange = useCallback(e => {setNewName(e.target.value)},[])
-	const onClick = useCallback(() => onUserUpdate(newName), [newName, onUserUpdate])
+	const onClick = useCallback(() => dispatch(login(newName)), [dispatch, newName])
 
 	return (
 		<>
@@ -23,7 +28,7 @@ export default ({name, onUserUpdate}: AuthPopupProps) => {
 						<div className="modal-body">
 							<input type='text'
 								   className="form-control"
-								   defaultValue={newName}
+								   defaultValue={user}
 								   autoFocus={true}
 								   onChange={onChange}
 							/>
