@@ -2,12 +2,7 @@ import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import { selectUser, login } from '../../state/ducks/auth/authSlice'
 
-interface AuthPopupProps {
-	name: string
-	onUserUpdate: (name: string) => void
-}
-
-export default ({name, onUserUpdate}: AuthPopupProps) => {
+export default () => {
 
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser)
