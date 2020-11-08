@@ -49,26 +49,7 @@ class App extends Component<{}, AppState>{
 	// 	}
 	// }
 	//
-	// handleColTitleUpdate = (id: number, newTitle: string): void => {
-	// 	if (newTitle === '') return
-	// 	this.setState((prevState) => ({
-	// 		columns: prevState.columns.map((column) => {
-	// 			if (column.id === id) {
-	// 				return {...column, title: newTitle}
-	// 			}
-	// 			return column
-	// 		}),
-	// 		card: prevState.card.map((card) => {
-	// 			if (card.colId === id) {
-	// 				return {
-	// 					...card,
-	// 					colId: id
-	// 				}
-	// 			}
-	// 			return card
-	// 		})
-	// 	}))
-	// }
+
 	//
 	// handleCardAdd = (title: string, colId: number): void => {
 	// 	if (title === '') return
@@ -156,7 +137,7 @@ class App extends Component<{}, AppState>{
 										// title={column.title}
 										// card={this.state.card.filter(card => card.colId === column.id)}
 										// comments={this.state.comments}
-										// user={this.state.user.name}
+										user={this.state.user.name}
 
 										// onColTitleUpdate={this.handleColTitleUpdate}
 										// onCardAdd={this.handleCardAdd}

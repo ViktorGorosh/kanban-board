@@ -10,3 +10,13 @@ export interface CardChanges {
 	title?: Card['title']
 	description?: Card['description']
 }
+
+export interface AddCardAction {
+	type: string,
+	payload: {
+		colId: number,
+		id: number,
+		newTitle: string,
+		author: string
+	}
+}
