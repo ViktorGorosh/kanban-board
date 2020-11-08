@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import './CardOpen.scss'
-import {Card, CardChanges, Comment} from "../../App";
-import CommentItem from "../../CommentItem/CommentItem";
+import {Card, CardChanges, Comment} from "../../../../../App";
+import CommentItem from "../../../../../CommentItem/CommentItem";
 
 interface CardOpenProps {
 	colTitle: string,
@@ -28,7 +28,7 @@ export default (props: CardOpenProps) => {
 	const onEscape = useCallback((e) => {
 		if (e.key === 'Escape') onClose()
 	}, [onClose])
-	
+
 	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
 	const onTitleSave = useCallback(() => {
 		if (title !== '') handleCardUpdate(card.id, {title})
@@ -85,7 +85,7 @@ export default (props: CardOpenProps) => {
 										   className="form-control input"
 										   defaultValue={card.title}
 										   autoFocus={true}
-										   
+
 										   onChange={onTitleChange}
 									/>
 									<button

@@ -1,12 +1,12 @@
 import React, {useCallback, useState} from "react";
 import './ColumnItem.scss';
 // import {Card, CardChanges, Comment} from "../../../../App";
-// import CardItem from "../../../../CardItem/CardItem";
+import CardItem from "../CardItem/CardItem";
 
 import {useSelector, useDispatch} from 'react-redux'
 import {selectUser} from "../../../state/ducks/auth/authSlice";
-import {selectColTitle} from "../../../state/ducks/column/columnSlice";
-import {changeTitle} from "../../../state/ducks/column/columnSlice";
+import {selectColTitle, changeTitle} from "../../../state/ducks/column/columnSlice";
+import {selectColumnCards} from "../../../state/ducks/card/cardSlice";
 
 interface ColumnItemProps {
 	// title: string,
@@ -30,6 +30,7 @@ export default ({colId}: ColumnItemProps) => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	const title = useSelector(state => selectColTitle(state, colId))
+	const cards = useSelector(state => selectColumnCards(state, colId))
 
 	// const {title, colId, cards, comments, user} = props
 	const [colTitle, setColTitle] = useState(title)
@@ -37,7 +38,8 @@ export default ({colId}: ColumnItemProps) => {
 	// const [newCardTitle, setNewCardTitle] = useState('')
 
 	const onChangeColTitle = useCallback(e => setColTitle(e.target.value), [])
-	const onColTitleUpdate = useCallback(() => dispatch(changeTitle({id: colId, newTitle: colTitle})), [colTitle, dispatch])
+	const onColTitleUpdate = useCallback(() => dispatch(changeTitle({id: colId, newTitle: colTitle})),
+		[colId, colTitle, dispatch])
 	// const onChangeNewCardTitle = useCallback(e => setNewCardTitle(e.target.value), [])
 	// const onCardAdd = useCallback(() => {
 	// 	setAddingCard(false)
@@ -59,25 +61,26 @@ export default ({colId}: ColumnItemProps) => {
 					onBlur={onColTitleUpdate}
 				/>
 				<ul className="list-group list-group-flush cards">
-					{/*{cards.map(card => {*/}
-					{/*		return (*/}
-					{/*			<CardItem*/}
-					{/*				key={card.id}*/}
-					{/*				user={user}*/}
-					{/*				colTitle={title}*/}
-					{/*				card={card}*/}
-					{/*				comments={comments.filter(comment => comment.cardId === card.id)}*/}
-
-					{/*				onCardDelete={onCardDelete}*/}
-					{/*				onCardUpdate={onCardUpdate}*/}
-
-					{/*				onCommentAdd={onCommentAdd}*/}
-					{/*				onCommentDelete={onCommentDelete}*/}
-					{/*				onCommentUpdate={onCommentUpdate}*/}
-					{/*			/>*/}
-					{/*		)*/}
-					{/*	})*/}
-					{/*}*/}
+					{cards.map(card => {
+							return (
+								<CardItem
+									key={card.id}
+									cardId={card.id}
+									// user={user}
+									// colTitle={title}
+									// card={card}
+									// comments={comments.filter(comment => comment.cardId === card.id)}
+									//
+									// onCardDelete={onCardDelete}
+									// onCardUpdate={onCardUpdate}
+									//
+									// onCommentAdd={onCommentAdd}
+									// onCommentDelete={onCommentDelete}
+									// onCommentUpdate={onCommentUpdate}
+								/>
+							)
+						})
+					}
 				</ul>
 				{/*{isAddingCard ?*/}
 				{/*	<div className='adding-card'>*/}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './App.scss'
-import AuthPopup from "./app/views/components/AuthPopup";
+import AuthPopup from "./app/views/components/AuthPopup/AuthPopup";
 import ColumnItem from "./app/views/components/ColumnItem/ColumnItem";
 
 import store from "./app/store";
@@ -58,7 +58,7 @@ class App extends Component<{}, AppState>{
 	// 			}
 	// 			return column
 	// 		}),
-	// 		cards: prevState.cards.map((card) => {
+	// 		card: prevState.card.map((card) => {
 	// 			if (card.colId === id) {
 	// 				return {
 	// 					...card,
@@ -73,7 +73,7 @@ class App extends Component<{}, AppState>{
 	// handleCardAdd = (title: string, colId: number): void => {
 	// 	if (title === '') return
 	// 	this.setState((prevState) => ({
-	// 		cards: [...prevState.cards,
+	// 		card: [...prevState.card,
 	// 			{colId, id: prevState.nextId, title, description: null, author: prevState.user}
 	// 		],
 	// 		nextId: prevState.nextId + 1
@@ -82,13 +82,13 @@ class App extends Component<{}, AppState>{
 	//
 	// handleCardDelete = (id: number): void => {
 	// 	this.setState(prevState => ({
-	// 		cards: prevState.cards.filter(card => card.id !== id)
+	// 		card: prevState.card.filter(card => card.id !== id)
 	// 	}))
 	// }
 	//
 	// handleCardUpdate = (id: number, changes: CardChanges): void => {
 	// 	this.setState(prevState => ({
-	// 		cards: prevState.cards.map(card => {
+	// 		card: prevState.card.map(card => {
 	// 			if (card.id === id) {
 	// 				return {...card, ...changes}
 	// 			}
@@ -154,7 +154,7 @@ class App extends Component<{}, AppState>{
 										key={column.id}
 										colId={column.id}
 										// title={column.title}
-										// cards={this.state.cards.filter(card => card.colId === column.id)}
+										// card={this.state.card.filter(card => card.colId === column.id)}
 										// comments={this.state.comments}
 										// user={this.state.user.name}
 
