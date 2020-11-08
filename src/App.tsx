@@ -1,18 +1,15 @@
 import React, {Component} from 'react'
 import './App.scss'
 import AuthPopup from "./app/views/components/AuthPopup";
-// import ColumnItem from "./ColumnItem/ColumnItem";
+import ColumnItem from "./app/views/components/ColumnItem/ColumnItem";
 
 import store from "./app/store";
-
+import {AuthState} from "./app/state/ducks/auth/types";
+import {Column} from "./app/state/ducks/column/types";
 
 interface AppState {
-	isAuthorized: boolean,
-}
-
-interface Column {
-	id: number,
-	title: string
+	user: AuthState
+	columns: Array<Column>
 }
 
 export interface Card {
@@ -40,8 +37,7 @@ class App extends Component<{}, AppState>{
 	constructor(props) {
 		super(props);
 
-		// @ts-ignore
-		this.state = store.getState().user.isAuthorized
+		this.state = store.getState()
 	}
 
 	// handleUserUpdate = (name: string): void => {
@@ -128,7 +124,7 @@ class App extends Component<{}, AppState>{
 	componentDidMount() {
 		store.subscribe(() => {
 			this.setState(() => ({
-					isAuthorized: store.getState().user.isAuthorized
+					...store.getState()
 				})
 			)
 		})
@@ -143,7 +139,7 @@ class App extends Component<{}, AppState>{
 	render() {
 		return (
 			<>
-				{this.state.isAuthorized ? null :
+				{this.state.user.isAuthorized ? null :
 					<AuthPopup />
 				}
 				<header className='main-header text-center'>
@@ -152,27 +148,27 @@ class App extends Component<{}, AppState>{
 				<section className='section-board'>
 					<div className="container-fluid">
 						<div className="row">
-							{/*{this.state.columns.map((column) => {*/}
-							{/*	return (*/}
-							{/*		<ColumnItem*/}
-							{/*			key={column.id}*/}
-							{/*			colId={column.id}*/}
-							{/*			title={column.title}*/}
-							{/*			cards={this.state.cards.filter(card => card.colId === column.id)}*/}
-							{/*			comments={this.state.comments}*/}
-							{/*			user={this.state.user}*/}
+							{this.state.columns.map((column) => {
+								return (
+									<ColumnItem
+										key={column.id}
+										colId={column.id}
+										// title={column.title}
+										// cards={this.state.cards.filter(card => card.colId === column.id)}
+										// comments={this.state.comments}
+										// user={this.state.user.name}
 
-							{/*			onColTitleUpdate={this.handleColTitleUpdate}*/}
-							{/*			onCardAdd={this.handleCardAdd}*/}
-							{/*			onCardDelete={this.handleCardDelete}*/}
-							{/*			onCardUpdate={this.handleCardUpdate}*/}
-
-							{/*			onCommentAdd={this.handleCommentAdd}*/}
-							{/*			onCommentDelete={this.handleCommentDelete}*/}
-							{/*			onCommentUpdate={this.handleCommentUpdate}*/}
-							{/*		/>*/}
-							{/*	)*/}
-							{/*})}*/}
+										// onColTitleUpdate={this.handleColTitleUpdate}
+										// onCardAdd={this.handleCardAdd}
+										// onCardDelete={this.handleCardDelete}
+										// onCardUpdate={this.handleCardUpdate}
+										//
+										// onCommentAdd={this.handleCommentAdd}
+										// onCommentDelete={this.handleCommentDelete}
+										// onCommentUpdate={this.handleCommentUpdate}
+									/>
+								)
+							})}
 						</div>
 					</div>
 				</section>
