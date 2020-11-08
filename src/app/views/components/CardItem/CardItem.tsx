@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import './CardItem.scss'
-import {Card, CardChanges, Comment} from "../../../../App";
+import {Comment} from "../../../../App";
 import CardOpen from "./CardOpen/CardOpen";
 
 import {useSelector, useDispatch} from 'react-redux'
@@ -24,6 +24,7 @@ export default ({cardId}: CardItemProps) => {
 
 	const dispatch = useDispatch()
 	const title = useSelector(state => selectCardTitle(state, cardId))
+
 	// const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
 	// 	onCommentUpdate} = props
 	// const [isActive, setActive] = useState(false)

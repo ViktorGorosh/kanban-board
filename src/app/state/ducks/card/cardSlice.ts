@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {Card} from "./types";
+import {AddCardAction, Card} from "./types";
 
 const initialState: Array<Card> = [
 	{
@@ -18,13 +18,27 @@ const initialState: Array<Card> = [
 	}
 ]
 
-export const cardsSlice = createSlice({
+export const cardSlice = createSlice({
 	name: 'card',
 	initialState,
 	reducers: {
-
+		addCard: (state: Array<Card>, action: AddCardAction) => {
+			if (action.payload.newTitle === '') return
+			return [
+				...state,
+				{
+					colId: action.payload.colId,
+					id: action.payload.id,
+					title: action.payload.newTitle,
+					description: null,
+					author: action.payload.author,
+				}
+			]
+		}
 	}
 })
+
+export const {addCard} = cardSlice.actions
 
 export const selectColumnCards = (state, colId) => {
 	return state.cards.filter(card => card.colId === colId)
@@ -33,4 +47,4 @@ export const selectCardTitle = (state, id) => {
 	return state.cards.find(card => card.id === id).title
 }
 
-export default cardsSlice.reducer
+export default cardSlice.reducer
