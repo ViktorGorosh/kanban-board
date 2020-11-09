@@ -3,7 +3,7 @@ export interface Column {
 	title: string
 }
 
-export interface changeTitleAction {
+export interface ChangeTitleAction {
 	type: string,
 	payload: {
 		id: number,

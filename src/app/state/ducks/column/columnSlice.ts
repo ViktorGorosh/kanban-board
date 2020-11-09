@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {changeTitleAction, Column} from "./types";
+import {ChangeTitleAction, Column} from "./types";
 
 const initialState: Array<Column> = [
 	{id: 0, title: 'TO DO'},
@@ -12,7 +12,7 @@ export const columnSlice = createSlice({
 	name: 'column',
 	initialState,
 	reducers: {
-		changeTitle: (state: Array<Column>, action: changeTitleAction) => {
+		changeTitle: (state: Array<Column>, action: ChangeTitleAction) => {
 			if (action.payload.newTitle !== '') {
 				return state.map((column) => {
 					if (column.id === action.payload.id) {
