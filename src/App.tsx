@@ -137,7 +137,7 @@ class App extends Component<{}, AppState>{
 										// title={column.title}
 										// card={this.state.card.filter(card => card.colId === column.id)}
 										// comments={this.state.comments}
-										user={this.state.user.name}
+										// user={this.state.user.name}
 
 										// onColTitleUpdate={this.handleColTitleUpdate}
 										// onCardAdd={this.handleCardAdd}
