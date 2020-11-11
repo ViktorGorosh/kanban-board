@@ -45,8 +45,10 @@ export default ({colId, user}: ColumnItemProps) => {
 
 	const onCardAdd = useCallback(() => {
 		setAddingCard(false)
-		dispatch(addCard({colId, id: nextId, newTitle: newCardTitle, author: user}))
-		dispatch(incrementNextId())
+		if (newCardTitle !== '') {
+			dispatch(addCard({colId, id: nextId, newTitle: newCardTitle, author: user}))
+			dispatch(incrementNextId())
+		}
 	}, [colId, dispatch, newCardTitle, nextId, user])
 
 	const onToggleAddingCard = useCallback(() => {
