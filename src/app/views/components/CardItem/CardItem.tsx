@@ -4,7 +4,7 @@ import {Comment} from "../../../../App";
 import CardOpen from "./CardOpen/CardOpen";
 
 import {useSelector, useDispatch} from 'react-redux'
-import {selectCardTitle} from "../../../state/ducks/card/cardSlice";
+// import {selectCardTitle} from "../../../state/ducks/card/cardSlice";
 import {Card} from "../../../state/ducks/card/types";
 
 interface CardItemProps {
@@ -24,7 +24,7 @@ interface CardItemProps {
 export default ({colTitle, card}: CardItemProps) => {
 
 	const dispatch = useDispatch()
-	const title = useSelector(state => selectCardTitle(state, card.id))
+	// const title = useSelector(state => selectCardTitle(state, card.id))
 
 	// const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
 	// 	onCommentUpdate} = props
@@ -39,7 +39,7 @@ export default ({colTitle, card}: CardItemProps) => {
 				className="list-group-item cards__item"
 				onClick={onToggleActive}
 			>
-				{title}
+				{card.title}
 				{/*<span className={'badge badge-info float-right'}>{comments.length}</span>*/}
 			</li>
 			{isActive ?

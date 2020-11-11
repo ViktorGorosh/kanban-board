@@ -46,9 +46,9 @@ export const {addCard, deleteCard} = cardSlice.actions
 export const selectColumnCards = (state, colId) => {
 	return state.cards.filter(card => card.colId === colId)
 }
-// TODO: delete this selector, just use card.title
-export const selectCardTitle = (state, id) => {
-	return state.cards.find(card => card.id === id).title
-}
+
+// export const selectCardTitle = (state, id) => {
+// 	return state.cards.find(card => card.id === id).title
+// }
 
 export default cardSlice.reducer
