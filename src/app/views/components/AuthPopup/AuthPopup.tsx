@@ -9,7 +9,10 @@ export default () => {
 
 	const [newName, setNewName] = useState(user)
 	const onChange = useCallback(e => {setNewName(e.target.value)},[])
-	const onClick = useCallback(() => dispatch(login(newName)), [dispatch, newName])
+	const onClick = useCallback(() => {
+		if (newName === '') return
+		dispatch(login(newName))
+	}, [dispatch, newName])
 
 	return (
 		<>

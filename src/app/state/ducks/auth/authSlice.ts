@@ -11,10 +11,8 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		login: (state: AuthState, action: LoginAction) => {
-			if (action.payload !== '') {
-				state.name = action.payload
-				state.isAuthorized = true
-			}
+			state.name = action.payload
+			state.isAuthorized = true
 		}
 	}
 })
