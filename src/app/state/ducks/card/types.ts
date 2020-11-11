@@ -15,16 +15,16 @@ export interface CardChanges {
 export interface AddCardAction {
 	type: string,
 	payload: {
-		colId: number,
-		id: number,
-		newTitle: string,
-		author: string
+		colId: Card['colId'],
+		id: Card['id'],
+		newTitle: Card['title'],
+		author: Card['author']
 	}
 }
 
 export interface DeleteCardAction {
 	type: string,
-	payload: number
+	payload: Card['id']
 }
 
 export interface UpdateCardAction {

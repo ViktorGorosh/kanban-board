@@ -6,7 +6,7 @@ export interface Column {
 export interface ChangeTitleAction {
 	type: string,
 	payload: {
-		id: number,
-		newTitle: string,
+		id: Column["id"],
+		newTitle: Column['title'],
 	}
 }
