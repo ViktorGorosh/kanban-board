@@ -20,3 +20,8 @@ export interface AddCardAction {
 		author: string
 	}
 }
+
+export interface DeleteCardAction {
+	type: string,
+	payload: number
+}

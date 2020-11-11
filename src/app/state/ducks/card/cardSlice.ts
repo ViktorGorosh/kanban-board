@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {AddCardAction, Card} from "./types";
+import {AddCardAction, Card, DeleteCardAction} from "./types";
 
 const initialState: Array<Card> = [
 	{
@@ -34,15 +34,19 @@ export const cardSlice = createSlice({
 					author: action.payload.author,
 				}
 			]
+		},
+		deleteCard: (state: Array<Card>, action: DeleteCardAction) => {
+			return state.filter(card => card.id !== action.payload)
 		}
 	}
 })
 
-export const {addCard} = cardSlice.actions
+export const {addCard, deleteCard} = cardSlice.actions
 
 export const selectColumnCards = (state, colId) => {
 	return state.cards.filter(card => card.colId === colId)
 }
+// TODO: delete this selector, just use card.title
 export const selectCardTitle = (state, id) => {
 	return state.cards.find(card => card.id === id).title
 }

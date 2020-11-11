@@ -3,6 +3,8 @@ import './CardOpen.scss'
 import {CardChanges, Comment} from "../../../../../App";
 import CommentItem from "../../../../../CommentItem/CommentItem";
 import {Card} from "../../../../state/ducks/card/types";
+import {deleteCard} from '../../../../state/ducks/card/cardSlice'
+import {useSelector, useDispatch} from 'react-redux'
 
 interface CardOpenProps {
 	colTitle: string,
@@ -21,6 +23,8 @@ interface CardOpenProps {
 export default ({colTitle, card, onClose}: CardOpenProps) => {
 	// const {colTitle, card, comments, onCardDelete: handleCardDelete, onCardUpdate: handleCardUpdate,
 	// 	onClose, onCommentAdd: handleCommentAdd, onCommentDelete, onCommentUpdate} = props
+	const dispatch = useDispatch()
+
 	const [title, setTitle] = useState(card.title)
 	const [description, setDescription] = useState(card.description)
 	const [isAddingComment, setAddingComment] = useState(false)
@@ -43,7 +47,7 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 	// const onDescriptionAdd = useCallback(() => handleCardUpdate(card.id, {description: ''}),
 	// 	[handleCardUpdate, card.id])
 	//
-	// const onCardDelete = useCallback(() => handleCardDelete(card.id), [handleCardDelete, card.id])
+	const onCardDelete = useCallback(() => dispatch(deleteCard(card.id)), [dispatch, card.id])
 	//
 	// const onToggleAddingComment = useCallback(() => {
 	// 	setAddingComment(prevState => !prevState)
@@ -178,7 +182,7 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 							<div className="card-footer d-flex justify-content-between">
 								<button
 									className='btn btn-danger'
-									// onClick={onCardDelete}
+									onClick={onCardDelete}
 								>Delete card</button>
 							</div>
 						</div>
