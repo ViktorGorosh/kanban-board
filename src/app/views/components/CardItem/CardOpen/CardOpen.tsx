@@ -1,10 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import './CardOpen.scss'
-import {CardChanges, Comment} from "../../../../../App";
-import CommentItem from "../../../../../CommentItem/CommentItem";
+// import {CardChanges, Comment} from "../../../../../App";
+import CommentItem from "../../CommentItem/CommentItem";
+import {useSelector, useDispatch} from 'react-redux';
 import {Card} from "../../../../state/ducks/card/types";
-import {deleteCard, updateCard} from '../../../../state/ducks/card/cardSlice'
-import {useSelector, useDispatch} from 'react-redux'
+import {deleteCard, updateCard} from '../../../../state/ducks/card/cardSlice';
+import {selectCardComments, addComment} from "../../../../state/ducks/comment/commentSlice";
+import {selectNextId} from "../../../../state/ducks/nextId/nextIdSlice";
+import {selectUser} from "../../../../state/ducks/auth/authSlice";
 
 interface CardOpenProps {
 	colTitle: string,
@@ -24,6 +27,9 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 	// const {colTitle, card, comments, onCardDelete: handleCardDelete, onCardUpdate: handleCardUpdate,
 	// 	onClose, onCommentAdd: handleCommentAdd, onCommentDelete, onCommentUpdate} = props
 	const dispatch = useDispatch()
+	const user = useSelector(selectUser)
+	const nextId = useSelector(selectNextId)
+	const comments = useSelector(state => selectCardComments(state, card.id))
 
 	const [title, setTitle] = useState(card.title)
 	const [description, setDescription] = useState(card.description)
@@ -35,33 +41,40 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 	}, [onClose])
 
 	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
+
 	const onTitleSave = useCallback(() => {
 		if (title === '') return
 		dispatch(updateCard({id: card.id, title}))
 	},[card.id, dispatch, title])
 
 	const onDescriptionChange = useCallback((e) => setDescription(e.target.value), [])
+
 	const onDescriptionDelete = useCallback(() => {
 		dispatch(updateCard({id: card.id, description: null}))
 	},[card.id, dispatch])
+
 	const onDescriptionSave = useCallback(() => {
 		dispatch(updateCard({id: card.id, description}))
 	},	[card.id, description, dispatch])
+
 	const onDescriptionAdd = useCallback(() => {
 		dispatch(updateCard({id: card.id, description: ''}))
 	},	[card.id, dispatch])
 
 	const onCardDelete = useCallback(() => dispatch(deleteCard(card.id)), [dispatch, card.id])
-	//
-	// const onToggleAddingComment = useCallback(() => {
-	// 	setAddingComment(prevState => !prevState)
-	// 	setNewComment('')
-	// }, [])
-	// const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
-	// const onCommentAdd = useCallback(() => {
-	// 	handleCommentAdd(newComment, card.id);
-	// 	setAddingComment(prevState => !prevState)
-	// }, [handleCommentAdd, card.id, newComment])
+
+	const onToggleAddingComment = useCallback(() => {
+		setAddingComment(prevState => !prevState)
+		setNewComment('')
+	}, [])
+
+	const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
+
+	const onCommentAdd = useCallback(() => {
+		if (newComment === '') return
+		setAddingComment(false)
+		dispatch(addComment({id: nextId, cardId: card.id, text: newComment, author: user}))
+	}, [card.id, dispatch, newComment, nextId, user])
 
 	useEffect(() => {
 		document.addEventListener('keydown', onEscape)
@@ -147,16 +160,17 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 
 								<h5 className='CardOpen__annotation mb-2'>Comments:</h5>
 								<ul className="list-group mb-2">
-									{/*{comments.map(comment => {*/}
-									{/*	return (*/}
-									{/*		<CommentItem*/}
-									{/*			key={comment.id}*/}
-									{/*			comment={comment}*/}
-									{/*			onCommentDelete={onCommentDelete}*/}
-									{/*			onCommentUpdate={onCommentUpdate}*/}
-									{/*		/>*/}
-									{/*	)*/}
-									{/*})}*/}
+									{comments.map(comment => {
+										return (
+											<CommentItem
+												key={comment.id}
+												comment={comment}
+												cardId={card.id}
+												// onCommentDelete={onCommentDelete}
+												// onCommentUpdate={onCommentUpdate}
+											/>
+										)
+									})}
 								</ul>
 
 								{isAddingComment ?
@@ -166,19 +180,19 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 											className="form-control adding-card__input"
 											placeholder='Enter comment...'
 											autoFocus={true}
-											// onChange={onNewCommentChange}
+											onChange={onNewCommentChange}
 										/>
 										<button
 											type="button"
 											className="btn btn-secondary adding-card__button"
-											// onClick={onCommentAdd}
+											onClick={onCommentAdd}
 										>Save</button>
 									</div>
 								:
 									<button
 										type="button"
 										className="btn btn-warning d-block ml-auto"
-										// onClick={onToggleAddingComment}
+										onClick={onToggleAddingComment}
 									>Add comment</button>
 								}
 

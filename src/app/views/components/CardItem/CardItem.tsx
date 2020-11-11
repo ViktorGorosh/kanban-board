@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import './CardItem.scss'
-import {Comment} from "../../../../App";
+// import {Comment} from "../../../../App";
 import CardOpen from "./CardOpen/CardOpen";
 
 import {useSelector, useDispatch} from 'react-redux'

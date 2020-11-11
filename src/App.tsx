@@ -12,25 +12,25 @@ interface AppState {
 	columns: Array<Column>
 }
 
-export interface Card {
-	colId: number,
-	id: number,
-	title: string,
-	description: string | null,
-	author: string
-}
+// export interface Card {
+// 	colId: number,
+// 	id: number,
+// 	title: string,
+// 	description: string | null,
+// 	author: string
+// }
 
-export interface Comment {
-	id: number,
-	cardId: number,
-	author: string,
-	text: string,
-}
+// export interface Comment {
+// 	id: number,
+// 	cardId: number,
+// 	author: string,
+// 	text: string,
+// }
 
-export interface CardChanges {
-	title?: Card['title']
-	description?: Card['description']
-}
+// export interface CardChanges {
+// 	title?: Card['title']
+// 	description?: Card['description']
+// }
 
 class App extends Component<{}, AppState>{
 

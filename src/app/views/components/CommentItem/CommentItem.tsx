@@ -1,25 +1,34 @@
 import React, {useCallback, useState} from "react";
-import {Comment} from "../App";
+import {Comment} from "../../../state/ducks/comment/types";
+import {useSelector, useDispatch} from 'react-redux'
+import {updateComment, deleteComment} from "../../../state/ducks/comment/commentSlice";
 
 interface CommentItemProps {
 	comment: Comment,
-
-	onCommentDelete: (id: number) => void
-	onCommentUpdate: (id: number, text: string) => void
+	cardId: number,
+	// onCommentDelete: (id: number) => void
+	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default (props: CommentItemProps) => {
+export default ({comment, cardId}: CommentItemProps) => {
 
-	const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate} = props
+	// const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate} = props
 
 	const [text, setText] = useState(comment.text)
-	
+
+	const dispatch = useDispatch()
+
 	const onCommentTextChange = useCallback(e => setText(e.target.value), [])
-	const onCommentUpdate = useCallback(() => handleCommentUpdate(comment.id, text),
-		[handleCommentUpdate, comment.id, text, ])
-	const onCommentDelete = useCallback(() => handleCommentDelete(comment.id),
-		[handleCommentDelete, comment.id])
-	
+
+	const onCommentUpdate = useCallback(() => {
+		if (text === '') return
+		dispatch(updateComment({id: comment.id, text}))
+	},[comment.id, dispatch, text])
+
+	const onCommentDelete = useCallback(() => {
+		dispatch(deleteComment(comment.id))
+	},[comment.id, dispatch])
+
 	return (
 		<li className='list-group-item comment'>
 			<blockquote className='blockquote mb-0'>
