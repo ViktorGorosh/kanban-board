@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Card} from "../../../../state/ducks/card/types";
 import {deleteCard, updateCard} from '../../../../state/ducks/card/cardSlice';
 import {selectCardComments, addComment} from "../../../../state/ducks/comment/commentSlice";
-import {selectNextId} from "../../../../state/ducks/nextId/nextIdSlice";
+import {selectNextId, incrementNextId} from "../../../../state/ducks/nextId/nextIdSlice";
 import {selectUser} from "../../../../state/ducks/auth/authSlice";
 
 interface CardOpenProps {
@@ -74,6 +74,7 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 		if (newComment === '') return
 		setAddingComment(false)
 		dispatch(addComment({id: nextId, cardId: card.id, text: newComment, author: user}))
+		dispatch(incrementNextId())
 	}, [card.id, dispatch, newComment, nextId, user])
 
 	useEffect(() => {
