@@ -9,10 +9,10 @@ import {Card} from "../../../state/ducks/card/types";
 
 interface CardItemProps {
 	// cardId: number
-	// colTitle: string
+	colTitle: string
 	card: Card
 	// comments: Array<Comment>
-	user: string
+	// user: string
 	// onCardDelete: (id: number) => void
 	// onCardUpdate: (id: number, changes: CardChanges) => void
 	//
@@ -21,43 +21,43 @@ interface CardItemProps {
 	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default ({card, user}: CardItemProps) => {
+export default ({colTitle, card}: CardItemProps) => {
 
 	const dispatch = useDispatch()
 	const title = useSelector(state => selectCardTitle(state, card.id))
 
 	// const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
 	// 	onCommentUpdate} = props
-	// const [isActive, setActive] = useState(false)
-	//
-	// const onToggleActive = useCallback(() => setActive(prevState => !prevState), []);
+	const [isActive, setActive] = useState(false)
+
+	const onToggleActive = useCallback(() => setActive(prevState => !prevState), []);
 
 
 	return (
 		<>
 			<li
 				className="list-group-item cards__item"
-				// onClick={onToggleActive}
+				onClick={onToggleActive}
 			>
 				{title}
 				{/*<span className={'badge badge-info float-right'}>{comments.length}</span>*/}
 			</li>
-			{/*{isActive ?*/}
-			{/*	<CardOpen*/}
-			{/*		colTitle={colTitle}*/}
-			{/*		card={card}*/}
-			{/*		comments={comments}*/}
-			{/*		onClose={onToggleActive}*/}
-
-			{/*		onCardDelete={onCardDelete}*/}
-			{/*		onCardUpdate={onCardUpdate}*/}
-
-			{/*		onCommentAdd={onCommentAdd}*/}
-			{/*		onCommentDelete={onCommentDelete}*/}
-			{/*		onCommentUpdate={onCommentUpdate}*/}
-			{/*	/>*/}
-			{/*: null*/}
-			{/*}*/}
+			{isActive ?
+				<CardOpen
+					colTitle={colTitle}
+					card={card}
+					// comments={comments}
+					// onClose={onToggleActive}
+					//
+					// onCardDelete={onCardDelete}
+					// onCardUpdate={onCardUpdate}
+					//
+					// onCommentAdd={onCommentAdd}
+					// onCommentDelete={onCommentDelete}
+					// onCommentUpdate={onCommentUpdate}
+				/>
+			: null
+			}
 		</>
 	)
 }

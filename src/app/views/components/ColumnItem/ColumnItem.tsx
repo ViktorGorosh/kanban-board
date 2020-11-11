@@ -69,8 +69,8 @@ export default ({colId, user}: ColumnItemProps) => {
 							return (
 								<CardItem
 									key={card.id}
+									colTitle={colTitle}
 									card={card}
-									user={user}
 								/>
 							)
 						})
