@@ -7,6 +7,7 @@ export interface Card {
 }
 
 export interface CardChanges {
+	id: Card['id']
 	title?: Card['title']
 	description?: Card['description']
 }
@@ -24,4 +25,9 @@ export interface AddCardAction {
 export interface DeleteCardAction {
 	type: string,
 	payload: number
+}
+
+export interface UpdateCardAction {
+	type: string,
+	payload: CardChanges
 }

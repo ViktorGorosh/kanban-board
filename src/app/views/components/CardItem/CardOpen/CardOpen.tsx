@@ -3,7 +3,7 @@ import './CardOpen.scss'
 import {CardChanges, Comment} from "../../../../../App";
 import CommentItem from "../../../../../CommentItem/CommentItem";
 import {Card} from "../../../../state/ducks/card/types";
-import {deleteCard} from '../../../../state/ducks/card/cardSlice'
+import {deleteCard, updateCard} from '../../../../state/ducks/card/cardSlice'
 import {useSelector, useDispatch} from 'react-redux'
 
 interface CardOpenProps {
@@ -34,19 +34,23 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 		if (e.key === 'Escape') onClose()
 	}, [onClose])
 
-	// const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
-	// const onTitleSave = useCallback(() => {
-	// 	if (title !== '') handleCardUpdate(card.id, {title})
-	// },[title, card.id, handleCardUpdate])
-	//
-	// const onDescriptionChange = useCallback((e) => setDescription(e.target.value), [])
-	// const onDescriptionDelete = useCallback(() => handleCardUpdate(card.id, {description: null}),
-	// 	[card.id, handleCardUpdate])
-	// const onDescriptionSave = useCallback(() => handleCardUpdate(card.id, {description}),
-	// 	[description, card.id, handleCardUpdate])
-	// const onDescriptionAdd = useCallback(() => handleCardUpdate(card.id, {description: ''}),
-	// 	[handleCardUpdate, card.id])
-	//
+	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
+	const onTitleSave = useCallback(() => {
+		if (title === '') return
+		dispatch(updateCard({id: card.id, title}))
+	},[card.id, dispatch, title])
+
+	const onDescriptionChange = useCallback((e) => setDescription(e.target.value), [])
+	const onDescriptionDelete = useCallback(() => {
+		dispatch(updateCard({id: card.id, description: null}))
+	},[card.id, dispatch])
+	const onDescriptionSave = useCallback(() => {
+		dispatch(updateCard({id: card.id, description}))
+	},	[card.id, description, dispatch])
+	const onDescriptionAdd = useCallback(() => {
+		dispatch(updateCard({id: card.id, description: ''}))
+	},	[card.id, dispatch])
+
 	const onCardDelete = useCallback(() => dispatch(deleteCard(card.id)), [dispatch, card.id])
 	//
 	// const onToggleAddingComment = useCallback(() => {
@@ -91,11 +95,11 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 										   defaultValue={card.title}
 										   autoFocus={true}
 
-										   // onChange={onTitleChange}
+										   onChange={onTitleChange}
 									/>
 									<button
 										className='CardOpen__save-title btn btn-info d-block'
-										// onClick={onTitleSave}
+										onClick={onTitleSave}
 									>Save</button>
 								</div>
 								<p>In "{colTitle}" list</p>
@@ -115,17 +119,17 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 											defaultValue={card.description}
 											autoFocus={true}
 
-											// onChange={onDescriptionChange}
+											onChange={onDescriptionChange}
 										/>
 
 										<div className='d-flex justify-content-between mb-2'>
 											<button
 												className='btn btn-danger d-block'
-												// onClick={onDescriptionDelete}
+												onClick={onDescriptionDelete}
 											>Delete description</button>
 											<button
 												className='btn btn-info d-block'
-												// onClick={onDescriptionSave}
+												onClick={onDescriptionSave}
 											>Save</button>
 										</div>
 									</>
@@ -136,7 +140,7 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 										<h5 className='CardOpen__annotation'>Description:</h5>
 										<button
 										className='btn btn-warning'
-										// onClick={onDescriptionAdd}
+										onClick={onDescriptionAdd}
 										>Add description</button>
 									</div>
 								}
