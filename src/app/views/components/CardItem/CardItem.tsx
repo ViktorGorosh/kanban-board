@@ -6,6 +6,7 @@ import CardOpen from "./CardOpen/CardOpen";
 import {useSelector, useDispatch} from 'react-redux'
 // import {selectCardTitle} from "../../../state/ducks/card/cardSlice";
 import {Card} from "../../../state/ducks/card/types";
+import {selectCardComments} from "../../../state/ducks/comment/commentSlice";
 
 interface CardItemProps {
 	// cardId: number
@@ -24,6 +25,7 @@ interface CardItemProps {
 export default ({colTitle, card}: CardItemProps) => {
 
 	const dispatch = useDispatch()
+	const comments = useSelector(state => selectCardComments(state, card.id))
 	// const title = useSelector(state => selectCardTitle(state, card.id))
 
 	// const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
@@ -40,7 +42,7 @@ export default ({colTitle, card}: CardItemProps) => {
 				onClick={onToggleActive}
 			>
 				{card.title}
-				{/*<span className={'badge badge-info float-right'}>{comments.length}</span>*/}
+				<span className={'badge badge-info float-right'}>{comments.length}</span>
 			</li>
 			{isActive ?
 				<CardOpen
