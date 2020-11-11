@@ -5,13 +5,14 @@ import CardOpen from "./CardOpen/CardOpen";
 
 import {useSelector, useDispatch} from 'react-redux'
 import {selectCardTitle} from "../../../state/ducks/card/cardSlice";
+import {Card} from "../../../state/ducks/card/types";
 
 interface CardItemProps {
-	cardId: number
+	// cardId: number
 	// colTitle: string
-	// card: Card
+	card: Card
 	// comments: Array<Comment>
-	// user: string
+	user: string
 	// onCardDelete: (id: number) => void
 	// onCardUpdate: (id: number, changes: CardChanges) => void
 	//
@@ -20,10 +21,10 @@ interface CardItemProps {
 	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default ({cardId}: CardItemProps) => {
+export default ({card, user}: CardItemProps) => {
 
 	const dispatch = useDispatch()
-	const title = useSelector(state => selectCardTitle(state, cardId))
+	const title = useSelector(state => selectCardTitle(state, card.id))
 
 	// const {colTitle, card, comments, onCardDelete, onCardUpdate, onCommentAdd, onCommentDelete,
 	// 	onCommentUpdate} = props

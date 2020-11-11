@@ -4,7 +4,7 @@ import './ColumnItem.scss';
 import CardItem from "../CardItem/CardItem";
 
 import {useSelector, useDispatch} from 'react-redux'
-import {selectUser} from "../../../state/ducks/auth/authSlice";
+// import {selectUser} from "../../../state/ducks/auth/authSlice";
 import {selectColTitle, changeTitle} from "../../../state/ducks/column/columnSlice";
 import {selectColumnCards, addCard} from "../../../state/ducks/card/cardSlice";
 import {selectNextId, incrementNextId} from "../../../state/ducks/nextId/nextIdSlice";
@@ -14,7 +14,7 @@ interface ColumnItemProps {
 	colId: number,
 	// cards: Array<Card>,
 	// comments: Array<Comment>
-	// user: string,
+	user: string,
 
 	// onColTitleUpdate: (id: number, newTitle: string) => void
 	// onCardAdd: (title: string, colId: number) => void
@@ -26,10 +26,10 @@ interface ColumnItemProps {
 	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default ({colId}: ColumnItemProps) => {
+export default ({colId, user}: ColumnItemProps) => {
 
 	const dispatch = useDispatch()
-	const user = useSelector(selectUser)
+	// const user = useSelector(selectUser)
 	const nextId = useSelector(selectNextId)
 	const title = useSelector(state => selectColTitle(state, colId))
 	const cards = useSelector(state => selectColumnCards(state, colId))
@@ -69,7 +69,8 @@ export default ({colId}: ColumnItemProps) => {
 							return (
 								<CardItem
 									key={card.id}
-									cardId={card.id}
+									card={card}
+									user={user}
 								/>
 							)
 						})
