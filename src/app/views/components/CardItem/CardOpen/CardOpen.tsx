@@ -8,7 +8,7 @@ interface CardOpenProps {
 	colTitle: string,
 	card: Card,
 	// comments: Array<Comment>
-	// onClose: () => void
+	onClose: () => void
 	//
 	// onCardDelete: (id: number) => void
 	// onCardUpdate: (id: number, changes: CardChanges) => void
@@ -18,7 +18,7 @@ interface CardOpenProps {
 	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default ({colTitle, card}: CardOpenProps) => {
+export default ({colTitle, card, onClose}: CardOpenProps) => {
 	// const {colTitle, card, comments, onCardDelete: handleCardDelete, onCardUpdate: handleCardUpdate,
 	// 	onClose, onCommentAdd: handleCommentAdd, onCommentDelete, onCommentUpdate} = props
 	const [title, setTitle] = useState(card.title)
@@ -26,9 +26,9 @@ export default ({colTitle, card}: CardOpenProps) => {
 	const [isAddingComment, setAddingComment] = useState(false)
 	const [newComment, setNewComment] = useState('')
 
-	// const onEscape = useCallback((e) => {
-	// 	if (e.key === 'Escape') onClose()
-	// }, [onClose])
+	const onEscape = useCallback((e) => {
+		if (e.key === 'Escape') onClose()
+	}, [onClose])
 
 	// const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
 	// const onTitleSave = useCallback(() => {
@@ -55,12 +55,12 @@ export default ({colTitle, card}: CardOpenProps) => {
 	// 	setAddingComment(prevState => !prevState)
 	// }, [handleCommentAdd, card.id, newComment])
 
-	// useEffect(() => {
-	// 	document.addEventListener('keydown', onEscape)
-	// 	return function cleanup() {
-	// 		document.removeEventListener('keydown', onEscape)
-	// 	};
-	// }, [onEscape]);
+	useEffect(() => {
+		document.addEventListener('keydown', onEscape)
+		return function cleanup() {
+			document.removeEventListener('keydown', onEscape)
+		};
+	}, [onEscape]);
 
 	return (
 		<>
@@ -74,7 +74,7 @@ export default ({colTitle, card}: CardOpenProps) => {
 								type="button"
 								className="close"
 								aria-label="Close"
-								// onClick={onClose}
+								onClick={onClose}
 							>
 								<span aria-hidden="true">&times;</span>
 							</button>

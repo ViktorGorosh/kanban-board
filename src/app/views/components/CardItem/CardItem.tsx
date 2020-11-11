@@ -47,7 +47,7 @@ export default ({colTitle, card}: CardItemProps) => {
 					colTitle={colTitle}
 					card={card}
 					// comments={comments}
-					// onClose={onToggleActive}
+					onClose={onToggleActive}
 					//
 					// onCardDelete={onCardDelete}
 					// onCardUpdate={onCardUpdate}
