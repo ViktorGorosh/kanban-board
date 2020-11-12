@@ -1,16 +1,15 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './App.scss'
 import AuthPopup from "./app/views/components/AuthPopup/AuthPopup";
 import ColumnItem from "./app/views/components/ColumnItem/ColumnItem";
+import {useSelector} from 'react-redux'
+import {selectUser} from "./app/state/ducks/auth/authSlice";
+import {selectColumns} from "./app/state/ducks/column/columnSlice";
 
-import store from "./app/store";
-import {AuthState} from "./app/state/ducks/auth/types";
-import {Column} from "./app/state/ducks/column/types";
-
-interface AppState {
-	user: AuthState
-	columns: Array<Column>
-}
+// interface AppState {
+// 	user: AuthState
+// 	columns: Array<Column>
+// }
 
 // export interface Card {
 // 	colId: number,
@@ -32,130 +31,72 @@ interface AppState {
 // 	description?: Card['description']
 // }
 
-class App extends Component<{}, AppState>{
+// function mapStateToProps(state) {
+// 	return {
+// 		user: state.user,
+// 		columns: state.columns
+// 	}
+// }
 
-	constructor(props) {
-		super(props);
+export default () => {
 
-		this.state = store.getState()
-	}
-
-	// handleUserUpdate = (name: string): void => {
-	// 	if (name !== '') {
-	// 		this.setState(() => ({
-	// 			isAuthorized: true,
-	// 			user: name
-	// 		}))
-	// 	}
-	// }
+	const user = useSelector(selectUser)
+	const columns = useSelector(selectColumns)
+	// constructor(props) {
+	// 	super(props);
 	//
-
-	//
-	// handleCardAdd = (title: string, colId: number): void => {
-	// 	if (title === '') return
-	// 	this.setState((prevState) => ({
-	// 		card: [...prevState.card,
-	// 			{colId, id: prevState.nextId, title, description: null, author: prevState.user}
-	// 		],
-	// 		nextId: prevState.nextId + 1
-	// 	}))
-	// }
-	//
-	// handleCardDelete = (id: number): void => {
-	// 	this.setState(prevState => ({
-	// 		card: prevState.card.filter(card => card.id !== id)
-	// 	}))
-	// }
-	//
-	// handleCardUpdate = (id: number, changes: CardChanges): void => {
-	// 	this.setState(prevState => ({
-	// 		card: prevState.card.map(card => {
-	// 			if (card.id === id) {
-	// 				return {...card, ...changes}
-	// 			}
-	// 			return card
-	// 		})
-	// 	}))
-	// }
-	//
-	// handleCommentAdd = (text: string, cardId: number): void => {
-	// 	if (text === '') return
-	// 	this.setState(prevState => ({
-	// 		comments: [...prevState.comments, {id: prevState.nextId, cardId, author: prevState.user, text}],
-	// 		nextId: prevState.nextId + 1
-	// 	}))
-	// }
-	//
-	// handleCommentDelete = (id: number): void => {
-	// 	this.setState(prevState => ({
-	// 		comments: prevState.comments.filter(comment => comment.id !== id)
-	// 	}))
-	// }
-	//
-	// handleCommentUpdate = (id: number, text: string): void => {
-	// 	if (text === '') return
-	// 	this.setState(prevState => ({
-	// 		comments: prevState.comments.map(comment => {
-	// 			if (comment.id === id) return {...comment, text}
-	// 			return comment
-	// 		})
-	// 	}))
+	// 	this.state = store.getState()
 	// }
 
-	componentDidMount() {
-		store.subscribe(() => {
-			this.setState(() => ({
-					...store.getState()
-				})
-			)
-		})
-	}
+	// componentDidMount() {
+	// 	// store.subscribe(() => {
+	// 	// 	this.setState(() => ({
+	// 	// 			...store.getState()
+	// 	// 		})
+	// 	// 	)
+	// 	// })
+	// }
 
 	// componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<State>, snapshot?: any) {
 	// 	console.log(this.state) // нужно текущее состояние, а не предыдущее
 	// 	const savedState = {...this.state, isAuthorized: false}
 	// 	localStorage.setItem('state', JSON.stringify(savedState))
 	// }
+	return (
+		<>
+			{user.isAuthorized ? null :
+				<AuthPopup />
+			}
+			<header className='main-header text-center'>
+				<h1 className='title'>NotTrelloAtAll</h1>
+			</header>
+			<section className='section-board'>
+				<div className="container-fluid">
+					<div className="row">
+						{columns.map((column) => {
+							return (
+								<ColumnItem
+									key={column.id}
+									colId={column.id}
+									// title={column.title}
+									// card={this.state.card.filter(card => card.colId === column.id)}
+									// comments={this.state.comments}
+									user={user.name}
 
-	render() {
-		return (
-			<>
-				{this.state.user.isAuthorized ? null :
-					<AuthPopup />
-				}
-				<header className='main-header text-center'>
-					<h1 className='title'>NotTrelloAtAll</h1>
-				</header>
-				<section className='section-board'>
-					<div className="container-fluid">
-						<div className="row">
-							{this.state.columns.map((column) => {
-								return (
-									<ColumnItem
-										key={column.id}
-										colId={column.id}
-										// title={column.title}
-										// card={this.state.card.filter(card => card.colId === column.id)}
-										// comments={this.state.comments}
-										user={this.state.user.name}
-
-										// onColTitleUpdate={this.handleColTitleUpdate}
-										// onCardAdd={this.handleCardAdd}
-										// onCardDelete={this.handleCardDelete}
-										// onCardUpdate={this.handleCardUpdate}
-										//
-										// onCommentAdd={this.handleCommentAdd}
-										// onCommentDelete={this.handleCommentDelete}
-										// onCommentUpdate={this.handleCommentUpdate}
-									/>
-								)
-							})}
-						</div>
+									// onColTitleUpdate={this.handleColTitleUpdate}
+									// onCardAdd={this.handleCardAdd}
+									// onCardDelete={this.handleCardDelete}
+									// onCardUpdate={this.handleCardUpdate}
+									//
+									// onCommentAdd={this.handleCommentAdd}
+									// onCommentDelete={this.handleCommentDelete}
+									// onCommentUpdate={this.handleCommentUpdate}
+								/>
+							)
+						})}
 					</div>
-				</section>
-			</>
-		)
-	}
+				</div>
+			</section>
+		</>
+	)
 }
-
-export default App
