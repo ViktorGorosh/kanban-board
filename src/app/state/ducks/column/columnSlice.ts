@@ -31,8 +31,8 @@ export const selectColumns = state => state.columns
 export const selectColTitle = (state, id) => {
 	return state.columns.find(column => column.id === id).title
 }
-export const selectCards = (state, colId) => {
-	return state.cards.find(card => card.colId === colId)
-}
+// export const selectCards = (state, colId) => {
+// 	return state.cards.find(card => card.colId === colId)
+// }
 
 export default columnSlice.reducer
