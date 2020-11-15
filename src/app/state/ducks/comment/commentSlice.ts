@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {AddCommentAction, Comment, DeleteCommentAction, UpdateCommentAction} from "./types";
-import {Card, UpdateCardAction} from "../card/types";
 
 const initialState: Array<Comment> = [
 	{
@@ -15,23 +14,25 @@ const commentSlice = createSlice({
 	name: 'comment',
 	initialState,
 	reducers: {
-		addComment: (state: Array<Comment>, action: AddCommentAction) => {
+		addComment: (state, action: AddCommentAction) => {
 			return [
 				...state,
 				action.payload
 			]
 		},
-		deleteComment: (state: Array<Comment>, action: DeleteCommentAction) => {
+		deleteComment: (state, action: DeleteCommentAction) => {
 			return state.filter(comment => comment.id !== action.payload)
 		},
-		updateComment: (state: Array<Comment>, action: UpdateCommentAction) => {
+		updateComment: (state, action: UpdateCommentAction) => {
 			return state.map(comment => {
+
 				if (comment.id === action.payload.id) {
 					return {
 						...comment,
 						...action.payload
 					}
 				}
+
 				return comment
 			})
 		}

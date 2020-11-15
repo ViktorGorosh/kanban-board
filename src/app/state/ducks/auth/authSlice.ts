@@ -3,14 +3,14 @@ import {AuthState, LoginAction} from "./types";
 
 const initialState: AuthState = {
 	name: 'Aноним',
-	isAuthorized: false,
+	isAuthorized: false
 }
 
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		login: (state: AuthState, action: LoginAction) => {
+		login: (state, action: LoginAction) => {
 			state.name = action.payload
 			state.isAuthorized = true
 		}
@@ -19,7 +19,6 @@ export const authSlice = createSlice({
 
 export const { login } = authSlice.actions
 
-export const selectUser = state => state.user.name
-export const selectIsAuthorized = state => state.user.isAuthorized
+export const selectUser = state => state.user
 
 export default authSlice.reducer

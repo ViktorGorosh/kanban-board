@@ -1,18 +1,13 @@
 import React, {useCallback, useState} from "react";
 import {Comment} from "../../../state/ducks/comment/types";
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {updateComment, deleteComment} from "../../../state/ducks/comment/commentSlice";
 
 interface CommentItemProps {
 	comment: Comment,
-	cardId: number,
-	// onCommentDelete: (id: number) => void
-	// onCommentUpdate: (id: number, text: string) => void
 }
 
-export default ({comment, cardId}: CommentItemProps) => {
-
-	// const {comment, onCommentDelete: handleCommentDelete, onCommentUpdate: handleCommentUpdate} = props
+export default ({comment}: CommentItemProps) => {
 
 	const [text, setText] = useState(comment.text)
 
@@ -21,7 +16,9 @@ export default ({comment, cardId}: CommentItemProps) => {
 	const onCommentTextChange = useCallback(e => setText(e.target.value), [])
 
 	const onCommentUpdate = useCallback(() => {
+
 		if (text === '') return
+
 		dispatch(updateComment({id: comment.id, text}))
 	},[comment.id, dispatch, text])
 

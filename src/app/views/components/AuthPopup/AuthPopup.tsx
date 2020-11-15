@@ -7,10 +7,12 @@ export default () => {
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser)
 
-	const [newName, setNewName] = useState(user)
+	const [newName, setNewName] = useState(user.name)
 	const onChange = useCallback(e => {setNewName(e.target.value)},[])
 	const onClick = useCallback(() => {
+
 		if (newName === '') return
+
 		dispatch(login(newName))
 	}, [dispatch, newName])
 
@@ -26,7 +28,7 @@ export default () => {
 						<div className="modal-body">
 							<input type='text'
 								   className="form-control"
-								   defaultValue={user}
+								   defaultValue={user.name}
 								   autoFocus={true}
 								   onChange={onChange}
 							/>

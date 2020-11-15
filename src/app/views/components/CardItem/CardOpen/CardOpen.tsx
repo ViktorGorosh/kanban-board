@@ -12,20 +12,10 @@ import {selectUser} from "../../../../state/ducks/auth/authSlice";
 interface CardOpenProps {
 	colTitle: string,
 	card: Card,
-	// comments: Array<Comment>
 	onClose: () => void
-	//
-	// onCardDelete: (id: number) => void
-	// onCardUpdate: (id: number, changes: CardChanges) => void
-	//
-	// onCommentAdd: (text: string, cardId: number) => void
-	// onCommentDelete: (id: number) => void
-	// onCommentUpdate: (id: number, text: string) => void
 }
 
 export default ({colTitle, card, onClose}: CardOpenProps) => {
-	// const {colTitle, card, comments, onCardDelete: handleCardDelete, onCardUpdate: handleCardUpdate,
-	// 	onClose, onCommentAdd: handleCommentAdd, onCommentDelete, onCommentUpdate} = props
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	const nextId = useSelector(selectNextId)
@@ -43,7 +33,9 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 	const onTitleChange = useCallback((e) => setTitle(e.target.value), [])
 
 	const onTitleSave = useCallback(() => {
+
 		if (title === '') return
+
 		dispatch(updateCard({id: card.id, title}))
 	},[card.id, dispatch, title])
 
@@ -71,11 +63,13 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 	const onNewCommentChange = useCallback((e) => setNewComment(e.target.value), [])
 
 	const onCommentAdd = useCallback(() => {
+
 		if (newComment === '') return
+
 		setAddingComment(false)
-		dispatch(addComment({id: nextId, cardId: card.id, text: newComment, author: user}))
+		dispatch(addComment({id: nextId, cardId: card.id, text: newComment, author: user.name}))
 		dispatch(incrementNextId())
-	}, [card.id, dispatch, newComment, nextId, user])
+	}, [card.id, dispatch, newComment, nextId, user.name])
 
 	useEffect(() => {
 		document.addEventListener('keydown', onEscape)
@@ -166,9 +160,6 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 											<CommentItem
 												key={comment.id}
 												comment={comment}
-												cardId={card.id}
-												// onCommentDelete={onCommentDelete}
-												// onCommentUpdate={onCommentUpdate}
 											/>
 										)
 									})}

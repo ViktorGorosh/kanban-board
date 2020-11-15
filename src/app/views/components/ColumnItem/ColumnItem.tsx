@@ -1,55 +1,43 @@
 import React, {useCallback, useState} from "react";
 import './ColumnItem.scss';
-// import {Comment} from "../../../../App";
 import CardItem from "../CardItem/CardItem";
 
 import {useSelector, useDispatch} from 'react-redux'
-// import {selectUser} from "../../../state/ducks/auth/authSlice";
-import {selectColTitle, changeTitle} from "../../../state/ducks/column/columnSlice";
+import {changeTitle} from "../../../state/ducks/column/columnSlice";
 import {selectColumnCards, addCard} from "../../../state/ducks/card/cardSlice";
 import {selectNextId, incrementNextId} from "../../../state/ducks/nextId/nextIdSlice";
+import {Column} from "../../../state/ducks/column/types";
+import {selectUser} from "../../../state/ducks/auth/authSlice";
 
 interface ColumnItemProps {
-	// title: string,
-	colId: number,
-	// cards: Array<Card>,
-	// comments: Array<Comment>
-	user: string,
-
-	// onColTitleUpdate: (id: number, newTitle: string) => void
-	// onCardAdd: (title: string, colId: number) => void
-	// onCardDelete: (id: number) => void
-	// onCardUpdate: (id: number, changes: CardChanges) => void
-	//
-	// onCommentAdd: (text: string, cardId: number) => void
-	// onCommentDelete: (id: number) => void
-	// onCommentUpdate: (id: number, text: string) => void
+	column: Column,
 }
 
-export default ({colId, user}: ColumnItemProps) => {
+export default ({column}: ColumnItemProps) => {
 
 	const dispatch = useDispatch()
-	// const user = useSelector(selectUser)
+	const user = useSelector(selectUser)
 	const nextId = useSelector(selectNextId)
-	const title = useSelector(state => selectColTitle(state, colId))
-	const cards = useSelector(state => selectColumnCards(state, colId))
+	const cards = useSelector(state => selectColumnCards(state, column.id))
 
-	const [colTitle, setColTitle] = useState(title)
+	const [colTitle, setColTitle] = useState(column.title)
 	const [isAddingCard, setAddingCard] = useState(false)
 	const [newCardTitle, setNewCardTitle] = useState('')
 
 	const onChangeColTitle = useCallback(e => setColTitle(e.target.value), [])
-	const onColTitleUpdate = useCallback(() => dispatch(changeTitle({id: colId, newTitle: colTitle})),
-		[colId, colTitle, dispatch])
+	const onColTitleUpdate = useCallback(() => dispatch(changeTitle({id: column.id, newTitle: colTitle})),
+		[column.id, colTitle, dispatch])
 	const onChangeNewCardTitle = useCallback(e => setNewCardTitle(e.target.value), [])
 
 	const onCardAdd = useCallback(() => {
+
+		if (newCardTitle === '') return
+
 		setAddingCard(false)
-		if (newCardTitle !== '') {
-			dispatch(addCard({colId, id: nextId, newTitle: newCardTitle, author: user}))
-			dispatch(incrementNextId())
-		}
-	}, [colId, dispatch, newCardTitle, nextId, user])
+		dispatch(addCard({colId: column.id, id: nextId, newTitle: newCardTitle, author: user}))
+		dispatch(incrementNextId())
+
+	}, [column.id, dispatch, newCardTitle, nextId, user])
 
 	const onToggleAddingCard = useCallback(() => {
 		setAddingCard(true)
@@ -62,7 +50,7 @@ export default ({colId, user}: ColumnItemProps) => {
 				<input
 					type='text'
 					className="form-control"
-					defaultValue={title}
+					defaultValue={column.title}
 					onChange={onChangeColTitle}
 					onBlur={onColTitleUpdate}
 				/>
@@ -71,7 +59,7 @@ export default ({colId, user}: ColumnItemProps) => {
 							return (
 								<CardItem
 									key={card.id}
-									colTitle={colTitle}
+									colTitle={column.title}
 									card={card}
 								/>
 							)
