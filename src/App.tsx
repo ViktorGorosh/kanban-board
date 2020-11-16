@@ -1,10 +1,10 @@
 import React from 'react'
 import './App.scss'
-import AuthPopup from "./app/views/components/AuthPopup/AuthPopup";
-import ColumnItem from "./app/views/components/ColumnItem/ColumnItem";
+import AuthPopup from "./views/components/AuthPopup/AuthPopup";
+import ColumnItem from "./views/components/ColumnItem/ColumnItem";
 import {useSelector} from 'react-redux'
-import {selectUser} from "./app/state/ducks/auth/authSlice";
-import {selectColumns} from "./app/state/ducks/column/columnSlice";
+import {selectUser} from "./state/ducks/auth/authSlice";
+import {selectColumns} from "./state/ducks/column/columnSlice";
 
 
 export default () => {
