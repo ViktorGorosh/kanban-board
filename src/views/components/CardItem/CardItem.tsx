@@ -1,10 +1,9 @@
 import React, {useCallback, useState} from "react";
-import './CardItem.scss'
-import CardOpen from "./CardOpen/CardOpen";
-
-import {useSelector} from 'react-redux'
-import {Card} from "../../../state/ducks/card/types";
-import {selectCardComments} from "../../../state/ducks/comment/commentSlice";
+import {useSelector} from 'react-redux';
+import {Card} from "state/ducks/card/types";
+import {selectCardComments} from "state/ducks/comment/commentSlice";
+import CardOpen from "views/components/CardItem/CardOpen/CardOpen";
+import './CardItem.scss';
 
 interface CardItemProps {
 	colTitle: string

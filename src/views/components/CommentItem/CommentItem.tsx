@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
-import {Comment} from "../../../state/ducks/comment/types";
 import {useDispatch} from 'react-redux'
-import {updateComment, deleteComment} from "../../../state/ducks/comment/commentSlice";
+import {updateComment, deleteComment} from "state/ducks/comment/commentSlice";
+import {Comment} from "state/ducks/comment/types";
 
 interface CommentItemProps {
 	comment: Comment,

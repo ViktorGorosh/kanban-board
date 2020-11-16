@@ -1,13 +1,12 @@
 import React, {useCallback, useState} from "react";
-import './ColumnItem.scss';
-import CardItem from "../CardItem/CardItem";
-
 import {useSelector, useDispatch} from 'react-redux'
-import {changeTitle} from "../../../state/ducks/column/columnSlice";
-import {selectColumnCards, addCard} from "../../../state/ducks/card/cardSlice";
-import {selectNextId, incrementNextId} from "../../../state/ducks/nextId/nextIdSlice";
-import {Column} from "../../../state/ducks/column/types";
-import {selectUser} from "../../../state/ducks/auth/authSlice";
+import {selectColumnCards, addCard} from "state/ducks/card/cardSlice";
+import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
+import {changeTitle} from "state/ducks/column/columnSlice";
+import {selectUser} from "state/ducks/auth/authSlice";
+import CardItem from "views/components/CardItem/CardItem";
+import {Column} from "state/ducks/column/types";
+import './ColumnItem.scss';
 
 interface ColumnItemProps {
 	column: Column,

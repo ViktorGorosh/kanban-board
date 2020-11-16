@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import { selectUser, login } from '../../../state/ducks/auth/authSlice'
+import { selectUser, login } from 'state/ducks/auth/authSlice';
 
 export default () => {
 
