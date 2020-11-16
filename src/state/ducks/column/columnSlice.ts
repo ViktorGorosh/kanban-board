@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ChangeTitleAction, Column} from "./types";
+import {Column} from "interfaces/column";
+import {ChangeTitleAction} from "./types";
 
 const initialState: Array<Column> = [
 	{id: 0, title: 'TO DO'},

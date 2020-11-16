@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {AddCommentAction, Comment, DeleteCommentAction, UpdateCommentAction} from "./types";
+import {Comment} from "interfaces/comment";
+import {AddCommentAction, DeleteCommentAction, UpdateCommentAction} from "./types";
 
 const initialState: Array<Comment> = [
 	{

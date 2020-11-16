@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useSelector} from 'react-redux';
-import {Card} from "state/ducks/card/types";
+import {Card} from "interfaces/card";
 import {selectCardComments} from "state/ducks/comment/commentSlice";
 import CardOpen from "views/components/CardItem/CardOpen/CardOpen";
 import './CardItem.scss';

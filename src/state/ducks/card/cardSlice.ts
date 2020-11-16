@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {AddCardAction, Card, DeleteCardAction, UpdateCardAction} from "./types";
+import {Card} from "interfaces/card";
+import {AddCardAction, DeleteCardAction, UpdateCardAction} from "./types";
 
 const initialState: Array<Card> = [
 	{

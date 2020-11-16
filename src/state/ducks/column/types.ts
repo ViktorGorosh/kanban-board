@@ -1,7 +1,4 @@
-export interface Column {
-	id: number,
-	title: string
-}
+import {Column} from "interfaces/column";
 
 export interface ChangeTitleAction {
 	type: string,

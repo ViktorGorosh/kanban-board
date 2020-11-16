@@ -5,7 +5,7 @@ import {selectCardComments, addComment} from "state/ducks/comment/commentSlice";
 import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
 import {selectUser} from "state/ducks/auth/authSlice";
 import CommentItem from "views/components/CommentItem/CommentItem";
-import {Card} from "state/ducks/card/types";
+import {Card} from "interfaces/card";
 import './CardOpen.scss'
 
 interface CardOpenProps {

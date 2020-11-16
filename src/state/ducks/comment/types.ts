@@ -1,9 +1,4 @@
-export interface Comment {
-	id: number,
-	cardId: number,
-	author: string,
-	text: string,
-}
+import {Comment} from "interfaces/comment";
 
 export interface AddCommentAction {
 	type: string,

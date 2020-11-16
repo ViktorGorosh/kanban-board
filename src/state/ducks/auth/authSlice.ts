@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {AuthState, LoginAction} from "./types";
+import {User} from "interfaces/user";
+import {LoginAction} from "./types";
 
-const initialState: AuthState = {
+const initialState: User = {
 	name: 'Aноним',
 	isAuthorized: false
 }
