@@ -33,7 +33,7 @@ export default ({column}: ColumnItemProps) => {
 		if (newCardTitle === '') return
 
 		setAddingCard(false)
-		dispatch(addCard({colId: column.id, id: nextId, newTitle: newCardTitle, author: user}))
+		dispatch(addCard({colId: column.id, id: nextId, newTitle: newCardTitle, author: user.name}))
 		dispatch(incrementNextId())
 
 	}, [column.id, dispatch, newCardTitle, nextId, user])
