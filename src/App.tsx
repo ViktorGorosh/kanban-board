@@ -4,13 +4,15 @@ import {selectUser} from "state/ducks/auth/authSlice";
 import {selectColumns} from "state/ducks/column/columnSlice";
 import AuthPopup from "views/components/AuthPopup/AuthPopup";
 import ColumnItem from "views/components/ColumnItem/ColumnItem";
+import {User} from "interfaces/user";
+import {Column} from "interfaces/column";
 import 'App.scss'
 
 
 export default () => {
 
-	const user = useSelector(selectUser)
-	const columns = useSelector(selectColumns)
+	const user: User = useSelector(selectUser)
+	const columns: Array<Column> = useSelector(selectColumns)
 
 	return (
 		<>

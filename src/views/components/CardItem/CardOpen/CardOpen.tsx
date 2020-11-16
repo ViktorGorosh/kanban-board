@@ -7,6 +7,8 @@ import {selectUser} from "state/ducks/auth/authSlice";
 import CommentItem from "views/components/CommentItem/CommentItem";
 import {Card} from "interfaces/card";
 import './CardOpen.scss'
+import {User} from "interfaces/user";
+import {Comment} from "interfaces/comment";
 
 interface CardOpenProps {
 	colTitle: string,
@@ -16,9 +18,9 @@ interface CardOpenProps {
 
 export default ({colTitle, card, onClose}: CardOpenProps) => {
 	const dispatch = useDispatch()
-	const user = useSelector(selectUser)
-	const nextId = useSelector(selectNextId)
-	const comments = useSelector(state => selectCardComments(state, card.id))
+	const user: User = useSelector(selectUser)
+	const nextId: number = useSelector(selectNextId)
+	const comments: Array<Comment> = useSelector(state => selectCardComments(state, card.id))
 
 	const [title, setTitle] = useState(card.title)
 	const [description, setDescription] = useState(card.description)

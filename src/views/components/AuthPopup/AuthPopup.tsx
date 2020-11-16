@@ -1,11 +1,12 @@
 import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import { selectUser, login } from 'state/ducks/auth/authSlice';
+import {User} from "interfaces/user";
 
 export default () => {
 
 	const dispatch = useDispatch();
-	const user = useSelector(selectUser)
+	const user: User = useSelector(selectUser)
 
 	const [newName, setNewName] = useState(user.name)
 	const onChange = useCallback(e => {setNewName(e.target.value)},[])

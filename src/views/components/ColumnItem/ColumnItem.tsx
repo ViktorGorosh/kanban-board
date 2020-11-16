@@ -5,7 +5,9 @@ import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
 import {changeTitle} from "state/ducks/column/columnSlice";
 import {selectUser} from "state/ducks/auth/authSlice";
 import CardItem from "views/components/CardItem/CardItem";
-import {Column} from "state/ducks/column/types";
+import {Column} from "interfaces/column";
+import {User} from "interfaces/user";
+import {Card} from "interfaces/card";
 import './ColumnItem.scss';
 
 interface ColumnItemProps {
@@ -15,9 +17,9 @@ interface ColumnItemProps {
 export default ({column}: ColumnItemProps) => {
 
 	const dispatch = useDispatch()
-	const user = useSelector(selectUser)
-	const nextId = useSelector(selectNextId)
-	const cards = useSelector(state => selectColumnCards(state, column.id))
+	const user: User = useSelector(selectUser)
+	const nextId: number = useSelector(selectNextId)
+	const cards: Array<Card> = useSelector(state => selectColumnCards(state, column.id))
 
 	const [colTitle, setColTitle] = useState(column.title)
 	const [isAddingCard, setAddingCard] = useState(false)

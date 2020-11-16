@@ -1,8 +1,9 @@
 import React, {useCallback, useState} from "react";
 import {useSelector} from 'react-redux';
-import {Card} from "interfaces/card";
 import {selectCardComments} from "state/ducks/comment/commentSlice";
 import CardOpen from "views/components/CardItem/CardOpen/CardOpen";
+import {Card} from "interfaces/card";
+import {Comment} from "interfaces/comment";
 import './CardItem.scss';
 
 interface CardItemProps {
@@ -12,7 +13,7 @@ interface CardItemProps {
 
 export default ({colTitle, card}: CardItemProps) => {
 
-	const comments = useSelector(state => selectCardComments(state, card.id))
+	const comments: Array<Comment> = useSelector(state => selectCardComments(state, card.id))
 	const [isActive, setActive] = useState(false)
 
 	const onToggleActive = useCallback(() => setActive(prevState => !prevState), []);
