@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import {selectColumnCards, addCard} from "state/ducks/card";
-import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
 import {changeTitle} from "state/ducks/column";
 import {selectUser} from "state/ducks/user";
 import CardItem from "views/components/CardItem/CardItem";
@@ -18,7 +17,6 @@ export default ({column}: ColumnItemProps) => {
 
 	const dispatch = useDispatch()
 	const user: User = useSelector(selectUser)
-	const nextId: number = useSelector(selectNextId)
 	const cards: Array<Card> = useSelector(state => selectColumnCards(state, column.id))
 
 	const [colTitle, setColTitle] = useState(column.title)
@@ -35,10 +33,9 @@ export default ({column}: ColumnItemProps) => {
 		if (newCardTitle === '') return
 
 		setAddingCard(false)
-		dispatch(addCard({colId: column.id, id: nextId, newTitle: newCardTitle, author: user.name}))
-		dispatch(incrementNextId())
+		dispatch(addCard({colId: column.id, newTitle: newCardTitle, author: user.name}))
 
-	}, [column.id, dispatch, newCardTitle, nextId, user])
+	}, [column.id, dispatch, newCardTitle, user])
 
 	const onToggleAddingCard = useCallback(() => {
 		setAddingCard(true)

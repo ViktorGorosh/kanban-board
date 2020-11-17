@@ -1,6 +1,6 @@
 export interface Comment {
-	id: number,
-	cardId: number,
+	id: string,
+	cardId: string,
 	author: string,
 	text: string,
 }

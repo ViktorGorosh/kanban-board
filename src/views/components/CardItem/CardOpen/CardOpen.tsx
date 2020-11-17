@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import {deleteCard, updateCard} from 'state/ducks/card';
 import {selectCardComments, addComment} from "state/ducks/comment";
-import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
 import {selectUser} from "state/ducks/user";
 import CommentItem from "views/components/CommentItem/CommentItem";
 import {Card} from "interfaces/card";
@@ -19,7 +18,6 @@ interface CardOpenProps {
 export default ({colTitle, card, onClose}: CardOpenProps) => {
 	const dispatch = useDispatch()
 	const user: User = useSelector(selectUser)
-	const nextId: number = useSelector(selectNextId)
 	const comments: Array<Comment> = useSelector(state => selectCardComments(state, card.id))
 
 	const [title, setTitle] = useState(card.title)
@@ -68,9 +66,8 @@ export default ({colTitle, card, onClose}: CardOpenProps) => {
 		if (newComment === '') return
 
 		setAddingComment(false)
-		dispatch(addComment({id: nextId, cardId: card.id, text: newComment, author: user.name}))
-		dispatch(incrementNextId())
-	}, [card.id, dispatch, newComment, nextId, user.name])
+		dispatch(addComment({cardId: card.id, text: newComment, author: user.name}))
+	}, [card.id, dispatch, newComment, user.name])
 
 	useEffect(() => {
 		document.addEventListener('keydown', onEscape)

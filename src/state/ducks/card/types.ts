@@ -4,7 +4,6 @@ export interface AddCardAction {
 	type: string,
 	payload: {
 		colId: Card['colId'],
-		id: Card['id'],
 		newTitle: Card['title'],
 		author: Card['author']
 	}

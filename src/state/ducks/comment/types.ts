@@ -2,7 +2,11 @@ import {Comment} from "interfaces/comment";
 
 export interface AddCommentAction {
 	type: string,
-	payload: Comment
+	payload: {
+		cardId: Comment['cardId'],
+		author: Comment['author'],
+		text: Comment['text'],
+	}
 }
 
 export interface DeleteCommentAction {

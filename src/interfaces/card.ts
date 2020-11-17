@@ -1,6 +1,6 @@
 export interface Card {
-	colId: number,
-	id: number,
+	colId: string,
+	id: string,
 	title: string,
 	description: string | null,
 	author: string
