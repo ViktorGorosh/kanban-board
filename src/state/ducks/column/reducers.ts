@@ -14,16 +14,14 @@ export const column = createSlice({
 	initialState,
 	reducers: {
 		changeTitle: (state, action: ChangeTitleAction) => {
-			if (action.payload.newTitle !== '') {
-				return state.map((column) => {
+			return state.map((column) => {
 
 				if (column.id === action.payload.id) {
 					return {...column, title: action.payload.newTitle}
 				}
 
-					return column
-				})
-			}
+				return column
+			})
 		}
 	}
 })
