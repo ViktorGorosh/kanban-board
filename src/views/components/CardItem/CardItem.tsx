@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useSelector} from 'react-redux';
-import {selectCardComments} from "state/ducks/comment/commentSlice";
+import {selectCardComments} from "state/ducks/comment";
 import CardOpen from "views/components/CardItem/CardOpen/CardOpen";
 import {Card} from "interfaces/card";
 import {Comment} from "interfaces/comment";

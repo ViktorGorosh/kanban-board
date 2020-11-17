@@ -1,9 +1,9 @@
 import { configureStore} from "@reduxjs/toolkit";
-import userReducer from "state/ducks/auth/authSlice";
+import userReducer from "state/ducks/user";
 import nextIdReducer from 'state/ducks/nextId/nextIdSlice'
-import columnsReducer from 'state/ducks/column/columnSlice';
-import cardsReducer from 'state/ducks/card/cardSlice'
-import commentsReducer from 'state/ducks/comment/commentSlice'
+import columnsReducer from 'state/ducks/column';
+import cardsReducer from 'state/ducks/card'
+import commentsReducer from 'state/ducks/comment'
 
 export default configureStore( {
 	reducer: {

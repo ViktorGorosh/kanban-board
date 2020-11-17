@@ -19,7 +19,7 @@ const initialState: Array<Card> = [
 	}
 ]
 
-export const cardSlice = createSlice({
+export const card = createSlice({
 	name: 'card',
 	initialState,
 	reducers: {
@@ -54,10 +54,4 @@ export const cardSlice = createSlice({
 	}
 })
 
-export const {addCard, deleteCard, updateCard} = cardSlice.actions
-
-export const selectColumnCards = (state, colId) => {
-	return state.cards.filter(card => card.colId === colId)
-}
-
-export default cardSlice.reducer
+export default card.reducer

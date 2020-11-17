@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux';
-import {deleteCard, updateCard} from 'state/ducks/card/cardSlice';
-import {selectCardComments, addComment} from "state/ducks/comment/commentSlice";
+import {deleteCard, updateCard} from 'state/ducks/card';
+import {selectCardComments, addComment} from "state/ducks/comment";
 import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
-import {selectUser} from "state/ducks/auth/authSlice";
+import {selectUser} from "state/ducks/user";
 import CommentItem from "views/components/CommentItem/CommentItem";
 import {Card} from "interfaces/card";
 import './CardOpen.scss'

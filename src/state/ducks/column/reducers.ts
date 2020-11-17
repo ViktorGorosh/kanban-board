@@ -9,7 +9,7 @@ const initialState: Array<Column> = [
 	{id: 3, title: 'Done'},
 ]
 
-export const columnSlice = createSlice({
+export const column = createSlice({
 	name: 'column',
 	initialState,
 	reducers: {
@@ -28,8 +28,4 @@ export const columnSlice = createSlice({
 	}
 })
 
-export const {changeTitle} = columnSlice.actions
-
-export const selectColumns = state => state.columns
-
-export default columnSlice.reducer
+export default column.reducer

@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from "react";
-import {useSelector, useDispatch} from 'react-redux'
-import {selectColumnCards, addCard} from "state/ducks/card/cardSlice";
+import {useSelector, useDispatch} from 'react-redux';
+import {selectColumnCards, addCard} from "state/ducks/card";
 import {selectNextId, incrementNextId} from "state/ducks/nextId/nextIdSlice";
-import {changeTitle} from "state/ducks/column/columnSlice";
-import {selectUser} from "state/ducks/auth/authSlice";
+import {changeTitle} from "state/ducks/column";
+import {selectUser} from "state/ducks/user";
 import CardItem from "views/components/CardItem/CardItem";
 import {Column} from "interfaces/column";
 import {User} from "interfaces/user";

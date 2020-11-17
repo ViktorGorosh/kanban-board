@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {selectUser} from "state/ducks/auth/authSlice";
-import {selectColumns} from "state/ducks/column/columnSlice";
+import { selectUser } from "state/ducks/user";
+import {selectColumns} from "state/ducks/column";
 import AuthPopup from "views/components/AuthPopup/AuthPopup";
 import ColumnItem from "views/components/ColumnItem/ColumnItem";
 import {User} from "interfaces/user";

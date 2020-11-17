@@ -11,7 +11,7 @@ const initialState: Array<Comment> = [
 	}
 ]
 
-const commentSlice = createSlice({
+export const comment = createSlice({
 	name: 'comment',
 	initialState,
 	reducers: {
@@ -40,10 +40,4 @@ const commentSlice = createSlice({
 	}
 })
 
-export const {addComment, deleteComment, updateComment} = commentSlice.actions
-
-export const selectCardComments = (state, cardId) => {
-	return state.comments.filter(comment => comment.cardId === cardId)
-}
-
-export default commentSlice.reducer
+export default comment.reducer
